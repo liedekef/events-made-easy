@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 3.3.6\n"
+"Project-Id-Version: Events Made Easy 3.3.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-10T16:40:10+00:00\n"
+"POT-Creation-Date: 2026-11-11T09:04:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -1919,7 +1919,7 @@ msgstr ""
 #: includes/eme-formfields.php:3865
 #: includes/eme-formfields.php:3866
 #: includes/eme-formfields.php:3867
-#: includes/eme-fs.php:641
+#: includes/eme-fs.php:649
 #: includes/eme-gdpr.php:453
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
@@ -1960,7 +1960,7 @@ msgstr ""
 #: includes/eme-formfields.php:3865
 #: includes/eme-formfields.php:3866
 #: includes/eme-formfields.php:3867
-#: includes/eme-fs.php:640
+#: includes/eme-fs.php:648
 #: includes/eme-gdpr.php:453
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
@@ -2078,7 +2078,7 @@ msgid "Edit Recurrence"
 msgstr ""
 
 #: includes/eme-events.php:653
-#: includes/eme-fs.php:825
+#: includes/eme-fs.php:845
 msgid "Database insert failed!"
 msgstr ""
 
@@ -2666,7 +2666,7 @@ msgstr ""
 #: includes/eme-events.php:6299
 #: includes/eme-events.php:6808
 #: includes/eme-events.php:6816
-#: includes/eme-fs.php:624
+#: includes/eme-fs.php:632
 msgid "Event Status"
 msgstr ""
 
@@ -2840,7 +2840,7 @@ msgstr ""
 
 #: includes/eme-events.php:6603
 #: includes/eme-members.php:2359
-#: includes/eme-options.php:3396
+#: includes/eme-options.php:3398
 msgid "Payment methods"
 msgstr ""
 
@@ -3016,7 +3016,7 @@ msgstr ""
 #: includes/eme-events.php:9785
 #: includes/eme-members.php:1966
 #: includes/eme-members.php:2091
-#: includes/eme-options.php:3448
+#: includes/eme-options.php:3450
 #: includes/eme-people.php:1059
 #: includes/eme-people.php:1249
 #: includes/eme-people.php:1580
@@ -4098,13 +4098,13 @@ msgstr ""
 #: includes/eme-options.php:1571
 #: includes/eme-options.php:2212
 #: includes/eme-options.php:2248
-#: includes/eme-options.php:3414
+#: includes/eme-options.php:3416
 msgid "None"
 msgstr ""
 
 #: includes/eme-events.php:8446
 #: includes/eme-members.php:2155
-#: includes/eme-options.php:3414
+#: includes/eme-options.php:3416
 msgid "Select a captcha to use"
 msgstr ""
 
@@ -4347,7 +4347,7 @@ msgstr ""
 #: includes/eme-members.php:2172
 #: includes/eme-members.php:2178
 #: includes/eme-options.php:2799
-#: includes/eme-options.php:3394
+#: includes/eme-options.php:3396
 msgid "Use the point as decimal separator"
 msgstr ""
 
@@ -5866,7 +5866,7 @@ msgstr ""
 #: includes/eme-options.php:3319
 #: includes/eme-options.php:3342
 #: includes/eme-options.php:3343
-#: includes/eme-options.php:3439
+#: includes/eme-options.php:3441
 msgid "the documentation"
 msgstr ""
 
@@ -6367,7 +6367,7 @@ msgid "Records deleted!"
 msgstr ""
 
 #: includes/eme-fs.php:174
-#: includes/eme-fs.php:907
+#: includes/eme-fs.php:927
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr ""
 
@@ -6389,24 +6389,24 @@ msgstr ""
 msgid "Create event"
 msgstr ""
 
-#: includes/eme-fs.php:651
+#: includes/eme-fs.php:659
 #: includes/eme-options.php:606
 msgid "New event succesfully created."
 msgstr ""
 
-#: includes/eme-fs.php:719
+#: includes/eme-fs.php:728
 msgid "Please enter a name for the event"
 msgstr ""
 
-#: includes/eme-fs.php:722
+#: includes/eme-fs.php:731
 msgid "Enter the event's start date"
 msgstr ""
 
-#: includes/eme-fs.php:750
+#: includes/eme-fs.php:758
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr ""
 
-#: includes/eme-fs.php:884
+#: includes/eme-fs.php:904
 #: includes/eme-gdpr.php:42
 #: includes/eme-gdpr.php:131
 #: includes/eme-gdpr.php:205
@@ -6421,7 +6421,7 @@ msgstr ""
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr ""
 
-#: includes/eme-fs.php:894
+#: includes/eme-fs.php:914
 #: includes/eme-gdpr.php:52
 #: includes/eme-gdpr.php:141
 #: includes/eme-gdpr.php:215
@@ -8621,7 +8621,7 @@ msgid "This will create a WP user after the membership signup is completed, as i
 msgstr ""
 
 #: includes/eme-members.php:2170
-#: includes/eme-options.php:3394
+#: includes/eme-options.php:3396
 msgid "Price"
 msgstr ""
 
@@ -8630,7 +8630,7 @@ msgid "Extra charge for new members"
 msgstr ""
 
 #: includes/eme-members.php:2182
-#: includes/eme-options.php:3395
+#: includes/eme-options.php:3397
 msgid "Currency"
 msgstr ""
 
@@ -8639,7 +8639,7 @@ msgid "The price you indicate for memberships is VAT included, special placehold
 msgstr ""
 
 #: includes/eme-members.php:2200
-#: includes/eme-options.php:3400
+#: includes/eme-options.php:3402
 msgid "Contact person"
 msgstr ""
 
@@ -9999,7 +9999,7 @@ msgid "Frontend Submit"
 msgstr ""
 
 #: includes/eme-options.php:1399
-#: includes/eme-options.php:3436
+#: includes/eme-options.php:3438
 msgid "Extensions"
 msgstr ""
 
@@ -12658,7 +12658,7 @@ msgid "Select yes to redirect to the payment page after a successfull booking or
 msgstr ""
 
 #: includes/eme-options.php:2802
-#: includes/eme-options.php:3405
+#: includes/eme-options.php:3407
 msgid "Redirect wait period"
 msgstr ""
 
@@ -13570,387 +13570,387 @@ msgstr ""
 msgid "Also check out the 'Email templates' and the 'Payment' sections for some extra frontend submit settings."
 msgstr ""
 
-#: includes/eme-options.php:3393
+#: includes/eme-options.php:3395
 msgid "Status for new event"
 msgstr ""
 
-#: includes/eme-options.php:3393
+#: includes/eme-options.php:3395
 msgid "The status for a newly submitted event."
 msgstr ""
 
-#: includes/eme-options.php:3394
+#: includes/eme-options.php:3396
 msgid "The price to pay in order to submit a new event. Leave empty or 0 if no price is to be paid. This is not related to RSVP settings inside the submitted event itself! Configure the optional payment form header/footer sections in the EME Payment settings."
 msgstr ""
 
-#: includes/eme-options.php:3395
+#: includes/eme-options.php:3397
 msgid "The currency used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr ""
 
-#: includes/eme-options.php:3396
+#: includes/eme-options.php:3398
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr ""
 
-#: includes/eme-options.php:3400
+#: includes/eme-options.php:3402
 msgid "Select the contact person that will receive email notifications whenever an event gets submitted or paid for. The mail templates are to be configured in the regular mail templates section."
 msgstr ""
 
-#: includes/eme-options.php:3400
+#: includes/eme-options.php:3402
 msgid "No contact"
 msgstr ""
 
-#: includes/eme-options.php:3401
+#: includes/eme-options.php:3403
 msgid "Default category for new event"
 msgstr ""
 
-#: includes/eme-options.php:3401
+#: includes/eme-options.php:3403
 msgid "The default category assigned to an event if nothing is selected in the form."
 msgstr ""
 
-#: includes/eme-options.php:3402
+#: includes/eme-options.php:3404
 msgid "Force location creation?"
 msgstr ""
 
-#: includes/eme-options.php:3402
+#: includes/eme-options.php:3404
 msgid "Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations."
 msgstr ""
 
-#: includes/eme-options.php:3403
+#: includes/eme-options.php:3405
 msgid "Allow guest submit?"
 msgstr ""
 
-#: includes/eme-options.php:3403
+#: includes/eme-options.php:3405
 msgid "Check this option if you want guests also to be able to add new events."
 msgstr ""
 
-#: includes/eme-options.php:3404
+#: includes/eme-options.php:3406
 msgid "Success Message"
 msgstr ""
 
-#: includes/eme-options.php:3404
+#: includes/eme-options.php:3406
 msgid "The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. The message is also shown if the event submission needs to be paid for and the redirection wait period (setting below this one) is not 0. This message can contain all event placeholders."
 msgstr ""
 
-#: includes/eme-options.php:3405
+#: includes/eme-options.php:3407
 msgid "Indicate in seconds how many seconds to wait before redirecting to the newly created event after showing the success message. If 0, the success message will not be shown and the redirect will happen immediately."
 msgstr ""
 
-#: includes/eme-options.php:3406
+#: includes/eme-options.php:3408
 msgid "Always show success message"
 msgstr ""
 
-#: includes/eme-options.php:3406
+#: includes/eme-options.php:3408
 msgid "Check this option if you want to always show the success message even if the person submitting the event has the right to see the newly submitted event. This also means no redirection will happen."
 msgstr ""
 
-#: includes/eme-options.php:3407
+#: includes/eme-options.php:3409
 msgid "Guests not allowed text"
 msgstr ""
 
-#: includes/eme-options.php:3407
+#: includes/eme-options.php:3409
 msgid "The text shown to a guest when trying to submit a new event when they are not allowed to do so and the option to redirect to the login page is not set."
 msgstr ""
 
-#: includes/eme-options.php:3408
+#: includes/eme-options.php:3410
 msgid "Redirect to login page"
 msgstr ""
 
-#: includes/eme-options.php:3408
+#: includes/eme-options.php:3410
 msgid "Check this option if you want the submitter to be redirected to the login page if not logged in (or does not have the needed access rights) and guests are not allowed to submit new events."
 msgstr ""
 
 #. translators: %s is the default capability name
-#: includes/eme-options.php:3410
+#: includes/eme-options.php:3412
 msgid "Access right to submit new events"
 msgstr ""
 
 #. translators: %s is the default capability name
-#: includes/eme-options.php:3410
+#: includes/eme-options.php:3412
 msgid "Permission needed to submit a new event when guest submit is not allowed. Default: %s"
 msgstr ""
 
-#: includes/eme-options.php:3415
+#: includes/eme-options.php:3417
 msgid "Use wysiwyg?"
 msgstr ""
 
-#: includes/eme-options.php:3415
+#: includes/eme-options.php:3417
 msgid "Check this option if you want to use a frontend wysiwyg editor for the event notes."
 msgstr ""
 
-#: includes/eme-options.php:3416
+#: includes/eme-options.php:3418
 msgid "Allow image upload?"
 msgstr ""
 
-#: includes/eme-options.php:3416
+#: includes/eme-options.php:3418
 msgid "Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes."
 msgstr ""
 
-#: includes/eme-options.php:3417
+#: includes/eme-options.php:3419
 msgid "Default form format"
 msgstr ""
 
-#: includes/eme-options.php:3417
+#: includes/eme-options.php:3419
 msgid "The default form format for submitting a new event."
 msgstr ""
 
-#: includes/eme-options.php:3437
+#: includes/eme-options.php:3439
 msgid "Manage Events Made Easy extension files located in the uploads includes directory."
 msgstr ""
 
-#: includes/eme-options.php:3439
+#: includes/eme-options.php:3441
 msgid "For more info on extensions, see "
 msgstr ""
 
-#: includes/eme-options.php:3445
+#: includes/eme-options.php:3447
 msgid "File"
 msgstr ""
 
-#: includes/eme-options.php:3446
+#: includes/eme-options.php:3448
 msgid "Current SHA256 (stored)"
 msgstr ""
 
-#: includes/eme-options.php:3447
+#: includes/eme-options.php:3449
 msgid "SHA256 (on disk)"
 msgstr ""
 
-#: includes/eme-options.php:3459
+#: includes/eme-options.php:3461
 msgid "Not registered"
 msgstr ""
 
-#: includes/eme-options.php:3461
+#: includes/eme-options.php:3463
 msgid "Match"
 msgstr ""
 
-#: includes/eme-options.php:3463
+#: includes/eme-options.php:3465
 msgid "Mismatch"
 msgstr ""
 
-#: includes/eme-options.php:3471
+#: includes/eme-options.php:3473
 msgid "No extension files found in the includes directory."
 msgstr ""
 
-#: includes/eme-options.php:3476
+#: includes/eme-options.php:3478
 msgid "I have verified the file hashes above and confirm regenerating signatures."
 msgstr ""
 
-#: includes/eme-options.php:3479
+#: includes/eme-options.php:3481
 msgid "Regenerate signatures"
 msgstr ""
 
-#: includes/eme-options.php:3485
+#: includes/eme-options.php:3487
 msgid "Other settings"
 msgstr ""
 
-#: includes/eme-options.php:3488
+#: includes/eme-options.php:3490
 msgid "Stay on edit page after save?"
 msgstr ""
 
-#: includes/eme-options.php:3488
+#: includes/eme-options.php:3490
 msgid "This allows you to stay on the edit page after saving events, locations, templates, formfields, people, groups or memberships."
 msgstr ""
 
-#: includes/eme-options.php:3489
+#: includes/eme-options.php:3491
 msgid "Remove leading zeros from minutes?"
 msgstr ""
 
-#: includes/eme-options.php:3489
+#: includes/eme-options.php:3491
 msgid "PHP date/time functions have no notation to show minutes without leading zeros. Checking this option will return e.g. 9 for 09 and empty for 00. This setting affects custom time placeholders and also the generic *DATE and *TIME placeholders"
 msgstr ""
 
-#: includes/eme-options.php:3490
+#: includes/eme-options.php:3492
 msgid "CSV delimiter"
 msgstr ""
 
-#: includes/eme-options.php:3490
+#: includes/eme-options.php:3492
 msgid "Set the delimiter used in CSV exports."
 msgstr ""
 
-#: includes/eme-options.php:3491
+#: includes/eme-options.php:3493
 msgid "Localize price"
 msgstr ""
 
-#: includes/eme-options.php:3491
+#: includes/eme-options.php:3493
 msgid "If selected, all prices will be shown in the current locale with the price symbol. If you don't want this, deselect this option to regain the old behavior of localized prices where you need to take care of the decimal accuracy, the currency symbol and it's location yourself. This option only works if the php class NumberFormatter is present, which is always the case in newer php versions but just don't forget to load the INTL extension in php."
 msgstr ""
 
-#: includes/eme-options.php:3492
+#: includes/eme-options.php:3494
 msgid "Decimals accuracy"
 msgstr ""
 
-#: includes/eme-options.php:3492
+#: includes/eme-options.php:3494
 msgid "EME tries to show the prices in the frontend in the current locale, with the decimals accuracy set here. Defaults to 2."
 msgstr ""
 
-#: includes/eme-options.php:3492
+#: includes/eme-options.php:3494
 msgid "This option is not used if the localize price option above is active and the php class NumberFormatter is present."
 msgstr ""
 
-#: includes/eme-options.php:3493
+#: includes/eme-options.php:3495
 msgid "Timepicker step interval"
 msgstr ""
 
-#: includes/eme-options.php:3493
+#: includes/eme-options.php:3495
 msgid "The timepicker step interval. Defaults to 5-minutes interval (meaning steps of 5 minutes will be taken)"
 msgstr ""
 
-#: includes/eme-options.php:3494
+#: includes/eme-options.php:3496
 msgid "Required field text"
 msgstr ""
 
-#: includes/eme-options.php:3494
+#: includes/eme-options.php:3496
 msgid "The text shown next to a form field when it is a required field"
 msgstr ""
 
-#: includes/eme-options.php:3495
+#: includes/eme-options.php:3497
 msgid "Address line 1 text"
 msgstr ""
 
-#: includes/eme-options.php:3495
+#: includes/eme-options.php:3497
 msgid "By default, the text shown for the first address line is 'Address line 1', but this might not be very informative to people, so feel free to put something else here, like 'street name'"
 msgstr ""
 
-#: includes/eme-options.php:3496
+#: includes/eme-options.php:3498
 msgid "Address line 2 text"
 msgstr ""
 
-#: includes/eme-options.php:3496
+#: includes/eme-options.php:3498
 msgid "By default, the text shown for the second address line is 'Address line 2', but this might not be very informative to people, so feel free to put something else here, like 'house number'"
 msgstr ""
 
-#: includes/eme-options.php:3497
+#: includes/eme-options.php:3499
 msgid "Thumbnail size"
 msgstr ""
 
-#: includes/eme-options.php:3497
+#: includes/eme-options.php:3499
 msgid "Choose the default thumbnail size to be shown when using placeholders involving thumbnails like e.g. #_EVENTIMAGETHUMB, #_LOCATIONIMAGETHUMB, ..."
 msgstr ""
 
-#: includes/eme-options.php:3498
+#: includes/eme-options.php:3500
 msgid "Use external url for single events or locations?"
 msgstr ""
 
-#: includes/eme-options.php:3498
+#: includes/eme-options.php:3500
 msgid "If selected, clicking on the single event or location url for details will go to the defined external url for that event or location if present."
 msgstr ""
 
-#: includes/eme-options.php:3499
+#: includes/eme-options.php:3501
 msgid "EME backend date format"
 msgstr ""
 
-#: includes/eme-options.php:3499
+#: includes/eme-options.php:3501
 msgid "The date format used in EME tables. Leave this empty to use the WordPress settings."
 msgstr ""
 
-#: includes/eme-options.php:3499
-#: includes/eme-options.php:3500
+#: includes/eme-options.php:3501
+#: includes/eme-options.php:3502
 msgid "Documentation on date and time formatting."
 msgstr ""
 
-#: includes/eme-options.php:3500
+#: includes/eme-options.php:3502
 msgid "EME backend time format"
 msgstr ""
 
-#: includes/eme-options.php:3500
+#: includes/eme-options.php:3502
 msgid "The time format used in EME tables. Leave this empty to use the WordPress settings."
 msgstr ""
 
-#: includes/eme-options.php:3508
+#: includes/eme-options.php:3510
 msgid "PDF font"
 msgstr ""
 
-#: includes/eme-options.php:3508
+#: includes/eme-options.php:3510
 msgid "Set the font to be used in generated PDF files. Sometimes you need to use a different font because not all characters might be defined in the current selected font."
 msgstr ""
 
-#: includes/eme-options.php:3509
+#: includes/eme-options.php:3511
 msgid "EME DB version"
 msgstr ""
 
-#: includes/eme-options.php:3509
+#: includes/eme-options.php:3511
 msgid "This is the current EME database version, you can use this to put the version back to an older version; upon saving EME will then redo the missed database upgrades from that version onwards if they didn't happen correctly and reset the value to the latest version. In any normal situation, you never need to change this value."
 msgstr ""
 
-#: includes/eme-options.php:3511
+#: includes/eme-options.php:3513
 msgid "HTML Editor"
 msgstr ""
 
-#: includes/eme-options.php:3514
+#: includes/eme-options.php:3516
 msgid "TinyMCE"
 msgstr ""
 
-#: includes/eme-options.php:3515
+#: includes/eme-options.php:3517
 msgid "Jodit"
 msgstr ""
 
-#: includes/eme-options.php:3517
+#: includes/eme-options.php:3519
 msgid "The HTML editor used by the plugin."
 msgstr ""
 
-#: includes/eme-options.php:3522
-#: includes/eme-options.php:3525
+#: includes/eme-options.php:3524
+#: includes/eme-options.php:3527
 msgid "Extra html tags"
 msgstr ""
 
-#: includes/eme-options.php:3525
+#: includes/eme-options.php:3527
 msgid "By default WordPress is strict in what html tags and attributes are allowed. You can here add a list of tags+attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one tag per line, followed by its optional attributes, all seperated by \",\". As an example, to allow the iframe tag and some attributes, you would add: \"iframe,src,height,width,frameborder\" "
 msgstr ""
 
-#: includes/eme-options.php:3526
+#: includes/eme-options.php:3528
 msgid "Extra style attributes"
 msgstr ""
 
-#: includes/eme-options.php:3526
+#: includes/eme-options.php:3528
 msgid "While the setting above allows you to add extra html tags and attributes, WordPress is even more strict concerning attributes allowed in the style tag. You can here add a list of extra style attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one attribute per line. As an example, to allow the visibility attribute for the style tag, you would add: \"visbility\" "
 msgstr ""
 
-#: includes/eme-options.php:3529
+#: includes/eme-options.php:3531
 msgid "Extra html headers"
 msgstr ""
 
-#: includes/eme-options.php:3532
+#: includes/eme-options.php:3534
 msgid "Extra html header"
 msgstr ""
 
-#: includes/eme-options.php:3532
+#: includes/eme-options.php:3534
 msgid "Here you can define extra html headers, no placeholders can be used."
 msgstr ""
 
-#: includes/eme-options.php:3533
+#: includes/eme-options.php:3535
 msgid "Extra html footer"
 msgstr ""
 
-#: includes/eme-options.php:3533
+#: includes/eme-options.php:3535
 msgid "Here you can define extra html footer, no placeholders can be used."
 msgstr ""
 
-#: includes/eme-options.php:3534
+#: includes/eme-options.php:3536
 msgid "Extra event html headers"
 msgstr ""
 
-#: includes/eme-options.php:3534
+#: includes/eme-options.php:3536
 msgid "Here you can define extra html headers when viewing a single event, typically used to add meta tags for facebook or SEO. All event placeholders can be used, but will be stripped from resulting html."
 msgstr ""
 
-#: includes/eme-options.php:3535
+#: includes/eme-options.php:3537
 msgid "Extra location html headers"
 msgstr ""
 
-#: includes/eme-options.php:3535
+#: includes/eme-options.php:3537
 msgid "Here you can define extra html headers when viewing a single location, typically used to add meta tags for facebook or SEO. All location placeholders can be used, but will be stripped from resulting html."
 msgstr ""
 
-#: includes/eme-options.php:3538
+#: includes/eme-options.php:3540
 msgid "Multisite options"
 msgstr ""
 
-#: includes/eme-options.php:3541
+#: includes/eme-options.php:3543
 msgid "Activate multisite data sharing?"
 msgstr ""
 
-#: includes/eme-options.php:3541
+#: includes/eme-options.php:3543
 msgid "If selected and WordPress multisite is active, this EME instance will use the database tables of the main multisite instance. This will cause all events, locations, bookings, memberships, templates etc ... to be shared with the main site. The only thing that remains local are all the EME options, allowing you to make language subsites or other things. Also be aware of planned actions: those will only be executed based on the options set in the main site, not per subsite. If you do not want to share data amongst subsites, this option is not needed."
 msgstr ""
 
-#: includes/eme-options.php:3553
+#: includes/eme-options.php:3555
 msgid "Save Changes"
 msgstr ""
 

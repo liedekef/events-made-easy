@@ -649,44 +649,44 @@ msgstr "Nepodařilo se vypočítat trasu"
 msgid "Address not found"
 msgstr "Adresa nebyla nalezena"
 
-#: includes/eme-options.php:3479
+#: includes/eme-options.php:3481
 msgid "Regenerate signatures"
 msgstr "Znovu vygenerovat podpisy"
 
-#: includes/eme-options.php:3476
+#: includes/eme-options.php:3478
 msgid "I have verified the file hashes above and confirm regenerating signatures."
 msgstr "Ověřil(a) jsem výše uvedené hashe souborů a potvrzuji obnovení podpisů."
 
-#: includes/eme-options.php:3471
+#: includes/eme-options.php:3473
 msgid "No extension files found in the includes directory."
 msgstr "V adresáři includes nebyly nalezeny žádné soubory rozšíření."
 
-#: includes/eme-options.php:3463
+#: includes/eme-options.php:3465
 msgid "Mismatch"
 msgstr "Neshoda"
 
-#: includes/eme-options.php:3461
+#: includes/eme-options.php:3463
 msgid "Match"
 msgstr "Shoda"
 
-#: includes/eme-options.php:3459
+#: includes/eme-options.php:3461
 msgid "Not registered"
 msgstr "Neregistrováno"
 
-#: includes/eme-options.php:3447
+#: includes/eme-options.php:3449
 msgid "SHA256 (on disk)"
 msgstr "SHA256 (na disku)"
 
-#: includes/eme-options.php:3446
+#: includes/eme-options.php:3448
 msgid "Current SHA256 (stored)"
 msgstr "Aktuální SHA256 (uložený)"
 
-#: includes/eme-options.php:3437
+#: includes/eme-options.php:3439
 msgid "Manage Events Made Easy extension files located in the uploads includes directory."
 msgstr "Spravujte soubory rozšíření Events Made Easy umístěné v adresáři uploads/includes."
 
 #: includes/eme-options.php:1399
-#: includes/eme-options.php:3436
+#: includes/eme-options.php:3438
 msgid "Extensions"
 msgstr "Rozšíření"
 
@@ -1096,146 +1096,146 @@ msgstr "Odeslání události %s"
 msgid "Bancontact Pay - Wero"
 msgstr "Bancontact Pay - Wero"
 
-#: includes/eme-options.php:3517
+#: includes/eme-options.php:3519
 msgid "The HTML editor used by the plugin."
 msgstr "HTML editor používaný pluginem."
 
-#: includes/eme-options.php:3515
+#: includes/eme-options.php:3517
 msgid "Jodit"
 msgstr "Jodit"
 
-#: includes/eme-options.php:3514
+#: includes/eme-options.php:3516
 msgid "TinyMCE"
 msgstr "TinyMCE"
 
-#: includes/eme-options.php:3511
+#: includes/eme-options.php:3513
 msgid "HTML Editor"
 msgstr "HTML editor"
 
-#: includes/eme-options.php:3499
-#: includes/eme-options.php:3500
+#: includes/eme-options.php:3501
+#: includes/eme-options.php:3502
 msgid "Documentation on date and time formatting."
 msgstr "Dokumentace k formátování data a času."
 
-#: includes/eme-options.php:3490
+#: includes/eme-options.php:3492
 msgid "CSV delimiter"
 msgstr "Oddělovač CSV"
 
-#: includes/eme-options.php:3417
+#: includes/eme-options.php:3419
 msgid "The default form format for submitting a new event."
 msgstr "Výchozí formát formuláře pro odesílání nové události."
 
-#: includes/eme-options.php:3417
+#: includes/eme-options.php:3419
 msgid "Default form format"
 msgstr "Výchozí formát formuláře"
 
-#: includes/eme-options.php:3416
+#: includes/eme-options.php:3418
 msgid "Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes."
 msgstr "Zaškrtněte tuto možnost, pokud chcete povolit nahrávání obrázků ve wysiwyg editoru na frontendu pro poznámky k události."
 
-#: includes/eme-options.php:3416
+#: includes/eme-options.php:3418
 msgid "Allow image upload?"
 msgstr "Povolit nahrávání obrázků?"
 
-#: includes/eme-options.php:3415
+#: includes/eme-options.php:3417
 msgid "Check this option if you want to use a frontend wysiwyg editor for the event notes."
 msgstr "Zaškrtněte tuto možnost, pokud chcete pro poznámky k události použít wysiwyg editor na frontendu."
 
-#: includes/eme-options.php:3415
+#: includes/eme-options.php:3417
 msgid "Use wysiwyg?"
 msgstr "Použít wysiwyg?"
 
 #. translators: %s is the default capability name
-#: includes/eme-options.php:3410
+#: includes/eme-options.php:3412
 msgid "Permission needed to submit a new event when guest submit is not allowed. Default: %s"
 msgstr "Oprávnění potřebné pro odeslání nové události, pokud odesílání hosty není povoleno. Výchozí: %s"
 
 #. translators: %s is the default capability name
-#: includes/eme-options.php:3410
+#: includes/eme-options.php:3412
 msgid "Access right to submit new events"
 msgstr "Přístupové právo pro odesílání nových událostí"
 
-#: includes/eme-options.php:3408
+#: includes/eme-options.php:3410
 msgid "Check this option if you want the submitter to be redirected to the login page if not logged in (or does not have the needed access rights) and guests are not allowed to submit new events."
 msgstr "Zaškrtněte tuto možnost, pokud chcete, aby byl odesílatel přesměrován na přihlašovací stránku, pokud není přihlášen (nebo nemá potřebná přístupová práva) a hosté nemají povoleno odesílat nové události."
 
-#: includes/eme-options.php:3408
+#: includes/eme-options.php:3410
 msgid "Redirect to login page"
 msgstr "Přesměrovat na přihlašovací stránku"
 
-#: includes/eme-options.php:3407
+#: includes/eme-options.php:3409
 msgid "The text shown to a guest when trying to submit a new event when they are not allowed to do so and the option to redirect to the login page is not set."
 msgstr "Text zobrazený hostovi při pokusu o odeslání nové události, pokud to nemá povoleno a není nastavena možnost přesměrování na přihlašovací stránku."
 
-#: includes/eme-options.php:3407
+#: includes/eme-options.php:3409
 msgid "Guests not allowed text"
 msgstr "Text pro nepovolené hosty"
 
-#: includes/eme-options.php:3406
+#: includes/eme-options.php:3408
 msgid "Check this option if you want to always show the success message even if the person submitting the event has the right to see the newly submitted event. This also means no redirection will happen."
 msgstr "Zaškrtněte tuto možnost, pokud chcete vždy zobrazit zprávu o úspěchu, i když odesílatel události má právo vidět nově odeslanou událost. To zároveň znamená, že nedojde k žádnému přesměrování."
 
-#: includes/eme-options.php:3406
+#: includes/eme-options.php:3408
 msgid "Always show success message"
 msgstr "Vždy zobrazit zprávu o úspěchu"
 
-#: includes/eme-options.php:3405
+#: includes/eme-options.php:3407
 msgid "Indicate in seconds how many seconds to wait before redirecting to the newly created event after showing the success message. If 0, the success message will not be shown and the redirect will happen immediately."
 msgstr "Uveďte v sekundách, jak dlouho čekat před přesměrováním na nově vytvořenou událost po zobrazení zprávy o úspěchu. Pokud je 0, zpráva o úspěchu se nezobrazí a přesměrování proběhne okamžitě."
 
-#: includes/eme-options.php:3404
+#: includes/eme-options.php:3406
 msgid "The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. The message is also shown if the event submission needs to be paid for and the redirection wait period (setting below this one) is not 0. This message can contain all event placeholders."
 msgstr "Zpráva zobrazená po úspěšném odeslání nové události, pokud odesílatel nemá právo vidět nově odeslanou událost. Tato zpráva se zobrazí i tehdy, když je třeba odeslání události zaplatit a doba čekání na přesměrování (nastavení níže) není 0. Tato zpráva může obsahovat všechny zástupné symboly události."
 
-#: includes/eme-options.php:3404
+#: includes/eme-options.php:3406
 msgid "Success Message"
 msgstr "Zpráva o úspěchu"
 
-#: includes/eme-options.php:3403
+#: includes/eme-options.php:3405
 msgid "Check this option if you want guests also to be able to add new events."
 msgstr "Zaškrtněte tuto možnost, pokud chcete, aby mohli přidávat nové události i hosté."
 
-#: includes/eme-options.php:3403
+#: includes/eme-options.php:3405
 msgid "Allow guest submit?"
 msgstr "Povolit odesílání hosty?"
 
-#: includes/eme-options.php:3402
+#: includes/eme-options.php:3404
 msgid "Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations."
 msgstr "Zaškrtněte tuto možnost, pokud chcete, aby bylo umístění vždy vytvořeno, i když uživatel nemá v EME nastavené potřebné oprávnění k vytváření umístění."
 
-#: includes/eme-options.php:3402
+#: includes/eme-options.php:3404
 msgid "Force location creation?"
 msgstr "Vynutit vytvoření umístění?"
 
-#: includes/eme-options.php:3401
+#: includes/eme-options.php:3403
 msgid "The default category assigned to an event if nothing is selected in the form."
 msgstr "Výchozí kategorie přiřazená události, pokud ve formuláři není nic vybráno."
 
-#: includes/eme-options.php:3401
+#: includes/eme-options.php:3403
 msgid "Default category for new event"
 msgstr "Výchozí kategorie pro novou událost"
 
-#: includes/eme-options.php:3400
+#: includes/eme-options.php:3402
 msgid "No contact"
 msgstr "Bez kontaktu"
 
-#: includes/eme-options.php:3400
+#: includes/eme-options.php:3402
 msgid "Select the contact person that will receive email notifications whenever an event gets submitted or paid for. The mail templates are to be configured in the regular mail templates section."
 msgstr "Vyberte kontaktní osobu, která bude dostávat e-mailová oznámení při odeslání nebo zaplacení události. Šablony e-mailů se nastavují v sekci běžných šablon e-mailů."
 
-#: includes/eme-options.php:3396
+#: includes/eme-options.php:3398
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "Platební metoda(y), která bude použita, pokud je nutné zaplatit za odeslané události. Toto nesouvisí s nastavením RSVP uvnitř samotné odeslané události!"
 
-#: includes/eme-options.php:3395
+#: includes/eme-options.php:3397
 msgid "The currency used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "Měna použitá, pokud je nutné zaplatit za odeslané události. Toto nesouvisí s nastavením RSVP uvnitř samotné odeslané události!"
 
-#: includes/eme-options.php:3394
+#: includes/eme-options.php:3396
 msgid "The price to pay in order to submit a new event. Leave empty or 0 if no price is to be paid. This is not related to RSVP settings inside the submitted event itself! Configure the optional payment form header/footer sections in the EME Payment settings."
 msgstr "Cena, kterou je třeba zaplatit za odeslání nové události. Ponechte prázdné nebo 0, pokud se platba nevyžaduje. Toto nesouvisí s nastavením RSVP uvnitř samotné odeslané události! Volitelné sekce záhlaví/zápatí platebního formuláře nastavte v nastavení Plateb EME."
 
-#: includes/eme-options.php:3393
+#: includes/eme-options.php:3395
 msgid "The status for a newly submitted event."
 msgstr "Stav nově zadané události."
 
@@ -1979,15 +1979,15 @@ msgstr "Zaškrtněte prosím políčko Friendly Captcha"
 msgid "Please check the Cloudflare Turnstile box"
 msgstr "Zaškrtněte prosím políčko Cloudflare Turnstile"
 
-#: includes/eme-fs.php:750
+#: includes/eme-fs.php:758
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr "Datum/čas konce musí nastat <strong>po</strong> datu/čase začátku"
 
-#: includes/eme-fs.php:722
+#: includes/eme-fs.php:731
 msgid "Enter the event's start date"
 msgstr "Zadejte datum začátku události"
 
-#: includes/eme-fs.php:651
+#: includes/eme-fs.php:659
 #: includes/eme-options.php:606
 msgid "New event succesfully created."
 msgstr "Nová událost byla úspěšně vytvořena."
@@ -1997,7 +1997,7 @@ msgid "Create event"
 msgstr "Vytvořit událost"
 
 #: includes/eme-fs.php:174
-#: includes/eme-fs.php:907
+#: includes/eme-fs.php:927
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr "Je nám líto, ale nemáte oprávnění odesílat nové události."
 
@@ -2199,7 +2199,7 @@ msgstr "Použít captcha pouze pro odhlášené uživatele?"
 
 #: includes/eme-events.php:8446
 #: includes/eme-members.php:2155
-#: includes/eme-options.php:3414
+#: includes/eme-options.php:3416
 msgid "Select a captcha to use"
 msgstr "Vyberte captchu k použití"
 
@@ -2647,11 +2647,11 @@ msgstr "Neimportováno (pole %1$s není platné): %2$s"
 msgid "Import finished: %1$d inserts, %2$d updates, %3$d errors"
 msgstr "Import dokončen: %1$d vloženo, %2$d aktualizováno, %3$d chyb"
 
-#: includes/eme-options.php:3533
+#: includes/eme-options.php:3535
 msgid "Here you can define extra html footer, no placeholders can be used."
 msgstr "Zde můžete definovat další HTML patičku, nelze použít žádné zástupné symboly."
 
-#: includes/eme-options.php:3532
+#: includes/eme-options.php:3534
 msgid "Here you can define extra html headers, no placeholders can be used."
 msgstr "Zde můžete definovat další HTML záhlaví, nelze použít žádné zástupné symboly."
 
@@ -2904,15 +2904,15 @@ msgstr "Duplikovat tuto šablonu"
 msgid "Leave empty to send the mail immediately"
 msgstr "Ponechte prázdné pro okamžité odeslání e-mailu"
 
-#: includes/eme-options.php:3541
+#: includes/eme-options.php:3543
 msgid "If selected and WordPress multisite is active, this EME instance will use the database tables of the main multisite instance. This will cause all events, locations, bookings, memberships, templates etc ... to be shared with the main site. The only thing that remains local are all the EME options, allowing you to make language subsites or other things. Also be aware of planned actions: those will only be executed based on the options set in the main site, not per subsite. If you do not want to share data amongst subsites, this option is not needed."
 msgstr "Pokud je vybráno a je aktivní WordPress multisite, tato instance EME bude používat databázové tabulky hlavní instance multisite. To způsobí, že všechny události, umístění, rezervace, členství, šablony atd. budou sdíleny s hlavním webem. Lokální zůstanou pouze všechny volby EME, což umožňuje vytvářet jazykové podweby nebo jiné věci. Pozor také na plánované akce: ty se budou provádět pouze na základě nastavení hlavního webu, nikoli podle jednotlivých podwebů. Pokud nechcete sdílet data mezi podweby, tato možnost není potřeba."
 
-#: includes/eme-options.php:3541
+#: includes/eme-options.php:3543
 msgid "Activate multisite data sharing?"
 msgstr "Aktivovat sdílení dat multisite?"
 
-#: includes/eme-options.php:3538
+#: includes/eme-options.php:3540
 msgid "Multisite options"
 msgstr "Nastavení multisite"
 
@@ -2937,19 +2937,19 @@ msgstr "Sdílení dat multisite je pro EME aktivováno, možnost „%s“ použi
 msgid "EME multisite data sharing is active, this instance will not do any planned actions. All planned actions will be executed from the main site."
 msgstr "Sdílení dat multisite EME je aktivní, tato instance nebude provádět žádné plánované akce. Všechny plánované akce budou provedeny z hlavního webu."
 
-#: includes/eme-options.php:3496
+#: includes/eme-options.php:3498
 msgid "By default, the text shown for the second address line is 'Address line 2', but this might not be very informative to people, so feel free to put something else here, like 'house number'"
 msgstr "Ve výchozím nastavení se pro druhý řádek adresy zobrazuje text „Adresa – řádek 2“, ale to nemusí lidem příliš pomoci, takže sem klidně napište něco jiného, například „číslo domu“"
 
-#: includes/eme-options.php:3496
+#: includes/eme-options.php:3498
 msgid "Address line 2 text"
 msgstr "Text pro druhý řádek adresy"
 
-#: includes/eme-options.php:3495
+#: includes/eme-options.php:3497
 msgid "By default, the text shown for the first address line is 'Address line 1', but this might not be very informative to people, so feel free to put something else here, like 'street name'"
 msgstr "Ve výchozím nastavení se pro první řádek adresy zobrazuje text „Adresa – řádek 1“, ale to nemusí lidem příliš pomoci, takže sem klidně napište něco jiného, například „název ulice“"
 
-#: includes/eme-options.php:3495
+#: includes/eme-options.php:3497
 msgid "Address line 1 text"
 msgstr "Text pro první řádek adresy"
 
@@ -4456,19 +4456,19 @@ msgstr "Platba proběhla v pořádku"
 msgid "Invalid URL"
 msgstr "Neplatná URL adresa"
 
-#: includes/eme-options.php:3500
+#: includes/eme-options.php:3502
 msgid "The time format used in EME tables. Leave this empty to use the WordPress settings."
 msgstr "Formát času používaný v tabulkách EME. Ponechte prázdné pro použití nastavení WordPressu."
 
-#: includes/eme-options.php:3500
+#: includes/eme-options.php:3502
 msgid "EME backend time format"
 msgstr "Formát času v administraci EME"
 
-#: includes/eme-options.php:3499
+#: includes/eme-options.php:3501
 msgid "The date format used in EME tables. Leave this empty to use the WordPress settings."
 msgstr "Formát data používaný v tabulkách EME. Ponechte prázdné pro použití nastavení WordPressu."
 
-#: includes/eme-options.php:3499
+#: includes/eme-options.php:3501
 msgid "EME backend date format"
 msgstr "Formát data v administraci EME"
 
@@ -4830,7 +4830,7 @@ msgstr "Žádat o informace o rodinných příslušnících při přihlášení"
 #: includes/eme-members.php:2172
 #: includes/eme-members.php:2178
 #: includes/eme-options.php:2799
-#: includes/eme-options.php:3394
+#: includes/eme-options.php:3396
 msgid "Use the point as decimal separator"
 msgstr "Použít tečku jako desetinný oddělovač"
 
@@ -5372,11 +5372,11 @@ msgstr "ID obchodníka Fondy"
 msgid "Fondy"
 msgstr "Fondy"
 
-#: includes/eme-options.php:3526
+#: includes/eme-options.php:3528
 msgid "While the setting above allows you to add extra html tags and attributes, WordPress is even more strict concerning attributes allowed in the style tag. You can here add a list of extra style attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one attribute per line. As an example, to allow the visibility attribute for the style tag, you would add: \"visbility\" "
 msgstr "Zatímco výše uvedené nastavení vám umožňuje přidat další HTML značky a atributy, WordPress je ještě přísnější ohledně atributů povolených ve značce style. Zde můžete přidat seznam dalších stylových atributů, které chcete v nastavení EME povolujících HTML povolit (kromě výchozích, nic se neodstraňuje). Seznam by měl obsahovat jeden atribut na řádek. Chcete-li například povolit atribut visibility pro značku style, přidali byste: „visibility“ "
 
-#: includes/eme-options.php:3526
+#: includes/eme-options.php:3528
 msgid "Extra style attributes"
 msgstr "Další atributy stylu"
 
@@ -5743,11 +5743,11 @@ msgstr "(včetně %d míst na čekacím seznamu)"
 msgid "If you select 'RSVP field', 'People field' or 'Members field', this field will show up as an extra column in the overview table for bookings, people or members. Selecting 'Generic' will cause it to show up in the overview table for bookings or members."
 msgstr "Pokud vyberete „Pole RSVP“, „Pole osoby“ nebo „Pole člena“, toto pole se zobrazí jako další sloupec v přehledové tabulce rezervací, osob nebo členů. Výběrem možnosti „Obecné“ se zobrazí v přehledové tabulce rezervací nebo členů."
 
-#: includes/eme-options.php:3508
+#: includes/eme-options.php:3510
 msgid "Set the font to be used in generated PDF files. Sometimes you need to use a different font because not all characters might be defined in the current selected font."
 msgstr "Nastavte písmo, které se použije ve vygenerovaných PDF souborech. Někdy je třeba použít jiné písmo, protože ne všechny znaky mohou být definovány v aktuálně vybraném písmu."
 
-#: includes/eme-options.php:3508
+#: includes/eme-options.php:3510
 msgid "PDF font"
 msgstr "Písmo PDF"
 
@@ -6117,11 +6117,11 @@ msgstr "Bez omezení"
 msgid "Membership payment page"
 msgstr "Stránka platby za členství"
 
-#: includes/eme-options.php:3493
+#: includes/eme-options.php:3495
 msgid "The timepicker step interval. Defaults to 5-minutes interval (meaning steps of 5 minutes will be taken)"
 msgstr "Interval kroku výběru času. Výchozí je interval 5 minut (tzn. budou použity kroky po 5 minutách)"
 
-#: includes/eme-options.php:3493
+#: includes/eme-options.php:3495
 msgid "Timepicker step interval"
 msgstr "Interval kroku výběru času"
 
@@ -6138,7 +6138,7 @@ msgid "Indicate in seconds how many seconds to wait before redirecting to the pa
 msgstr "Uveďte v sekundách, jak dlouho čekat před přesměrováním na platební stránku."
 
 #: includes/eme-options.php:2802
-#: includes/eme-options.php:3405
+#: includes/eme-options.php:3407
 msgid "Redirect wait period"
 msgstr "Doba čekání na přesměrování"
 
@@ -6527,11 +6527,11 @@ msgstr "Opravte prosím formát RSVP formuláře tak, aby používal #_EMAIL."
 msgid "Your event seems to have multiple price categories, so you can't use #_SEATS (or #_SPACES) in your event RSVP form format. Please correct the RSVP form format to use the #_SEATS{xx} notation."
 msgstr "Vaše událost má zřejmě více cenových kategorií, takže nemůžete použít #_SEATS (nebo #_SPACES) ve formátu RSVP formuláře vaší události. Opravte prosím formát RSVP formuláře tak, aby používal notaci #_SEATS{xx}."
 
-#: includes/eme-options.php:3509
+#: includes/eme-options.php:3511
 msgid "This is the current EME database version, you can use this to put the version back to an older version; upon saving EME will then redo the missed database upgrades from that version onwards if they didn't happen correctly and reset the value to the latest version. In any normal situation, you never need to change this value."
 msgstr "Toto je aktuální verze databáze EME, můžete ji použít k vrácení verze na starší; při uložení EME poté znovu provede vynechané aktualizace databáze od této verze dále, pokud neproběhly správně, a hodnotu vrátí zpět na nejnovější verzi. Za běžných okolností tuto hodnotu nikdy nemusíte měnit."
 
-#: includes/eme-options.php:3509
+#: includes/eme-options.php:3511
 msgid "EME DB version"
 msgstr "Verze databáze EME"
 
@@ -6851,12 +6851,12 @@ msgstr "Vyžadovat, aby byli uživatelé přihlášeni, aby se tato sleva uplatn
 msgid "Logged-in users only"
 msgstr "Pouze přihlášení uživatelé"
 
-#: includes/eme-options.php:3525
+#: includes/eme-options.php:3527
 msgid "By default WordPress is strict in what html tags and attributes are allowed. You can here add a list of tags+attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one tag per line, followed by its optional attributes, all seperated by \",\". As an example, to allow the iframe tag and some attributes, you would add: \"iframe,src,height,width,frameborder\" "
 msgstr "Ve výchozím nastavení je WordPress přísný v tom, jaké HTML značky a atributy jsou povoleny. Zde můžete přidat seznam značek+atributů, které chcete v nastavení EME povolujících HTML povolit (kromě výchozích, nic se neodstraňuje). Seznam by měl obsahovat jednu značku na řádek, následovanou jejími volitelnými atributy, vše oddělené „,“. Chcete-li například povolit značku iframe a některé atributy, přidali byste: „iframe,src,height,width,frameborder“ "
 
-#: includes/eme-options.php:3522
-#: includes/eme-options.php:3525
+#: includes/eme-options.php:3524
+#: includes/eme-options.php:3527
 msgid "Extra html tags"
 msgstr "Další HTML značky"
 
@@ -8477,7 +8477,7 @@ msgstr "Soubor už byl dříve nahraný."
 msgid "File upload is required."
 msgstr "Je potřeba nahrát soubor."
 
-#: includes/eme-options.php:3445
+#: includes/eme-options.php:3447
 msgid "File"
 msgstr "Soubor"
 
@@ -8697,7 +8697,7 @@ msgstr "Heslo pro RSVP"
 msgid "You have been subscribed."
 msgstr "Byl jste úspěšně přihlášen."
 
-#: includes/eme-fs.php:884
+#: includes/eme-fs.php:904
 #: includes/eme-gdpr.php:42
 #: includes/eme-gdpr.php:131
 #: includes/eme-gdpr.php:205
@@ -8819,15 +8819,15 @@ msgstr "ID  plat. brány"
 msgid "Payment GW"
 msgstr "Platební brána"
 
-#: includes/eme-options.php:3488
+#: includes/eme-options.php:3490
 msgid "This allows you to stay on the edit page after saving events, locations, templates, formfields, people, groups or memberships."
 msgstr "Toto vám umožní zůstat na stránce v editoru po uložení události, místa, šablony, pole formuláře, osoby, skupiny nebo člena."
 
-#: includes/eme-options.php:3489
+#: includes/eme-options.php:3491
 msgid "PHP date/time functions have no notation to show minutes without leading zeros. Checking this option will return e.g. 9 for 09 and empty for 00. This setting affects custom time placeholders and also the generic *DATE and *TIME placeholders"
 msgstr "Funkce data/času PHP nemají zápis pro zobrazení minut bez počátečních nul. Zaškrtnutím této možnosti bude vráceno např. 9 pro 09 a prázdné pro 00. Toto nastavení ovlivňuje vlastní zástupné symboly času a také obecné zástupné symboly *DATE a *TIME"
 
-#: includes/eme-options.php:3488
+#: includes/eme-options.php:3490
 msgid "Stay on edit page after save?"
 msgstr "Zůstat po uložení na stránce úprav?"
 
@@ -9743,7 +9743,7 @@ msgstr "Zásilka byla naplánována."
 msgid "Please select a person to send the preview mail to."
 msgstr "Vyberte prosím osobu, které se má odeslat náhledový e-mail."
 
-#: includes/eme-fs.php:719
+#: includes/eme-fs.php:728
 msgid "Please enter a name for the event"
 msgstr "Zadejte prosím název události"
 
@@ -10116,17 +10116,17 @@ msgid "WP Admin"
 msgstr "Administrátor WP"
 
 #: includes/eme-members.php:2200
-#: includes/eme-options.php:3400
+#: includes/eme-options.php:3402
 msgid "Contact person"
 msgstr "Kontaktní osoba"
 
 #: includes/eme-members.php:2182
-#: includes/eme-options.php:3395
+#: includes/eme-options.php:3397
 msgid "Currency"
 msgstr "Měna"
 
 #: includes/eme-members.php:2170
-#: includes/eme-options.php:3394
+#: includes/eme-options.php:3396
 msgid "Price"
 msgstr "Cena"
 
@@ -10943,15 +10943,15 @@ msgstr "Informace o akci"
 msgid "The mail queue has been cleared."
 msgstr "Fronta e-mailů byla vyprázdněna."
 
-#: includes/eme-options.php:3492
+#: includes/eme-options.php:3494
 msgid "This option is not used if the localize price option above is active and the php class NumberFormatter is present."
 msgstr "Tato možnost se nepoužívá, pokud je aktivní výše uvedená možnost lokalizace ceny a je přítomna třída PHP NumberFormatter."
 
-#: includes/eme-options.php:3491
+#: includes/eme-options.php:3493
 msgid "If selected, all prices will be shown in the current locale with the price symbol. If you don't want this, deselect this option to regain the old behavior of localized prices where you need to take care of the decimal accuracy, the currency symbol and it's location yourself. This option only works if the php class NumberFormatter is present, which is always the case in newer php versions but just don't forget to load the INTL extension in php."
 msgstr "Pokud je vybráno, všechny ceny se zobrazí v aktuálním jazykovém prostředí se symbolem ceny. Pokud toto nechcete, zrušte zaškrtnutí této možnosti a obnovte starší chování lokalizovaných cen, kde je třeba se sami postarat o přesnost desetinných míst, symbol měny a jeho umístění. Tato možnost funguje pouze pokud je přítomna třída PHP NumberFormatter, což je vždy případ novějších verzí PHP, jen nezapomeňte v PHP načíst rozšíření INTL."
 
-#: includes/eme-options.php:3491
+#: includes/eme-options.php:3493
 msgid "Localize price"
 msgstr "Lokalizovat cenu"
 
@@ -11054,11 +11054,11 @@ msgstr "Vloženo nové opakování obsahující %d událostí"
 msgid "Filter on start date"
 msgstr "Filtrovat podle data začátku"
 
-#: includes/eme-options.php:3494
+#: includes/eme-options.php:3496
 msgid "The text shown next to a form field when it is a required field"
 msgstr "Text zobrazený u pole formuláře, pokud se jedná o povinné pole"
 
-#: includes/eme-options.php:3494
+#: includes/eme-options.php:3496
 msgid "Required field text"
 msgstr "Text požadovaného pole"
 
@@ -11294,23 +11294,23 @@ msgstr "Nesprávné ID platby."
 msgid "Hash Incorrect"
 msgstr "Nesprávný hash"
 
-#: includes/eme-options.php:3498
+#: includes/eme-options.php:3500
 msgid "If selected, clicking on the single event or location url for details will go to the defined external url for that event or location if present."
 msgstr "Pokud je vybráno, kliknutí na URL adresu jednotlivé události nebo umístění pro podrobnosti přejde na definovanou externí URL adresu pro tuto událost nebo umístění, pokud existuje."
 
-#: includes/eme-options.php:3498
+#: includes/eme-options.php:3500
 msgid "Use external url for single events or locations?"
 msgstr "Použít externí URL adresu pro jednotlivé události nebo umístění?"
 
-#: includes/eme-options.php:3492
+#: includes/eme-options.php:3494
 msgid "EME tries to show the prices in the frontend in the current locale, with the decimals accuracy set here. Defaults to 2."
 msgstr "EME se snaží zobrazovat ceny na frontendu v aktuálním jazykovém prostředí s přesností desetinných míst zde nastavenou. Výchozí je 2."
 
-#: includes/eme-options.php:3492
+#: includes/eme-options.php:3494
 msgid "Decimals accuracy"
 msgstr "Přesnost desetinných míst"
 
-#: includes/eme-options.php:3485
+#: includes/eme-options.php:3487
 msgid "Other settings"
 msgstr "Ostatní nastavení"
 
@@ -11387,7 +11387,7 @@ msgstr "Uživatelé WordPress"
 #: includes/eme-options.php:1571
 #: includes/eme-options.php:2212
 #: includes/eme-options.php:2248
-#: includes/eme-options.php:3414
+#: includes/eme-options.php:3416
 msgid "None"
 msgstr "Žádné"
 
@@ -12203,7 +12203,7 @@ msgstr "Žádná rezervace není spojena s tímto jménem a e-mailem"
 msgid "Booking deleted"
 msgstr "Rezervace zrušena"
 
-#: includes/eme-fs.php:894
+#: includes/eme-fs.php:914
 #: includes/eme-gdpr.php:52
 #: includes/eme-gdpr.php:141
 #: includes/eme-gdpr.php:215
@@ -12449,35 +12449,35 @@ msgstr "Žádost o vícenásobnou rezervaci"
 msgid "Payment handling"
 msgstr "Zpracování plateb"
 
-#: includes/eme-options.php:3553
+#: includes/eme-options.php:3555
 msgid "Save Changes"
 msgstr "Uložit změny"
 
-#: includes/eme-options.php:3535
+#: includes/eme-options.php:3537
 msgid "Here you can define extra html headers when viewing a single location, typically used to add meta tags for facebook or SEO. All location placeholders can be used, but will be stripped from resulting html."
 msgstr "Zde můžete definovat další HTML záhlaví při zobrazení jednotlivého umístění, obvykle se používá k přidání meta tagů pro facebook nebo SEO. Lze použít všechny zástupné symboly umístění, ale budou z výsledného HTML odstraněny."
 
-#: includes/eme-options.php:3535
+#: includes/eme-options.php:3537
 msgid "Extra location html headers"
 msgstr "Další HTML záhlaví umístění"
 
-#: includes/eme-options.php:3534
+#: includes/eme-options.php:3536
 msgid "Here you can define extra html headers when viewing a single event, typically used to add meta tags for facebook or SEO. All event placeholders can be used, but will be stripped from resulting html."
 msgstr "Zde můžete definovat další HTML záhlaví při zobrazení jednotlivé události, obvykle se používá k přidání meta tagů pro facebook nebo SEO. Lze použít všechny zástupné symboly události, ale budou z výsledného HTML odstraněny."
 
-#: includes/eme-options.php:3534
+#: includes/eme-options.php:3536
 msgid "Extra event html headers"
 msgstr "Další HTML záhlaví události"
 
-#: includes/eme-options.php:3533
+#: includes/eme-options.php:3535
 msgid "Extra html footer"
 msgstr "Další HTML patička"
 
-#: includes/eme-options.php:3532
+#: includes/eme-options.php:3534
 msgid "Extra html header"
 msgstr "Další HTML záhlaví"
 
-#: includes/eme-options.php:3529
+#: includes/eme-options.php:3531
 msgid "Extra html headers"
 msgstr "Další HTML záhlaví"
 
@@ -12485,15 +12485,15 @@ msgstr "Další HTML záhlaví"
 msgid "Map options"
 msgstr "Možnosti mapy"
 
-#: includes/eme-options.php:3497
+#: includes/eme-options.php:3499
 msgid "Choose the default thumbnail size to be shown when using placeholders involving thumbnails like e.g. #_EVENTIMAGETHUMB, #_LOCATIONIMAGETHUMB, ..."
 msgstr "Vyberte výchozí velikost náhledu zobrazeného při použití zástupných symbolů zahrnujících náhledy, jako např. #_EVENTIMAGETHUMB, #_LOCATIONIMAGETHUMB, ..."
 
-#: includes/eme-options.php:3497
+#: includes/eme-options.php:3499
 msgid "Thumbnail size"
 msgstr "Velikost náhledu"
 
-#: includes/eme-options.php:3490
+#: includes/eme-options.php:3492
 msgid "Set the delimiter used in CSV exports."
 msgstr "Nastavte oddělovač použitý v exportech CSV."
 
@@ -13527,7 +13527,7 @@ msgstr "Tento obsah se zobrazí těsně nad vaším kódem pro výchozí formát
 msgid "Default event list format header"
 msgstr "Výchozí formát hlavičky seznamu událostí"
 
-#: includes/eme-options.php:3489
+#: includes/eme-options.php:3491
 msgid "Remove leading zeros from minutes?"
 msgstr "Odstranit počáteční nuly z minut?"
 
@@ -13539,7 +13539,7 @@ msgstr "Formát událostí"
 msgid "Initial status for a new event"
 msgstr "Počáteční stav pro novou událost"
 
-#: includes/eme-options.php:3393
+#: includes/eme-options.php:3395
 msgid "Status for new event"
 msgstr "Stav nové události"
 
@@ -14247,7 +14247,7 @@ msgstr "Upravit pole"
 #: includes/eme-options.php:3319
 #: includes/eme-options.php:3342
 #: includes/eme-options.php:3343
-#: includes/eme-options.php:3439
+#: includes/eme-options.php:3441
 msgid "the documentation"
 msgstr "dokumentaci"
 
@@ -14658,7 +14658,7 @@ msgstr "Paypal"
 
 #: includes/eme-events.php:6603
 #: includes/eme-members.php:2359
-#: includes/eme-options.php:3396
+#: includes/eme-options.php:3398
 msgid "Payment methods"
 msgstr "Platební metody"
 
@@ -14990,7 +14990,7 @@ msgstr "Kopírovat"
 #: includes/eme-events.php:9785
 #: includes/eme-members.php:1966
 #: includes/eme-members.php:2091
-#: includes/eme-options.php:3448
+#: includes/eme-options.php:3450
 #: includes/eme-people.php:1059
 #: includes/eme-people.php:1249
 #: includes/eme-people.php:1580
@@ -15052,7 +15052,7 @@ msgstr "Všechny kategorie"
 #: includes/eme-events.php:6299
 #: includes/eme-events.php:6808
 #: includes/eme-events.php:6816
-#: includes/eme-fs.php:624
+#: includes/eme-fs.php:632
 msgid "Event Status"
 msgstr "Stav události"
 
@@ -15197,7 +15197,7 @@ msgid "New event successfully inserted!"
 msgstr "Nová událost vložena!"
 
 #: includes/eme-events.php:653
-#: includes/eme-fs.php:825
+#: includes/eme-fs.php:845
 msgid "Database insert failed!"
 msgstr "Vložení do databáze selhalo!"
 
@@ -15405,7 +15405,7 @@ msgstr "Přidat atribut"
 #: includes/eme-formfields.php:3865
 #: includes/eme-formfields.php:3866
 #: includes/eme-formfields.php:3867
-#: includes/eme-fs.php:640
+#: includes/eme-fs.php:648
 #: includes/eme-gdpr.php:453
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
@@ -15446,7 +15446,7 @@ msgstr "Ne"
 #: includes/eme-formfields.php:3865
 #: includes/eme-formfields.php:3866
 #: includes/eme-formfields.php:3867
-#: includes/eme-fs.php:641
+#: includes/eme-fs.php:649
 #: includes/eme-gdpr.php:453
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
@@ -15621,7 +15621,7 @@ msgstr ""
 msgid "Want to create your own payment gateway? Then create an extension, see "
 msgstr ""
 
-#: includes/eme-options.php:3439
+#: includes/eme-options.php:3441
 msgid "For more info on extensions, see "
 msgstr ""
 

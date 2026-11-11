@@ -1459,7 +1459,7 @@ msgstr "每个座位固定"
 #: includes/eme-formfields.php:3865
 #: includes/eme-formfields.php:3866
 #: includes/eme-formfields.php:3867
-#: includes/eme-fs.php:641
+#: includes/eme-fs.php:649
 #: includes/eme-gdpr.php:453
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
@@ -1500,7 +1500,7 @@ msgstr "是的"
 #: includes/eme-formfields.php:3865
 #: includes/eme-formfields.php:3866
 #: includes/eme-formfields.php:3867
-#: includes/eme-fs.php:640
+#: includes/eme-fs.php:648
 #: includes/eme-gdpr.php:453
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
@@ -1610,7 +1610,7 @@ msgid "Edit Recurrence"
 msgstr "编辑循环"
 
 #: includes/eme-events.php:653
-#: includes/eme-fs.php:825
+#: includes/eme-fs.php:845
 msgid "Database insert failed!"
 msgstr "数据库插入失败!"
 
@@ -2096,7 +2096,7 @@ msgstr "活动名称"
 #: includes/eme-events.php:6299
 #: includes/eme-events.php:6808
 #: includes/eme-events.php:6816
-#: includes/eme-fs.php:624
+#: includes/eme-fs.php:632
 msgid "Event Status"
 msgstr "活动状态"
 
@@ -2254,7 +2254,7 @@ msgstr "通用的 RSVP 信息"
 
 #: includes/eme-events.php:6603
 #: includes/eme-members.php:2359
-#: includes/eme-options.php:3396
+#: includes/eme-options.php:3398
 msgid "Payment methods"
 msgstr "付款方式"
 
@@ -2395,7 +2395,7 @@ msgstr "删除循环"
 #: includes/eme-events.php:9785
 #: includes/eme-members.php:1966
 #: includes/eme-members.php:2091
-#: includes/eme-options.php:3448
+#: includes/eme-options.php:3450
 #: includes/eme-people.php:1059
 #: includes/eme-people.php:1249
 #: includes/eme-people.php:1580
@@ -3473,7 +3473,7 @@ msgstr "对于多价格活动，用 “||” 分隔数值"
 #: includes/eme-members.php:2172
 #: includes/eme-members.php:2178
 #: includes/eme-options.php:2799
-#: includes/eme-options.php:3394
+#: includes/eme-options.php:3396
 msgid "Use the point as decimal separator"
 msgstr "使用点作为小数点的分隔符"
 
@@ -5010,7 +5010,7 @@ msgstr "关于表格字段的更多信息，请参见"
 #: includes/eme-options.php:3319
 #: includes/eme-options.php:3342
 #: includes/eme-options.php:3343
-#: includes/eme-options.php:3439
+#: includes/eme-options.php:3441
 msgid "the documentation"
 msgstr "文档"
 
@@ -5709,7 +5709,7 @@ msgstr "上传文件时遇到的错误"
 msgid "No such record"
 msgstr "没有这样的记录"
 
-#: includes/eme-fs.php:884
+#: includes/eme-fs.php:904
 #: includes/eme-gdpr.php:42
 #: includes/eme-gdpr.php:131
 #: includes/eme-gdpr.php:205
@@ -5724,7 +5724,7 @@ msgstr "没有这样的记录"
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "检测到机器人。如果您认为您收到这个消息是错误的，请联系网站所有者。"
 
-#: includes/eme-fs.php:894
+#: includes/eme-fs.php:914
 #: includes/eme-gdpr.php:52
 #: includes/eme-gdpr.php:141
 #: includes/eme-gdpr.php:215
@@ -7058,7 +7058,7 @@ msgid "This will create a WP user after the membership signup is completed, as i
 msgstr "这将在会员注册完成后创建一个 WP 用户，就像这个人在 WP 本身注册一样。这只会在注册的人没有登录，并且电子邮件还没有被其他 WP 用户占用的情况下创建一个用户。"
 
 #: includes/eme-members.php:2170
-#: includes/eme-options.php:3394
+#: includes/eme-options.php:3396
 msgid "Price"
 msgstr "价格"
 
@@ -7067,7 +7067,7 @@ msgid "Extra charge for new members"
 msgstr "对新成员的额外收费"
 
 #: includes/eme-members.php:2182
-#: includes/eme-options.php:3395
+#: includes/eme-options.php:3397
 msgid "Currency"
 msgstr "货币"
 
@@ -7076,7 +7076,7 @@ msgid "The price you indicate for memberships is VAT included, special placehold
 msgstr "您所表示的会员资格价格是包含增值税的，可以预见特殊的占位符表示不含增值税的价格。"
 
 #: includes/eme-members.php:2200
-#: includes/eme-options.php:3400
+#: includes/eme-options.php:3402
 msgid "Contact person"
 msgstr "联系人"
 
@@ -8473,7 +8473,7 @@ msgstr "自动完成来源"
 #: includes/eme-options.php:1571
 #: includes/eme-options.php:2212
 #: includes/eme-options.php:2248
-#: includes/eme-options.php:3414
+#: includes/eme-options.php:3416
 msgid "None"
 msgstr "无"
 
@@ -10676,7 +10676,7 @@ msgid "Select yes to redirect to the payment page after a successfull booking or
 msgstr "选择 \"是\"，在成功预订或注册会籍后重定向到支付页面，选择 \"否\"，在内部显示支付页面。建议把这个选项设为 \"是\"，这样人们就可以使用浏览器中的后退按钮回到付款页面。"
 
 #: includes/eme-options.php:2802
-#: includes/eme-options.php:3405
+#: includes/eme-options.php:3407
 msgid "Redirect wait period"
 msgstr "重定向等待期"
 
@@ -11416,91 +11416,91 @@ msgstr "默认地点气球格式"
 msgid "The format of the text appearing in the balloon describing the location in the map."
 msgstr "出现在气球中的文字格式，描述地图中的地点。"
 
-#: includes/eme-options.php:3485
+#: includes/eme-options.php:3487
 msgid "Other settings"
 msgstr "其他设置"
 
-#: includes/eme-options.php:3488
+#: includes/eme-options.php:3490
 msgid "Stay on edit page after save?"
 msgstr "保存后停留在编辑页面上？"
 
-#: includes/eme-options.php:3488
+#: includes/eme-options.php:3490
 msgid "This allows you to stay on the edit page after saving events, locations, templates, formfields, people, groups or memberships."
 msgstr "这允许您在保存活动、地点、模板、表格字段、人员、群组或会籍资格后，留在编辑页面上。"
 
-#: includes/eme-options.php:3489
+#: includes/eme-options.php:3491
 msgid "Remove leading zeros from minutes?"
 msgstr "移除分钟中的前导零？"
 
-#: includes/eme-options.php:3489
+#: includes/eme-options.php:3491
 msgid "PHP date/time functions have no notation to show minutes without leading zeros. Checking this option will return e.g. 9 for 09 and empty for 00. This setting affects custom time placeholders and also the generic *DATE and *TIME placeholders"
 msgstr "PHP 日期或时间函数没有显示不带前导零的分钟的符号。勾选此选项将返回例如 9 代表 09，空代表 00。该设置影响自定义时间占位符，也影响通用的 *DATE 和 *TIME 占位符。"
 
-#: includes/eme-options.php:3491
+#: includes/eme-options.php:3493
 msgid "Localize price"
 msgstr "本土化的价格"
 
-#: includes/eme-options.php:3491
+#: includes/eme-options.php:3493
 msgid "If selected, all prices will be shown in the current locale with the price symbol. If you don't want this, deselect this option to regain the old behavior of localized prices where you need to take care of the decimal accuracy, the currency symbol and it's location yourself. This option only works if the php class NumberFormatter is present, which is always the case in newer php versions but just don't forget to load the INTL extension in php."
 msgstr "如果选择了这个选项，所有的价格都会在当前的地区显示，并带有价格符号。如果您不希望这样，请取消选择这个选项，以恢复旧的本地化价格的行为，您需要自己处理小数点的准确性，货币符号和它的位置。这个选项只有在 php 类 NumberFormatter 存在的情况下才起作用，在较新的 php 版本中总是这样，但不要忘记在 php 中加载 INTL 延展。"
 
-#: includes/eme-options.php:3492
+#: includes/eme-options.php:3494
 msgid "Decimals accuracy"
 msgstr "小数的准确性"
 
-#: includes/eme-options.php:3492
+#: includes/eme-options.php:3494
 msgid "EME tries to show the prices in the frontend in the current locale, with the decimals accuracy set here. Defaults to 2."
 msgstr "EME 试图在前台显示当前地区的价格，小数点的精确度在此设置。默认值为 2。"
 
-#: includes/eme-options.php:3492
+#: includes/eme-options.php:3494
 msgid "This option is not used if the localize price option above is active and the php class NumberFormatter is present."
 msgstr "如果上面的价格本地化选项处于激活状态，并且存在 php 类 NumberFormatter，则该选项不使用。"
 
-#: includes/eme-options.php:3493
+#: includes/eme-options.php:3495
 msgid "Timepicker step interval"
 msgstr "时间选择器的步骤间隔"
 
-#: includes/eme-options.php:3493
+#: includes/eme-options.php:3495
 msgid "The timepicker step interval. Defaults to 5-minutes interval (meaning steps of 5 minutes will be taken)"
 msgstr "定时器的步长间隔。默认为 5 分钟的间隔（意味着将采取 5 分钟的步骤）。"
 
-#: includes/eme-options.php:3494
+#: includes/eme-options.php:3496
 msgid "Required field text"
 msgstr "必要的字段文本"
 
-#: includes/eme-options.php:3494
+#: includes/eme-options.php:3496
 msgid "The text shown next to a form field when it is a required field"
 msgstr "当表格字段为必填字段时，显示在其旁边的文本。"
 
-#: includes/eme-options.php:3495
+#: includes/eme-options.php:3497
 msgid "Address line 1 text"
 msgstr "地址第 1 行文本"
 
-#: includes/eme-options.php:3495
+#: includes/eme-options.php:3497
 msgid "By default, the text shown for the first address line is 'Address line 1', but this might not be very informative to people, so feel free to put something else here, like 'street name'"
 msgstr "默认情况下，第一行地址显示的文本是 \"地址第 1 行\"，但这可能对人们来说信息量不大，所以可以随意在这里放些别的东西，比如 \"街道名称\"。"
 
-#: includes/eme-options.php:3496
+#: includes/eme-options.php:3498
 msgid "Address line 2 text"
 msgstr "地址第 2 行文本"
 
-#: includes/eme-options.php:3496
+#: includes/eme-options.php:3498
 msgid "By default, the text shown for the second address line is 'Address line 2', but this might not be very informative to people, so feel free to put something else here, like 'house number'"
 msgstr "默认情况下，第二个地址行显示的文本是 \"地址第 2 行\"，但这可能对人们来说信息量不大，所以请随意在这里放一些其他东西，如 \"门牌号\"。"
 
-#: includes/eme-options.php:3497
+#: includes/eme-options.php:3499
 msgid "Thumbnail size"
 msgstr "缩略图大小"
 
-#: includes/eme-options.php:3497
+#: includes/eme-options.php:3499
 msgid "Choose the default thumbnail size to be shown when using placeholders involving thumbnails like e.g. #_EVENTIMAGETHUMB, #_LOCATIONIMAGETHUMB, ..."
 msgstr "当使用涉及缩略图的占位符（如 #_EVENTIMAGETHUMB, #_LOCATIONIMAGETHUMB, ...）时，选择默认的缩略图尺寸来显示。"
 
-#: includes/eme-options.php:3498
+#: includes/eme-options.php:3500
 msgid "Use external url for single events or locations?"
 msgstr "对单个活动或地点使用外部网址？"
 
-#: includes/eme-options.php:3498
+#: includes/eme-options.php:3500
 msgid "If selected, clicking on the single event or location url for details will go to the defined external url for that event or location if present."
 msgstr "如果选择了，点击单个活动或地点的网址了解详情，将转到该活动或地点的定义的外部网址（如果存在）。"
 
@@ -11516,104 +11516,104 @@ msgstr "将生日电子邮件限制在活跃会员的身上？"
 msgid "If selected and birthday emails are to be send, only persons with an active membership will get a birthday email."
 msgstr "如果选择并发送生日电子邮件，只有拥有活跃会员资格的人才会收到生日电子邮件。"
 
-#: includes/eme-options.php:3499
+#: includes/eme-options.php:3501
 msgid "EME backend date format"
 msgstr "EME 后端的日期格式"
 
-#: includes/eme-options.php:3499
+#: includes/eme-options.php:3501
 msgid "The date format used in EME tables. Leave this empty to use the WordPress settings."
 msgstr "EME表格中使用的日期格式。留空以使用WordPress设置。"
 
-#: includes/eme-options.php:3500
+#: includes/eme-options.php:3502
 msgid "EME backend time format"
 msgstr "EME 后端的时间格式"
 
-#: includes/eme-options.php:3500
+#: includes/eme-options.php:3502
 msgid "The time format used in EME tables. Leave this empty to use the WordPress settings."
 msgstr "EME表格中使用的时间格式。留空以使用WordPress设置。"
 
-#: includes/eme-options.php:3508
+#: includes/eme-options.php:3510
 msgid "PDF font"
 msgstr "PDF 字体"
 
-#: includes/eme-options.php:3508
+#: includes/eme-options.php:3510
 msgid "Set the font to be used in generated PDF files. Sometimes you need to use a different font because not all characters might be defined in the current selected font."
 msgstr "设置生成的 PDF 文件中使用的字体。有时您需要使用不同的字体，因为不是所有的字符都可能被定义在当前选定的字体中。"
 
-#: includes/eme-options.php:3509
+#: includes/eme-options.php:3511
 msgid "EME DB version"
 msgstr "EME 数据库版本"
 
-#: includes/eme-options.php:3509
+#: includes/eme-options.php:3511
 msgid "This is the current EME database version, you can use this to put the version back to an older version; upon saving EME will then redo the missed database upgrades from that version onwards if they didn't happen correctly and reset the value to the latest version. In any normal situation, you never need to change this value."
 msgstr "这是当前 EME 数据库的版本，您可以用它把版本放回一个较早的版本；保存后，EME 将从该版本开始重做错过的数据库升级，如果它们没有正确发生，并将该值重置为最新版本。在任何正常情况下，您都不需要改变这个值。"
 
-#: includes/eme-options.php:3522
-#: includes/eme-options.php:3525
+#: includes/eme-options.php:3524
+#: includes/eme-options.php:3527
 msgid "Extra html tags"
 msgstr "额外的 HTML 标签"
 
-#: includes/eme-options.php:3525
+#: includes/eme-options.php:3527
 msgid "By default WordPress is strict in what html tags and attributes are allowed. You can here add a list of tags+attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one tag per line, followed by its optional attributes, all seperated by \",\". As an example, to allow the iframe tag and some attributes, you would add: \"iframe,src,height,width,frameborder\" "
 msgstr "默认情况下，WordPress对允许的HTML标签和属性很严格。您可以在此添加要在允许HTML的EME设置中允许的标签+属性列表（除了默认值之外，不会删除任何内容）。列表应每行一个标签，后跟其可选属性，全部用逗号分隔。例如，要允许iframe标签和一些属性，您将添加：\"iframe,src,height,width,frameborder\" "
 
-#: includes/eme-options.php:3526
+#: includes/eme-options.php:3528
 msgid "Extra style attributes"
 msgstr "额外样式的属性"
 
-#: includes/eme-options.php:3526
+#: includes/eme-options.php:3528
 msgid "While the setting above allows you to add extra html tags and attributes, WordPress is even more strict concerning attributes allowed in the style tag. You can here add a list of extra style attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one attribute per line. As an example, to allow the visibility attribute for the style tag, you would add: \"visbility\" "
 msgstr "虽然上面的设置允许您添加额外的HTML标签和属性，但WordPress对style标签中允许的属性更加严格。您可以在此添加要在允许HTML的EME设置中允许的额外style属性列表（除了默认值之外，不会删除任何内容）。列表应每行一个属性。例如，要允许style标签的visibility属性，您将添加：\"visbility\" "
 
-#: includes/eme-options.php:3529
+#: includes/eme-options.php:3531
 msgid "Extra html headers"
 msgstr "额外的 HTML 页头"
 
-#: includes/eme-options.php:3532
+#: includes/eme-options.php:3534
 msgid "Extra html header"
 msgstr "额外的 HTML 页头"
 
-#: includes/eme-options.php:3532
+#: includes/eme-options.php:3534
 msgid "Here you can define extra html headers, no placeholders can be used."
 msgstr "在此可以定义额外的HTML页眉，不能使用占位符。"
 
-#: includes/eme-options.php:3533
+#: includes/eme-options.php:3535
 msgid "Extra html footer"
 msgstr "额外的 HTML 页脚"
 
-#: includes/eme-options.php:3533
+#: includes/eme-options.php:3535
 msgid "Here you can define extra html footer, no placeholders can be used."
 msgstr "在此可以定义额外的HTML页脚，不能使用占位符。"
 
-#: includes/eme-options.php:3534
+#: includes/eme-options.php:3536
 msgid "Extra event html headers"
 msgstr "额外的活动 HTML 页头"
 
-#: includes/eme-options.php:3534
+#: includes/eme-options.php:3536
 msgid "Here you can define extra html headers when viewing a single event, typically used to add meta tags for facebook or SEO. All event placeholders can be used, but will be stripped from resulting html."
 msgstr "在这里，您可以在查看单个活动时定义额外的 HTML 页头，通常用于为 Facebook 或 SEO 添加元标签。所有的活动占位符都可以使用，但会从产生的 HTML 中剥离。"
 
-#: includes/eme-options.php:3535
+#: includes/eme-options.php:3537
 msgid "Extra location html headers"
 msgstr "额外地点的 html 页头"
 
-#: includes/eme-options.php:3535
+#: includes/eme-options.php:3537
 msgid "Here you can define extra html headers when viewing a single location, typically used to add meta tags for facebook or SEO. All location placeholders can be used, but will be stripped from resulting html."
 msgstr "在这里，您可以在查看单个位置时定义额外的 HTML 页头，通常用于为 Facebook 或 SEO 添加元标签。所有的位置占位符都可以使用，但会从产生的 HTML 中剥离。"
 
-#: includes/eme-options.php:3538
+#: includes/eme-options.php:3540
 msgid "Multisite options"
 msgstr "多站点选项"
 
-#: includes/eme-options.php:3541
+#: includes/eme-options.php:3543
 msgid "Activate multisite data sharing?"
 msgstr "激活多站点数据共享？"
 
-#: includes/eme-options.php:3541
+#: includes/eme-options.php:3543
 msgid "If selected and WordPress multisite is active, this EME instance will use the database tables of the main multisite instance. This will cause all events, locations, bookings, memberships, templates etc ... to be shared with the main site. The only thing that remains local are all the EME options, allowing you to make language subsites or other things. Also be aware of planned actions: those will only be executed based on the options set in the main site, not per subsite. If you do not want to share data amongst subsites, this option is not needed."
 msgstr "如果选中且WordPress多站点处于活动状态，此EME实例将使用主多站点实例的数据库表。这将导致所有活动、地点、预订、会员资格、模板等与主站点共享。唯一保持本地的是所有EME选项，允许您创建语言子站点或其他内容。还要注意计划的操作：这些操作将仅根据主站点中设置的选项执行，而不是每个子站点。如果您不想在子站点之间共享数据，则不需要此选项。"
 
-#: includes/eme-options.php:3553
+#: includes/eme-options.php:3555
 msgid "Save Changes"
 msgstr "保存更改"
 
@@ -13255,69 +13255,69 @@ msgstr "接下来10个活动的列表"
 msgid "Frontend Submit options"
 msgstr "前端提交选项"
 
-#: includes/eme-options.php:3393
+#: includes/eme-options.php:3395
 msgid "Status for new event"
 msgstr "新活动的状态"
 
-#: includes/eme-options.php:3393
+#: includes/eme-options.php:3395
 msgid "The status for a newly submitted event."
 msgstr "新提交活动的状态。"
 
-#: includes/eme-options.php:3401
+#: includes/eme-options.php:3403
 msgid "Default category for new event"
 msgstr "新活动的默认类别"
 
-#: includes/eme-options.php:3401
+#: includes/eme-options.php:3403
 msgid "The default category assigned to an event if nothing is selected in the form."
 msgstr "如果在表单中未选择任何内容，则分配给活动的默认类别。"
 
-#: includes/eme-options.php:3402
+#: includes/eme-options.php:3404
 msgid "Force location creation?"
 msgstr "强制创建地点？"
 
-#: includes/eme-options.php:3402
+#: includes/eme-options.php:3404
 msgid "Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations."
 msgstr "如果您希望始终创建地点，即使用户没有在EME中设置创建地点所需的权限，也请选中此选项。"
 
-#: includes/eme-options.php:3403
+#: includes/eme-options.php:3405
 msgid "Allow guest submit?"
 msgstr "允许访客提交？"
 
-#: includes/eme-options.php:3403
+#: includes/eme-options.php:3405
 msgid "Check this option if you want guests also to be able to add new events."
 msgstr "如果您希望访客也能够添加新活动，请选中此选项。"
 
-#: includes/eme-options.php:3407
+#: includes/eme-options.php:3409
 msgid "Guests not allowed text"
 msgstr "访客不允许文本"
 
-#: includes/eme-options.php:3408
+#: includes/eme-options.php:3410
 msgid "Redirect to login page"
 msgstr "重定向到登录页面"
 
 #. translators: %s is the default capability name
-#: includes/eme-options.php:3410
+#: includes/eme-options.php:3412
 msgid "Permission needed to submit a new event when guest submit is not allowed. Default: %s"
 msgstr "不允许访客提交时提交新活动所需的权限。默认：%s"
 
-#: includes/eme-options.php:3415
+#: includes/eme-options.php:3417
 msgid "Use wysiwyg?"
 msgstr "使用所见即所得编辑器？"
 
-#: includes/eme-options.php:3415
+#: includes/eme-options.php:3417
 msgid "Check this option if you want to use a frontend wysiwyg editor for the event notes."
 msgstr "如果您希望为活动备注使用前端所见即所得编辑器，请选中此选项。"
 
-#: includes/eme-options.php:3416
+#: includes/eme-options.php:3418
 msgid "Allow image upload?"
 msgstr "允许上传图片？"
 
-#: includes/eme-options.php:3416
+#: includes/eme-options.php:3418
 msgid "Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes."
 msgstr "如果您希望在活动备注的前端所见即所得编辑器中允许上传图片，请选中此选项。"
 
 #: includes/eme-fs.php:174
-#: includes/eme-fs.php:907
+#: includes/eme-fs.php:927
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr "抱歉，您不允许提交新活动。"
 
@@ -13325,20 +13325,20 @@ msgstr "抱歉，您不允许提交新活动。"
 msgid "Create event"
 msgstr "创建活动"
 
-#: includes/eme-fs.php:651
+#: includes/eme-fs.php:659
 #: includes/eme-options.php:606
 msgid "New event succesfully created."
 msgstr "新活动已成功创建。"
 
-#: includes/eme-fs.php:719
+#: includes/eme-fs.php:728
 msgid "Please enter a name for the event"
 msgstr "请输入活动名称"
 
-#: includes/eme-fs.php:722
+#: includes/eme-fs.php:731
 msgid "Enter the event's start date"
 msgstr "输入活动的开始日期"
 
-#: includes/eme-fs.php:750
+#: includes/eme-fs.php:758
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr "结束日期/时间必须在开始日期/时间<strong>之后</strong>"
 
@@ -13346,40 +13346,40 @@ msgstr "结束日期/时间必须在开始日期/时间<strong>之后</strong>"
 msgid "Frontend Submit"
 msgstr "前端提交"
 
-#: includes/eme-options.php:3404
+#: includes/eme-options.php:3406
 msgid "Success Message"
 msgstr "成功消息"
 
-#: includes/eme-options.php:3405
+#: includes/eme-options.php:3407
 msgid "Indicate in seconds how many seconds to wait before redirecting to the newly created event after showing the success message. If 0, the success message will not be shown and the redirect will happen immediately."
 msgstr "以秒为单位指定在显示成功消息后等待多少秒再重定向到新创建的活动。如果为0，将不会显示成功消息，重定向将立即发生。"
 
-#: includes/eme-options.php:3417
+#: includes/eme-options.php:3419
 msgid "Default form format"
 msgstr "默认表单格式"
 
-#: includes/eme-options.php:3417
+#: includes/eme-options.php:3419
 msgid "The default form format for submitting a new event."
 msgstr "提交新活动的默认表单格式。"
 
-#: includes/eme-options.php:3406
+#: includes/eme-options.php:3408
 msgid "Always show success message"
 msgstr "始终显示成功消息"
 
-#: includes/eme-options.php:3406
+#: includes/eme-options.php:3408
 msgid "Check this option if you want to always show the success message even if the person submitting the event has the right to see the newly submitted event. This also means no redirection will happen."
 msgstr "如果您希望始终显示成功消息，即使提交活动的人有权查看新提交的活动，也请选中此选项。这也意味着不会发生重定向。"
 
-#: includes/eme-options.php:3407
+#: includes/eme-options.php:3409
 msgid "The text shown to a guest when trying to submit a new event when they are not allowed to do so and the option to redirect to the login page is not set."
 msgstr "当访客不允许提交新活动且未设置重定向到登录页面选项时显示的文本。"
 
-#: includes/eme-options.php:3408
+#: includes/eme-options.php:3410
 msgid "Check this option if you want the submitter to be redirected to the login page if not logged in (or does not have the needed access rights) and guests are not allowed to submit new events."
 msgstr "如果您希望提交者在未登录（或没有所需访问权限）且不允许访客提交新活动时被重定向到登录页面，请选中此选项。"
 
 #. translators: %s is the default capability name
-#: includes/eme-options.php:3410
+#: includes/eme-options.php:3412
 msgid "Access right to submit new events"
 msgstr "提交新活动的访问权限"
 
@@ -13406,7 +13406,7 @@ msgstr "活动提交付款页面"
 
 #: includes/eme-events.php:8446
 #: includes/eme-members.php:2155
-#: includes/eme-options.php:3414
+#: includes/eme-options.php:3416
 msgid "Select a captcha to use"
 msgstr "选择要使用的验证码"
 
@@ -13498,15 +13498,15 @@ msgstr "如果前端活动提交表单需要付款，支付按钮下方显示的
 msgid "Also check out the 'Email templates' and the 'Payment' sections for some extra frontend submit settings."
 msgstr "另请查看\"电子邮件模板\"和\"支付\"部分，了解一些额外的前端提交设置。"
 
-#: includes/eme-options.php:3400
+#: includes/eme-options.php:3402
 msgid "Select the contact person that will receive email notifications whenever an event gets submitted or paid for. The mail templates are to be configured in the regular mail templates section."
 msgstr "选择在活动提交或付款时接收电子邮件通知的联系人。邮件模板需要在常规邮件模板部分进行配置。"
 
-#: includes/eme-options.php:3400
+#: includes/eme-options.php:3402
 msgid "No contact"
 msgstr "无联系人"
 
-#: includes/eme-options.php:3404
+#: includes/eme-options.php:3406
 msgid "The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. The message is also shown if the event submission needs to be paid for and the redirection wait period (setting below this one) is not 0. This message can contain all event placeholders."
 msgstr "成功提交新活动后显示的消息，如果提交活动的人无权查看新提交的活动。如果活动提交需要付款且重定向等待时间（此设置下方的设置）不为0，也会显示此消息。此消息可以包含所有活动占位符。"
 
@@ -13518,15 +13518,15 @@ msgstr "未找到与此支付关联的活动。如果您认为收到此消息有
 msgid "Incorrect currency."
 msgstr "货币不正确。"
 
-#: includes/eme-options.php:3394
+#: includes/eme-options.php:3396
 msgid "The price to pay in order to submit a new event. Leave empty or 0 if no price is to be paid. This is not related to RSVP settings inside the submitted event itself! Configure the optional payment form header/footer sections in the EME Payment settings."
 msgstr "提交新活动需要支付的价格。留空或0表示不需要付款。这与提交活动本身的回复设置无关！请在EME支付设置中配置可选的支付表单页眉/页脚部分。"
 
-#: includes/eme-options.php:3395
+#: includes/eme-options.php:3397
 msgid "The currency used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "提交活动需要付款时使用的货币。这与提交活动本身的回复设置无关！"
 
-#: includes/eme-options.php:3396
+#: includes/eme-options.php:3398
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "提交活动需要付款时使用的支付方式。这与提交活动本身的回复设置无关！"
 
@@ -13542,11 +13542,11 @@ msgstr "默认情况下每人每个活动只允许报名一个任务？"
 msgid "Check this option if you want by default that a person can only signup for one task per event."
 msgstr "如果您希望默认情况下每人每个活动只能报名一个任务，请选中此选项。"
 
-#: includes/eme-options.php:3490
+#: includes/eme-options.php:3492
 msgid "CSV delimiter"
 msgstr "CSV分隔符"
 
-#: includes/eme-options.php:3490
+#: includes/eme-options.php:3492
 msgid "Set the delimiter used in CSV exports."
 msgstr "设置CSV导出中使用的分隔符。"
 
@@ -14179,19 +14179,19 @@ msgstr "可视化"
 msgid "Insert non-breaking space"
 msgstr "插入不换行空格"
 
-#: includes/eme-options.php:3511
+#: includes/eme-options.php:3513
 msgid "HTML Editor"
 msgstr "HTML 编辑器"
 
-#: includes/eme-options.php:3514
+#: includes/eme-options.php:3516
 msgid "TinyMCE"
 msgstr "TinyMCE"
 
-#: includes/eme-options.php:3515
+#: includes/eme-options.php:3517
 msgid "Jodit"
 msgstr "Jodit"
 
-#: includes/eme-options.php:3517
+#: includes/eme-options.php:3519
 msgid "The HTML editor used by the plugin."
 msgstr "该插件使用的 HTML 编辑器。"
 
@@ -14671,8 +14671,8 @@ msgstr "发送给指定数量的成员分组"
 msgid "Send to active members belonging to"
 msgstr "发送给属于以下类别的活跃成员"
 
-#: includes/eme-options.php:3499
-#: includes/eme-options.php:3500
+#: includes/eme-options.php:3501
+#: includes/eme-options.php:3502
 msgid "Documentation on date and time formatting."
 msgstr "关于日期和时间格式的文档。"
 
@@ -14801,47 +14801,47 @@ msgid "Events Made Easy: the following extension file(s) failed signature verifi
 msgstr "Events Made Easy：以下扩展文件签名验证失败，未加载：%s。请前往\"设置 &gt; 扩展\"选项卡，然后点击\"重新生成签名\"。"
 
 #: includes/eme-options.php:1399
-#: includes/eme-options.php:3436
+#: includes/eme-options.php:3438
 msgid "Extensions"
 msgstr "扩展"
 
-#: includes/eme-options.php:3437
+#: includes/eme-options.php:3439
 msgid "Manage Events Made Easy extension files located in the uploads includes directory."
 msgstr "管理位于 uploads includes 目录中的 Events Made Easy 扩展文件。"
 
-#: includes/eme-options.php:3445
+#: includes/eme-options.php:3447
 msgid "File"
 msgstr "文件"
 
-#: includes/eme-options.php:3446
+#: includes/eme-options.php:3448
 msgid "Current SHA256 (stored)"
 msgstr "当前 SHA256（已存储）"
 
-#: includes/eme-options.php:3447
+#: includes/eme-options.php:3449
 msgid "SHA256 (on disk)"
 msgstr "SHA256（磁盘上）"
 
-#: includes/eme-options.php:3459
+#: includes/eme-options.php:3461
 msgid "Not registered"
 msgstr "未注册"
 
-#: includes/eme-options.php:3461
+#: includes/eme-options.php:3463
 msgid "Match"
 msgstr "匹配"
 
-#: includes/eme-options.php:3463
+#: includes/eme-options.php:3465
 msgid "Mismatch"
 msgstr "不匹配"
 
-#: includes/eme-options.php:3471
+#: includes/eme-options.php:3473
 msgid "No extension files found in the includes directory."
 msgstr "在 includes 目录中未找到扩展文件。"
 
-#: includes/eme-options.php:3476
+#: includes/eme-options.php:3478
 msgid "I have verified the file hashes above and confirm regenerating signatures."
 msgstr "我已验证上述文件哈希值，并确认重新生成签名。"
 
-#: includes/eme-options.php:3479
+#: includes/eme-options.php:3481
 msgid "Regenerate signatures"
 msgstr "重新生成签名"
 
@@ -15674,7 +15674,7 @@ msgstr ""
 msgid "Want to create your own payment gateway? Then create an extension, see "
 msgstr ""
 
-#: includes/eme-options.php:3439
+#: includes/eme-options.php:3441
 msgid "For more info on extensions, see "
 msgstr ""
 

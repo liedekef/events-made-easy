@@ -434,9 +434,6 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
                 $required = 1;
                 $type     = 'text';
                 break;
-            case 'event_attributes':
-            case 'event_properties':
-                break;
             case 'recaptcha':
             case 'hcaptcha':
             case 'cfcaptcha':
@@ -616,8 +613,19 @@ function eme_fs_getcategoriesselect( $more ) {
 }
 
 function eme_fs_getstatusselect( $more ) {
-    $safe_more         = eme_sanitize_attr_string( $more, 'eme_snapselect' );
+    $safe_more          = eme_sanitize_attr_string( $more, 'eme_snapselect' );
+    $eme_fs_options     = get_option( 'eme_fs' );
     $event_status_array = eme_status_array();
+    // don't show statuses that are not to be set manually in FS submit
+    unset( $event_status_array[ EME_EVENT_STATUS_FS_DRAFT ], $event_status_array[ EME_EVENT_STATUS_TRASH ] );
+    // users without publish rights can only choose the configured auto_publish status or draft
+    if ( ! current_user_can( get_option( 'eme_cap_publish_event' ) ) ) {
+        foreach ( array_keys( $event_status_array ) as $event_status_key ) {
+            if ( $event_status_key != $eme_fs_options['auto_publish'] && $event_status_key != EME_EVENT_STATUS_DRAFT ) {
+                unset( $event_status_array[ $event_status_key ] );
+            }
+        }
+    }
     $status_select     = [];
     $status_select[]   = '<select id="event_status" name="event[event_status]" ' . $safe_more . '>';
     // the first value should be empty, so if it is required, the browser can require it ...
@@ -691,7 +699,7 @@ function eme_fs_process_newevent() {
 
     if ( ! is_user_logged_in() ) {
         // guests: some limitations
-        foreach ( [ 'event_author', 'event_contactperson_id', 'event_status',
+        foreach ( [ 'event_contactperson_id', 'event_status',
             'event_page_title_format', 'event_single_event_format',
             'event_contactperson_email_body', 'event_respondent_email_body',
             'event_registration_pending_email_body', 'event_registration_updated_email_body',
@@ -708,6 +716,7 @@ function eme_fs_process_newevent() {
     }
     // things nobody should touch in FS submit
     unset( $event_data[ 'recurrence_id' ] );
+    unset( $event_data[ 'event_author' ] );
 
     if (isset($event_data['event_properties']['all_day']) && $event_data['event_properties']['all_day']==1)
         $all_day=1;
@@ -727,7 +736,6 @@ function eme_fs_process_newevent() {
     if ( isset( $event_data['event_category_ids'] ) && eme_is_integer_array( eme_sanitize_request( $event_data['event_category_ids'] ) ) ) {
         $event_data['event_category_ids'] = join( ',', eme_sanitize_request( $event_data['event_category_ids'] ) );
     }
-
     if ($all_day) {
         $event_start_time = '00:00';
         $event_end_time = "23:59";
@@ -762,8 +770,6 @@ function eme_fs_process_newevent() {
             $force=1;
         if (empty($event_data['location_id']))
             $event_data['location_id'] = eme_fs_processlocation($event_data, $force);
-        if (empty($event_data['event_status']))
-            $event_data['event_status']=$eme_fs_options['auto_publish'];
         if (!isset($event_data['event_category_ids']) && !empty($eme_fs_options['default_cat']))
             $event_data['event_category_ids']=$eme_fs_options['default_cat'];
 
@@ -771,6 +777,20 @@ function eme_fs_process_newevent() {
         if (!empty($event_data['event_properties'])) {
             // the not-set properties need to be treated as if a new event, so set new_event param to 1
             $event_data['event_properties'] = eme_init_event_props($event_data['event_properties'], 1);
+        }
+
+        // set correct status if not enough rights or not present
+        $allowed_states = array_values( array_diff( array_keys( eme_status_array() ), [ EME_EVENT_STATUS_FS_DRAFT, EME_EVENT_STATUS_TRASH ] ) );
+        $auto_publish   = intval( $eme_fs_options['auto_publish'] );
+        // the next should not happen, but to be sure
+        if ( ! in_array( $auto_publish, $allowed_states, true ) ) {
+            $auto_publish = EME_EVENT_STATUS_DRAFT;
+        }
+        $event_status = isset( $event_data['event_status'] ) && is_scalar( $event_data['event_status'] ) ? intval( $event_data['event_status'] ) : 0;
+        if ( empty( $event_data['event_status'] ) || ! in_array( $event_status, $allowed_states, true ) ) {
+            $event_data['event_status'] = $auto_publish;
+        } elseif ( $event_status != $auto_publish && ! current_user_can( get_option( 'eme_cap_publish_event' ) ) ) {
+            $event_data['event_status'] = EME_EVENT_STATUS_DRAFT;
         }
 
         $new_event = eme_new_event();
@@ -811,8 +831,8 @@ function eme_fs_process_newevent() {
                     }
                 } elseif (!empty($eme_fs_options['always_success_message'])) {
                     $res['htmlmessage'] = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
-                } elseif ((is_user_logged_in() && $event['event_status'] != EME_EVENT_STATUS_DRAFT) || 
-                    $event['event_status'] == EME_EVENT_STATUS_PUBLIC ) {
+                } elseif ((is_user_logged_in() && !in_array($event['event_status'], [ EME_EVENT_STATUS_DRAFT, EME_EVENT_STATUS_FS_DRAFT])) ||
+                          $event['event_status'] == EME_EVENT_STATUS_PUBLIC) {
                     $res['redirect'] = eme_event_url($event);
                     $res['waitperiod'] = $eme_fs_options['redirect_timeout'];
                     if ($eme_fs_options['redirect_timeout'] != 0) {

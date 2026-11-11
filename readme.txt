@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 3.3.7
+Stable tag: 3.3.8
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -103,7 +103,12 @@ To prevent user-provided text from being executed as a shortcode or EME placehol
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.3.7  (2026/11/12) =
+= 3.3.8  (2026/11/11) =
+* Frontend submit: only show and accept event statuses the submitter is allowed to set. Users without publish rights can only submit with the configured "Status for new event" or as Draft, so a requested Draft/Private event can no longer get published by accident. Reported by kudo3228@gmail.com.
+* Frontend submit: the "Status for new event" setting no longer offers Frontend Draft or Trashed
+* Frontend submit: the event author is now always the submitting user (or nobody for guests) and can no longer be set via the form. Reported by kudo3228@gmail.com.
+
+= 3.3.7  (2026/11/10) =
 * Keep square brackets visible when neutralizing shortcode syntax in plain-text output by inserting spaces instead of replacing them with parentheses
 * Neutralize shortcode syntax from person first/last names on save (and others when saving events from frontend submut), so for example "Smith [Jr]" is stored as "Smith [ Jr ]", this avoids shortcode injection.
 * Document #_PROP

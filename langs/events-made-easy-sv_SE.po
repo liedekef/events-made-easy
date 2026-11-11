@@ -644,44 +644,44 @@ msgstr "Kunde inte beräkna rutt"
 msgid "Address not found"
 msgstr "Adress hittades inte"
 
-#: includes/eme-options.php:3479
+#: includes/eme-options.php:3481
 msgid "Regenerate signatures"
 msgstr "Generera signaturer igen"
 
-#: includes/eme-options.php:3476
+#: includes/eme-options.php:3478
 msgid "I have verified the file hashes above and confirm regenerating signatures."
 msgstr "Jag har verifierat filhasharna ovan och bekräftar att generera signaturer igen."
 
-#: includes/eme-options.php:3471
+#: includes/eme-options.php:3473
 msgid "No extension files found in the includes directory."
 msgstr "Inga tilläggsfiler hittades i includes-mappen."
 
-#: includes/eme-options.php:3463
+#: includes/eme-options.php:3465
 msgid "Mismatch"
 msgstr "Ingen matchning"
 
-#: includes/eme-options.php:3461
+#: includes/eme-options.php:3463
 msgid "Match"
 msgstr "Matchning"
 
-#: includes/eme-options.php:3459
+#: includes/eme-options.php:3461
 msgid "Not registered"
 msgstr "Inte registrerad"
 
-#: includes/eme-options.php:3447
+#: includes/eme-options.php:3449
 msgid "SHA256 (on disk)"
 msgstr "SHA256 (på disk)"
 
-#: includes/eme-options.php:3446
+#: includes/eme-options.php:3448
 msgid "Current SHA256 (stored)"
 msgstr "Aktuell SHA256 (lagrad)"
 
-#: includes/eme-options.php:3437
+#: includes/eme-options.php:3439
 msgid "Manage Events Made Easy extension files located in the uploads includes directory."
 msgstr "Hantera Events Made Easy-tilläggsfiler som finns i mappen uploads/includes."
 
 #: includes/eme-options.php:1399
-#: includes/eme-options.php:3436
+#: includes/eme-options.php:3438
 msgid "Extensions"
 msgstr "Tillägg"
 
@@ -1090,146 +1090,146 @@ msgstr "Evenemanginskickning %s"
 msgid "Bancontact Pay - Wero"
 msgstr "Bancontact Pay - Wero"
 
-#: includes/eme-options.php:3517
+#: includes/eme-options.php:3519
 msgid "The HTML editor used by the plugin."
 msgstr "HTML-redigeraren som används av tillägget."
 
-#: includes/eme-options.php:3515
+#: includes/eme-options.php:3517
 msgid "Jodit"
 msgstr "Jodit"
 
-#: includes/eme-options.php:3514
+#: includes/eme-options.php:3516
 msgid "TinyMCE"
 msgstr "TinyMCE"
 
-#: includes/eme-options.php:3511
+#: includes/eme-options.php:3513
 msgid "HTML Editor"
 msgstr "HTML-redigerare"
 
-#: includes/eme-options.php:3499
-#: includes/eme-options.php:3500
+#: includes/eme-options.php:3501
+#: includes/eme-options.php:3502
 msgid "Documentation on date and time formatting."
 msgstr "Dokumentation om datum- och tidsformatering."
 
-#: includes/eme-options.php:3490
+#: includes/eme-options.php:3492
 msgid "CSV delimiter"
 msgstr "CSV-avgränsare"
 
-#: includes/eme-options.php:3417
+#: includes/eme-options.php:3419
 msgid "The default form format for submitting a new event."
 msgstr "Standardformulärformatet för att skicka in ett nytt evenemang."
 
-#: includes/eme-options.php:3417
+#: includes/eme-options.php:3419
 msgid "Default form format"
 msgstr "Standardformulärformat"
 
-#: includes/eme-options.php:3416
+#: includes/eme-options.php:3418
 msgid "Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes."
 msgstr "Markera detta alternativ om du vill tillåta bilduppladdning i framsida-WYSIWYG-redigeraren för evenemangsanteckningarna."
 
-#: includes/eme-options.php:3416
+#: includes/eme-options.php:3418
 msgid "Allow image upload?"
 msgstr "Tillåt bilduppladdning?"
 
-#: includes/eme-options.php:3415
+#: includes/eme-options.php:3417
 msgid "Check this option if you want to use a frontend wysiwyg editor for the event notes."
 msgstr "Markera detta alternativ om du vill använda en framsida-WYSIWYG-redigerare för evenemangsanteckningarna."
 
-#: includes/eme-options.php:3415
+#: includes/eme-options.php:3417
 msgid "Use wysiwyg?"
 msgstr "Använd WYSIWYG?"
 
 #. translators: %s is the default capability name
-#: includes/eme-options.php:3410
+#: includes/eme-options.php:3412
 msgid "Permission needed to submit a new event when guest submit is not allowed. Default: %s"
 msgstr "Behörighet behövs för att skicka in ett nytt evenemang när gästinskickning inte är tillåten. Standard: %s"
 
 #. translators: %s is the default capability name
-#: includes/eme-options.php:3410
+#: includes/eme-options.php:3412
 msgid "Access right to submit new events"
 msgstr "Behörighet att skicka in nya evenemang"
 
-#: includes/eme-options.php:3408
+#: includes/eme-options.php:3410
 msgid "Check this option if you want the submitter to be redirected to the login page if not logged in (or does not have the needed access rights) and guests are not allowed to submit new events."
 msgstr "Markera detta alternativ om du vill att den som skickar in ska omdirigeras till inloggningssidan om de inte är inloggade (eller inte har de nödvändiga behörigheterna) och gäster inte har tillåtelse att skicka in nya evenemang."
 
-#: includes/eme-options.php:3408
+#: includes/eme-options.php:3410
 msgid "Redirect to login page"
 msgstr "Omdirigera till inloggningssida"
 
-#: includes/eme-options.php:3407
+#: includes/eme-options.php:3409
 msgid "The text shown to a guest when trying to submit a new event when they are not allowed to do so and the option to redirect to the login page is not set."
 msgstr "Texten som visas för en gäst när de försöker skicka in ett nytt evenemang när de inte har tillåtelse att göra det och alternativet att omdirigera till inloggningssidan inte är inställt."
 
-#: includes/eme-options.php:3407
+#: includes/eme-options.php:3409
 msgid "Guests not allowed text"
 msgstr "Text för gäster ej tillåtna"
 
-#: includes/eme-options.php:3406
+#: includes/eme-options.php:3408
 msgid "Check this option if you want to always show the success message even if the person submitting the event has the right to see the newly submitted event. This also means no redirection will happen."
 msgstr "Markera detta alternativ om du alltid vill visa framgångsmeddelandet, även om personen som skickar in evenemanget har rätt att se det nyss inskickade evenemanget. Detta innebär också att ingen omdirigering kommer att ske."
 
-#: includes/eme-options.php:3406
+#: includes/eme-options.php:3408
 msgid "Always show success message"
 msgstr "Visa alltid framgångsmeddelande"
 
-#: includes/eme-options.php:3405
+#: includes/eme-options.php:3407
 msgid "Indicate in seconds how many seconds to wait before redirecting to the newly created event after showing the success message. If 0, the success message will not be shown and the redirect will happen immediately."
 msgstr "Ange i sekunder hur länge vänta innan omdirigering till det nyss skapade evenemanget efter visning av framgångsmeddelandet. Om 0 kommer framgångsmeddelandet inte att visas och omdirigeringen sker omedelbart."
 
-#: includes/eme-options.php:3404
+#: includes/eme-options.php:3406
 msgid "The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. The message is also shown if the event submission needs to be paid for and the redirection wait period (setting below this one) is not 0. This message can contain all event placeholders."
 msgstr "Meddelandet som visas efter att ett nytt evenemang har skickats in framgångsrikt om personen som skickar in evenemanget inte har rätt att se det nyss inskickade evenemanget. Meddelandet visas också om evenemanginskickningen behöver betalas och väntetiden för omdirigering (inställningen nedan denna) inte är 0. Detta meddelande kan innehålla alla evenemangsplatshållare."
 
-#: includes/eme-options.php:3404
+#: includes/eme-options.php:3406
 msgid "Success Message"
 msgstr "Framgångsmeddelande"
 
-#: includes/eme-options.php:3403
+#: includes/eme-options.php:3405
 msgid "Check this option if you want guests also to be able to add new events."
 msgstr "Markera detta alternativ om du vill att gäster också ska kunna lägga till nya evenemang."
 
-#: includes/eme-options.php:3403
+#: includes/eme-options.php:3405
 msgid "Allow guest submit?"
 msgstr "Tillåt gästinskickning?"
 
-#: includes/eme-options.php:3402
+#: includes/eme-options.php:3404
 msgid "Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations."
 msgstr "Markera detta alternativ om du vill att platsen alltid ska skapas, även om användaren inte har nödvändig behörighet i EME för att skapa platser."
 
-#: includes/eme-options.php:3402
+#: includes/eme-options.php:3404
 msgid "Force location creation?"
 msgstr "Tvinga skapande av plats?"
 
-#: includes/eme-options.php:3401
+#: includes/eme-options.php:3403
 msgid "The default category assigned to an event if nothing is selected in the form."
 msgstr "Standardkategorin som tilldelas ett evenemang om inget valts i formuläret."
 
-#: includes/eme-options.php:3401
+#: includes/eme-options.php:3403
 msgid "Default category for new event"
 msgstr "Standardkategori för nytt evenemang"
 
-#: includes/eme-options.php:3400
+#: includes/eme-options.php:3402
 msgid "No contact"
 msgstr "Ingen kontakt"
 
-#: includes/eme-options.php:3400
+#: includes/eme-options.php:3402
 msgid "Select the contact person that will receive email notifications whenever an event gets submitted or paid for. The mail templates are to be configured in the regular mail templates section."
 msgstr "Välj kontaktpersonen som kommer att få e-postaviseringar när ett evenemang skickas in eller betalas. E-postmallarna konfigureras i avsnittet för vanliga e-postmallar."
 
-#: includes/eme-options.php:3396
+#: includes/eme-options.php:3398
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "Betalningsmetoden/metoderna som ska användas när inskickade evenemang behöver betalas. Detta är inte relaterat till RSVP-inställningarna i det inskickade evenemanget!"
 
-#: includes/eme-options.php:3395
+#: includes/eme-options.php:3397
 msgid "The currency used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
 msgstr "Valutan som används när inskickade evenemang behöver betalas. Detta är inte relaterat till RSVP-inställningarna i det inskickade evenemanget!"
 
-#: includes/eme-options.php:3394
+#: includes/eme-options.php:3396
 msgid "The price to pay in order to submit a new event. Leave empty or 0 if no price is to be paid. This is not related to RSVP settings inside the submitted event itself! Configure the optional payment form header/footer sections in the EME Payment settings."
 msgstr "Priset att betala för att skicka in ett nytt evenemang. Lämna tomt eller 0 om inget pris ska betalas. Detta är inte relaterat till RSVP-inställningarna i det inskickade evenemanget! Konfigurera de valfria betalningsformulärens rubrik-/fotavsnitten i EME Betalningsinställningarna."
 
-#: includes/eme-options.php:3393
+#: includes/eme-options.php:3395
 msgid "The status for a newly submitted event."
 msgstr "Statusen för ett nyligen inskickat evenemang."
 
@@ -1973,15 +1973,15 @@ msgstr "Vänligen markera Friendly Captcha-rutan"
 msgid "Please check the Cloudflare Turnstile box"
 msgstr ""
 
-#: includes/eme-fs.php:750
+#: includes/eme-fs.php:758
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr "Slutdatum/tid måste inträffa <strong>efter</strong> startdatum/tid"
 
-#: includes/eme-fs.php:722
+#: includes/eme-fs.php:731
 msgid "Enter the event's start date"
 msgstr "Ange evenemangets startdatum"
 
-#: includes/eme-fs.php:651
+#: includes/eme-fs.php:659
 #: includes/eme-options.php:606
 msgid "New event succesfully created."
 msgstr "Nytt evenemang skapat framgångsrikt."
@@ -1991,7 +1991,7 @@ msgid "Create event"
 msgstr "Skapa evenemang"
 
 #: includes/eme-fs.php:174
-#: includes/eme-fs.php:907
+#: includes/eme-fs.php:927
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr "Tyvärr, men du har inte tillåtelse att skicka in nya evenemang."
 
@@ -2193,7 +2193,7 @@ msgstr "Använd captcha bara för utloggade användare?"
 
 #: includes/eme-events.php:8446
 #: includes/eme-members.php:2155
-#: includes/eme-options.php:3414
+#: includes/eme-options.php:3416
 msgid "Select a captcha to use"
 msgstr "Välj en CAPTCHA att använda"
 
@@ -2640,11 +2640,11 @@ msgstr ""
 msgid "Import finished: %1$d inserts, %2$d updates, %3$d errors"
 msgstr "Import slutförd: %1$d insättningar, %2$d uppdateringar, %3$d fel"
 
-#: includes/eme-options.php:3533
+#: includes/eme-options.php:3535
 msgid "Here you can define extra html footer, no placeholders can be used."
 msgstr "Här kan du definiera extra HTML-fot, inga platshållare kan användas."
 
-#: includes/eme-options.php:3532
+#: includes/eme-options.php:3534
 msgid "Here you can define extra html headers, no placeholders can be used."
 msgstr "Här kan du definiera extra HTML-rubriker, inga platshållare kan användas."
 
@@ -2897,15 +2897,15 @@ msgstr "Duplicera denna mall"
 msgid "Leave empty to send the mail immediately"
 msgstr "Lämna tomt för att skicka e-postmeddelandet omedelbart"
 
-#: includes/eme-options.php:3541
+#: includes/eme-options.php:3543
 msgid "If selected and WordPress multisite is active, this EME instance will use the database tables of the main multisite instance. This will cause all events, locations, bookings, memberships, templates etc ... to be shared with the main site. The only thing that remains local are all the EME options, allowing you to make language subsites or other things. Also be aware of planned actions: those will only be executed based on the options set in the main site, not per subsite. If you do not want to share data amongst subsites, this option is not needed."
 msgstr "Om valt och WordPress flerwebbplats är aktiverat kommer denna EME-instans att använda databastabellerna för huvudinstansen. Detta gör att alla evenemang, platser, bokningar, medlemskap, mallar etc. delas med huvudwebbplatsen. Det enda som förblir lokalt är alla EME-alternativ, vilket gör att du kan skapa språkunderversioner eller andra saker. Var också medveten om planerade åtgärder: dessa kommer bara att köras baserat på alternativen som är inställda på huvudwebbplatsen, inte per underwebbplats. Om du inte vill dela data mellan underwebbplatser behövs detta alternativ inte."
 
-#: includes/eme-options.php:3541
+#: includes/eme-options.php:3543
 msgid "Activate multisite data sharing?"
 msgstr "Aktivera delning av data för flera webbplatser?"
 
-#: includes/eme-options.php:3538
+#: includes/eme-options.php:3540
 msgid "Multisite options"
 msgstr "Alternativ för flera webbplatser"
 
@@ -2930,19 +2930,19 @@ msgstr "Flerwebbplatsdelning av data är aktiverad för EME, alternativet \"%s\"
 msgid "EME multisite data sharing is active, this instance will not do any planned actions. All planned actions will be executed from the main site."
 msgstr "EME-delning av data mellan flera webbplatser är aktiv, denna instans kommer inte att utföra några schemalagda åtgärder. Alla schemalagda åtgärder kommer att utföras från huvudwebbplatsen."
 
-#: includes/eme-options.php:3496
+#: includes/eme-options.php:3498
 msgid "By default, the text shown for the second address line is 'Address line 2', but this might not be very informative to people, so feel free to put something else here, like 'house number'"
 msgstr "Som standard visas texten 'Address line 2' för den andra adressraden, men detta kanske inte är så informativt, så känn dig fri att ange något annat här, som 'husnummer'"
 
-#: includes/eme-options.php:3496
+#: includes/eme-options.php:3498
 msgid "Address line 2 text"
 msgstr "Text för adressrad 2"
 
-#: includes/eme-options.php:3495
+#: includes/eme-options.php:3497
 msgid "By default, the text shown for the first address line is 'Address line 1', but this might not be very informative to people, so feel free to put something else here, like 'street name'"
 msgstr "Som standard visas texten 'Address line 1' för den första adressraden, men detta kanske inte är så informativt, så känn dig fri att ange något annat här, som 'gatunamn'"
 
-#: includes/eme-options.php:3495
+#: includes/eme-options.php:3497
 msgid "Address line 1 text"
 msgstr "Text för adressrad 1"
 
@@ -4447,19 +4447,19 @@ msgstr "Betalning OK"
 msgid "Invalid URL"
 msgstr "Ogiltig URL"
 
-#: includes/eme-options.php:3500
+#: includes/eme-options.php:3502
 msgid "The time format used in EME tables. Leave this empty to use the WordPress settings."
 msgstr "Tidsformatet som används i EME-tabeller. Lämna tomt för att använda WordPress-inställningarna."
 
-#: includes/eme-options.php:3500
+#: includes/eme-options.php:3502
 msgid "EME backend time format"
 msgstr "EME-backend tidsformat"
 
-#: includes/eme-options.php:3499
+#: includes/eme-options.php:3501
 msgid "The date format used in EME tables. Leave this empty to use the WordPress settings."
 msgstr "Datumformatet som används i EME-tabeller. Lämna tomt för att använda WordPress-inställningarna."
 
-#: includes/eme-options.php:3499
+#: includes/eme-options.php:3501
 msgid "EME backend date format"
 msgstr "EME-backend datumformat"
 
@@ -4821,7 +4821,7 @@ msgstr "Fråga efter familjemedlemsinformation när någon registrerar sig"
 #: includes/eme-members.php:2172
 #: includes/eme-members.php:2178
 #: includes/eme-options.php:2799
-#: includes/eme-options.php:3394
+#: includes/eme-options.php:3396
 msgid "Use the point as decimal separator"
 msgstr "Använd punkt som decimalavgränsare"
 
@@ -5355,11 +5355,11 @@ msgstr "Fondy-merchant-ID"
 msgid "Fondy"
 msgstr "Fondy"
 
-#: includes/eme-options.php:3526
+#: includes/eme-options.php:3528
 msgid "While the setting above allows you to add extra html tags and attributes, WordPress is even more strict concerning attributes allowed in the style tag. You can here add a list of extra style attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one attribute per line. As an example, to allow the visibility attribute for the style tag, you would add: \"visbility\" "
 msgstr "Medan inställningen ovan låter dig lägga till extra HTML-taggar och attribut, är WordPress ännu striktere vad gäller attribut som tillåts i style-taggen. Här kan du lägga till en lista med extra stilattribut du vill tillåta i EME-inställningar som tillåter HTML (utöver standardalternativen, inget tas bort). Listan bör vara ett attribut per rad. Som exempel, för att tillåta visibility-attributet för style-taggen, lägger du till: \"visibility\""
 
-#: includes/eme-options.php:3526
+#: includes/eme-options.php:3528
 msgid "Extra style attributes"
 msgstr "Extra stilattribut"
 
@@ -5726,11 +5726,11 @@ msgstr "(%d platser på väntelistan inkluderade)"
 msgid "If you select 'RSVP field', 'People field' or 'Members field', this field will show up as an extra column in the overview table for bookings, people or members. Selecting 'Generic' will cause it to show up in the overview table for bookings or members."
 msgstr "Om du väljer 'OSA-fält', 'Personfält' eller 'Medlemsfält' kommer detta fält att visas som en extra kolumn i översikts-tabellen för bokningar, personer eller medlemmar. Att välja 'Allmänt' kommer att få det att visas i översikts-tabellen för bokningar eller medlemmar."
 
-#: includes/eme-options.php:3508
+#: includes/eme-options.php:3510
 msgid "Set the font to be used in generated PDF files. Sometimes you need to use a different font because not all characters might be defined in the current selected font."
 msgstr "Ange det teckensnitt som ska användas i genererade PDF-filer. Ibland behöver du använda ett annat teckensnitt eftersom inte alla tecken kanske är definierade i det valda teckensnittet."
 
-#: includes/eme-options.php:3508
+#: includes/eme-options.php:3510
 msgid "PDF font"
 msgstr "PDF typsnitt"
 
@@ -6100,11 +6100,11 @@ msgstr "Ingen begränsning"
 msgid "Membership payment page"
 msgstr "Betalningssida för medlemskap"
 
-#: includes/eme-options.php:3493
+#: includes/eme-options.php:3495
 msgid "The timepicker step interval. Defaults to 5-minutes interval (meaning steps of 5 minutes will be taken)"
 msgstr "Tidväljarens stegintervall. Standard är 5-minutersintervall (vilket innebär att steg om 5 minuter görs)"
 
-#: includes/eme-options.php:3493
+#: includes/eme-options.php:3495
 msgid "Timepicker step interval"
 msgstr "Tidväljarens stegintervall"
 
@@ -6121,7 +6121,7 @@ msgid "Indicate in seconds how many seconds to wait before redirecting to the pa
 msgstr "Ange i sekunder hur länge som ska väntas innan omdirigering till betalningssidan."
 
 #: includes/eme-options.php:2802
-#: includes/eme-options.php:3405
+#: includes/eme-options.php:3407
 msgid "Redirect wait period"
 msgstr "Väntetid för omdirigering"
 
@@ -6510,11 +6510,11 @@ msgstr "Vänligen ändra OSA-formuläret så att det innehåller #_EMAIL."
 msgid "Your event seems to have multiple price categories, so you can't use #_SEATS (or #_SPACES) in your event RSVP form format. Please correct the RSVP form format to use the #_SEATS{xx} notation."
 msgstr "Ditt event verkar ha multipla priskategorier, så du kan inte använda #_SEATS (eller #_SPACES) i ditt OSA-formulär för eventet. Vänligen ändra OSA-formuläret så att det använder #_SEATS{xx} i stället."
 
-#: includes/eme-options.php:3509
+#: includes/eme-options.php:3511
 msgid "This is the current EME database version, you can use this to put the version back to an older version; upon saving EME will then redo the missed database upgrades from that version onwards if they didn't happen correctly and reset the value to the latest version. In any normal situation, you never need to change this value."
 msgstr "Detta är aktuell EME databasversion, du kan använda detta för att återställa till en äldre version; när du sparar ändringen kommer EME att göra om missade databasuppdateringar från den versionen och framåt ifall de inte blev rätt utförda, och återställa värdet till den senaste versionen. Under alla normala omständigheter, kommer du aldrig behöva ändra detta värde."
 
-#: includes/eme-options.php:3509
+#: includes/eme-options.php:3511
 msgid "EME DB version"
 msgstr "EME databasversion"
 
@@ -6834,12 +6834,12 @@ msgstr "Kräv att användare är inloggade för att rabatten ska gälla."
 msgid "Logged-in users only"
 msgstr "Endast inloggade användare"
 
-#: includes/eme-options.php:3525
+#: includes/eme-options.php:3527
 msgid "By default WordPress is strict in what html tags and attributes are allowed. You can here add a list of tags+attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one tag per line, followed by its optional attributes, all seperated by \",\". As an example, to allow the iframe tag and some attributes, you would add: \"iframe,src,height,width,frameborder\" "
 msgstr "Som standard är WordPress strikt med vilka HTML-taggar och attribut som är tillåtna. Här kan du lägga till en lista med taggar+attribut du vill tillåta i EME-inställningar som tillåter HTML (utöver standardalternativen, inget tas bort). Listan bör vara en tagg per rad, följd av dess valfria attribut, alla separerade med \",\". Som exempel, för att tillåta iframe-taggen och vissa attribut, lägger du till: \"iframe,src,height,width,frameborder\""
 
-#: includes/eme-options.php:3522
-#: includes/eme-options.php:3525
+#: includes/eme-options.php:3524
+#: includes/eme-options.php:3527
 msgid "Extra html tags"
 msgstr "Extra html-taggar"
 
@@ -8460,7 +8460,7 @@ msgstr "Filen finns redan"
 msgid "File upload is required."
 msgstr "Filuppladdning krävs."
 
-#: includes/eme-options.php:3445
+#: includes/eme-options.php:3447
 msgid "File"
 msgstr "Fil"
 
@@ -8680,7 +8680,7 @@ msgstr "Lösenord för OSA"
 msgid "You have been subscribed."
 msgstr "Din prenumeration har avbrutits."
 
-#: includes/eme-fs.php:884
+#: includes/eme-fs.php:904
 #: includes/eme-gdpr.php:42
 #: includes/eme-gdpr.php:131
 #: includes/eme-gdpr.php:205
@@ -8802,15 +8802,15 @@ msgstr "Betalnings-GW ID"
 msgid "Payment GW"
 msgstr "Betalningsgateway"
 
-#: includes/eme-options.php:3488
+#: includes/eme-options.php:3490
 msgid "This allows you to stay on the edit page after saving events, locations, templates, formfields, people, groups or memberships."
 msgstr "Detta låter dig stanna på redigeringssidan efter sparande av event, platser, mallar, formulärfält, personer, grupper eller medlemskap."
 
-#: includes/eme-options.php:3489
+#: includes/eme-options.php:3491
 msgid "PHP date/time functions have no notation to show minutes without leading zeros. Checking this option will return e.g. 9 for 09 and empty for 00. This setting affects custom time placeholders and also the generic *DATE and *TIME placeholders"
 msgstr "PHP funktioner för datum/tid har ingen notering för att visa minuter utan inledande nolla. Markera detta alternativ för att returnera t.ex. 9 för 09 och inget alls för 00. Denna inställning påverkar anpassade platshållare och även generiska *DATE och *TIME platshållare"
 
-#: includes/eme-options.php:3488
+#: includes/eme-options.php:3490
 msgid "Stay on edit page after save?"
 msgstr "Stanna kvar på redigeringssidan efter spara?"
 
@@ -9726,7 +9726,7 @@ msgstr "E-postutskicket har planerats."
 msgid "Please select a person to send the preview mail to."
 msgstr "Vänligen välj en person att sända förhandsgranskningen till."
 
-#: includes/eme-fs.php:719
+#: includes/eme-fs.php:728
 msgid "Please enter a name for the event"
 msgstr "Vänligen ange ett namn för evenemanget"
 
@@ -10091,17 +10091,17 @@ msgid "WP Admin"
 msgstr "WP-admin"
 
 #: includes/eme-members.php:2200
-#: includes/eme-options.php:3400
+#: includes/eme-options.php:3402
 msgid "Contact person"
 msgstr "Kontaktperson"
 
 #: includes/eme-members.php:2182
-#: includes/eme-options.php:3395
+#: includes/eme-options.php:3397
 msgid "Currency"
 msgstr "Valuta"
 
 #: includes/eme-members.php:2170
-#: includes/eme-options.php:3394
+#: includes/eme-options.php:3396
 msgid "Price"
 msgstr "Pris"
 
@@ -10918,15 +10918,15 @@ msgstr "Handlingsinfo"
 msgid "The mail queue has been cleared."
 msgstr "E-postkön har tömts"
 
-#: includes/eme-options.php:3492
+#: includes/eme-options.php:3494
 msgid "This option is not used if the localize price option above is active and the php class NumberFormatter is present."
 msgstr "Detta alternativ används inte ifall alternativet för lokala priser ovan är aktiverat och php-klassen NumberFormatter finns närvarande."
 
-#: includes/eme-options.php:3491
+#: includes/eme-options.php:3493
 msgid "If selected, all prices will be shown in the current locale with the price symbol. If you don't want this, deselect this option to regain the old behavior of localized prices where you need to take care of the decimal accuracy, the currency symbol and it's location yourself. This option only works if the php class NumberFormatter is present, which is always the case in newer php versions but just don't forget to load the INTL extension in php."
 msgstr "Välj Ja för att visa alla priser i den lokala valutan med valutasymbol. Om du inte vill detta, välj Nej för att återfå det gamla beteendet med lokala priser där du själv behöver hantera antalet decimaler, valutasymbolen och dess placering själv. Detta alternativ fungerar endast ifall php-klassen NumberFormatter är närvarande, vilket alltid är fallet i nyare php-versioner, glöm bara inte att ladda INTL-utökningen i php."
 
-#: includes/eme-options.php:3491
+#: includes/eme-options.php:3493
 msgid "Localize price"
 msgstr "Lokalisera pris"
 
@@ -11029,11 +11029,11 @@ msgstr "Nytt återkommande event tillagt med %d tillfällen"
 msgid "Filter on start date"
 msgstr "Filtrera efter startdatum"
 
-#: includes/eme-options.php:3494
+#: includes/eme-options.php:3496
 msgid "The text shown next to a form field when it is a required field"
 msgstr "Text som visas intill ett fält i formuläret som är ett obligatoriskt fält"
 
-#: includes/eme-options.php:3494
+#: includes/eme-options.php:3496
 msgid "Required field text"
 msgstr "Obligatoriskt textfält"
 
@@ -11269,23 +11269,23 @@ msgstr "felaktigt betalnings-id."
 msgid "Hash Incorrect"
 msgstr "Felaktig hash"
 
-#: includes/eme-options.php:3498
+#: includes/eme-options.php:3500
 msgid "If selected, clicking on the single event or location url for details will go to the defined external url for that event or location if present."
 msgstr "Om markerad så medför ett klick på detaljer för ett enstaka event eller en plats att man styrs till den definierade externa url för eventet eller platsen, om den kan nås."
 
-#: includes/eme-options.php:3498
+#: includes/eme-options.php:3500
 msgid "Use external url for single events or locations?"
 msgstr "Använd extern url för enstaka event eller platser?"
 
-#: includes/eme-options.php:3492
+#: includes/eme-options.php:3494
 msgid "EME tries to show the prices in the frontend in the current locale, with the decimals accuracy set here. Defaults to 2."
 msgstr "EME försöker visa priserna i front-end i den lokala valutan, med det antal decimaler som specificeras här. Standardvärde är 2."
 
-#: includes/eme-options.php:3492
+#: includes/eme-options.php:3494
 msgid "Decimals accuracy"
 msgstr "Antal decimaler"
 
-#: includes/eme-options.php:3485
+#: includes/eme-options.php:3487
 msgid "Other settings"
 msgstr "Övriga inställningar"
 
@@ -11362,7 +11362,7 @@ msgstr "Wordpressanvändare"
 #: includes/eme-options.php:1571
 #: includes/eme-options.php:2212
 #: includes/eme-options.php:2248
-#: includes/eme-options.php:3414
+#: includes/eme-options.php:3416
 msgid "None"
 msgstr "Ingen"
 
@@ -12178,7 +12178,7 @@ msgstr "Det finns inga bokningar kopplade till detta namn och e-post"
 msgid "Booking deleted"
 msgstr "Bokning borttagen"
 
-#: includes/eme-fs.php:894
+#: includes/eme-fs.php:914
 #: includes/eme-gdpr.php:52
 #: includes/eme-gdpr.php:141
 #: includes/eme-gdpr.php:215
@@ -12424,35 +12424,35 @@ msgstr "Multipla bokningsönskemål"
 msgid "Payment handling"
 msgstr "Hantering av betalningar"
 
-#: includes/eme-options.php:3553
+#: includes/eme-options.php:3555
 msgid "Save Changes"
 msgstr "Spara ändringar"
 
-#: includes/eme-options.php:3535
+#: includes/eme-options.php:3537
 msgid "Here you can define extra html headers when viewing a single location, typically used to add meta tags for facebook or SEO. All location placeholders can be used, but will be stripped from resulting html."
 msgstr "Här kan du definiera extra html-headers när man visar en enstaka plats, typiskt vore att lägga till metataggar för Facebook eller SEO. Alla platshållare för platser kan användas, men kommer att rensas från html-koder."
 
-#: includes/eme-options.php:3535
+#: includes/eme-options.php:3537
 msgid "Extra location html headers"
 msgstr "Extra html-headers för platser"
 
-#: includes/eme-options.php:3534
+#: includes/eme-options.php:3536
 msgid "Here you can define extra html headers when viewing a single event, typically used to add meta tags for facebook or SEO. All event placeholders can be used, but will be stripped from resulting html."
 msgstr "Här kan du definiera extra html-headers när man visar ett enstaka event, typiskt vore att lägga till metataggar för Facebook eller SEO. Alla platshållare för event kan användas, men kommer att rensas från html-koder. "
 
-#: includes/eme-options.php:3534
+#: includes/eme-options.php:3536
 msgid "Extra event html headers"
 msgstr "Extra html-headers för event"
 
-#: includes/eme-options.php:3533
+#: includes/eme-options.php:3535
 msgid "Extra html footer"
 msgstr "Extra html-footer"
 
-#: includes/eme-options.php:3532
+#: includes/eme-options.php:3534
 msgid "Extra html header"
 msgstr "Extra html-header"
 
-#: includes/eme-options.php:3529
+#: includes/eme-options.php:3531
 msgid "Extra html headers"
 msgstr "Extra html-headers"
 
@@ -12460,15 +12460,15 @@ msgstr "Extra html-headers"
 msgid "Map options"
 msgstr "Kartinställningar"
 
-#: includes/eme-options.php:3497
+#: includes/eme-options.php:3499
 msgid "Choose the default thumbnail size to be shown when using placeholders involving thumbnails like e.g. #_EVENTIMAGETHUMB, #_LOCATIONIMAGETHUMB, ..."
 msgstr "Välj standard för miniatyrstorlek som ska visas när platshållare inkluderande miniatyrer används som t.ex. #_EVENTIMAGETHUMB, #_LOCATIONIMAGETHUMB, ..."
 
-#: includes/eme-options.php:3497
+#: includes/eme-options.php:3499
 msgid "Thumbnail size"
 msgstr "Storlek på miniatyr"
 
-#: includes/eme-options.php:3490
+#: includes/eme-options.php:3492
 msgid "Set the delimiter used in CSV exports."
 msgstr "Ange avgränsaren som används i CSV-exporter."
 
@@ -13494,7 +13494,7 @@ msgstr "Detta innehåll visas precis ovanför din kod för standardformatet för
 msgid "Default event list format header"
 msgstr "Standard sidhuvudformat för eventlistor"
 
-#: includes/eme-options.php:3489
+#: includes/eme-options.php:3491
 msgid "Remove leading zeros from minutes?"
 msgstr "Ta bort inledande nollor från minuter?"
 
@@ -13506,7 +13506,7 @@ msgstr "Format för event"
 msgid "Initial status for a new event"
 msgstr "Initial status för ett nytt event"
 
-#: includes/eme-options.php:3393
+#: includes/eme-options.php:3395
 msgid "Status for new event"
 msgstr "Status för nytt event"
 
@@ -14214,7 +14214,7 @@ msgstr "Redigera fält"
 #: includes/eme-options.php:3319
 #: includes/eme-options.php:3342
 #: includes/eme-options.php:3343
-#: includes/eme-options.php:3439
+#: includes/eme-options.php:3441
 msgid "the documentation"
 msgstr "dokumentationen"
 
@@ -14625,7 +14625,7 @@ msgstr "Paypal"
 
 #: includes/eme-events.php:6603
 #: includes/eme-members.php:2359
-#: includes/eme-options.php:3396
+#: includes/eme-options.php:3398
 msgid "Payment methods"
 msgstr "Betalningsmetoder"
 
@@ -14956,7 +14956,7 @@ msgstr "Kopiera"
 #: includes/eme-events.php:9785
 #: includes/eme-members.php:1966
 #: includes/eme-members.php:2091
-#: includes/eme-options.php:3448
+#: includes/eme-options.php:3450
 #: includes/eme-people.php:1059
 #: includes/eme-people.php:1249
 #: includes/eme-people.php:1580
@@ -15018,7 +15018,7 @@ msgstr "Alla kategorier"
 #: includes/eme-events.php:6299
 #: includes/eme-events.php:6808
 #: includes/eme-events.php:6816
-#: includes/eme-fs.php:624
+#: includes/eme-fs.php:632
 msgid "Event Status"
 msgstr "Eventstatus"
 
@@ -15163,7 +15163,7 @@ msgid "New event successfully inserted!"
 msgstr "Nytt event tillagt!"
 
 #: includes/eme-events.php:653
-#: includes/eme-fs.php:825
+#: includes/eme-fs.php:845
 msgid "Database insert failed!"
 msgstr "Inlägg i databasen misslyckades!"
 
@@ -15371,7 +15371,7 @@ msgstr "Lägg till attribut här"
 #: includes/eme-formfields.php:3865
 #: includes/eme-formfields.php:3866
 #: includes/eme-formfields.php:3867
-#: includes/eme-fs.php:640
+#: includes/eme-fs.php:648
 #: includes/eme-gdpr.php:453
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
@@ -15412,7 +15412,7 @@ msgstr "Nej"
 #: includes/eme-formfields.php:3865
 #: includes/eme-formfields.php:3866
 #: includes/eme-formfields.php:3867
-#: includes/eme-fs.php:641
+#: includes/eme-fs.php:649
 #: includes/eme-gdpr.php:453
 #: includes/eme-gdpr.php:454
 #: includes/eme-gdpr.php:575
@@ -15608,7 +15608,7 @@ msgstr ""
 msgid "Want to create your own payment gateway? Then create an extension, see "
 msgstr ""
 
-#: includes/eme-options.php:3439
+#: includes/eme-options.php:3441
 msgid "For more info on extensions, see "
 msgstr ""
 

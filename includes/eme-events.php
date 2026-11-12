@@ -10651,7 +10651,7 @@ function eme_get_event_post_answers() {
             $field_id  = intval( $matches[1] );
             $formfield = eme_get_formfield( $field_id );
             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'events' ) {
-                $value = eme_kses_maybe_unfiltered( $value );
+                $value = eme_kses_request_maybe_unfiltered( $value );
                 // for multivalue fields like checkbox, the value is in fact an array
                 // to store it, we make it a simple "multi" string using eme_convert_array2multi, so later on when we need to parse the values
                 // (when editing), we can re-convert it to an array with eme_convert_multi2array (see eme_formfields.php)

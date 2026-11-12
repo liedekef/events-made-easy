@@ -106,6 +106,8 @@ To prevent user-provided text from being executed as a shortcode or EME placehol
 = 3.3.9  (2026/11/) =
 * Fix all payment methods to check for valid payment method too
 * Security: fix for CVE-2026-127112 (reported by Wordfence)
+* Custom field filtering (event/location/task lists and signups) now only uses the first 20 selected values per field
+* Removed the deprecated functions eme_strip_js() and eme_apply_output_filters(); use eme_kses_request() and eme_sanitize_placeholder_output() instead
 
 = 3.3.8  (2026/11/11) =
 * Frontend submit: only show and accept event statuses the submitter is allowed to set. Users without publish rights can only submit with the configured "Status for new event" or as Draft, so a requested Draft/Private event can no longer get published by accident. Reported by kudo3228@gmail.com.

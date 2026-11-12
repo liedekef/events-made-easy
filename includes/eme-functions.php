@@ -2737,7 +2737,10 @@ function _eme_kses_single( $value, $allow_unfiltered, $unslash ) {
     // See https://codereview.stackexchange.com/questions/30045/regex-to-remove-inline-javascript-from-string
     if ( $allow_unfiltered ) {
         // even for unfiltered: strip out javascript
-        $res = preg_replace( '#<\s*script.*?>.*?<\s*/\s*script\s*>#is', '', $value );
+        // remove complete script elements first, then any stray opening/closing
+        // script tags (an unclosed <script src=...> would otherwise survive)
+        $res = preg_replace( '#<\s*script\b[^>]*>.*?<\s*/\s*script\s*>#is', '', $value );
+        $res = preg_replace( '#<\s*/?\s*script\b[^>]*>#is', '', $res );
         return _eme_strip_inline_event_handlers( $res );
     }
     $allowed_html = wp_kses_allowed_html( 'post' );

@@ -103,6 +103,10 @@ To prevent user-provided text from being executed as a shortcode or EME placehol
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.3.9  (2026/11/) =
+* Fix all payment methods to check for valid payment method too
+* Security: fix for CVE-2026-127112 (reported by Wordfence)
+
 = 3.3.8  (2026/11/11) =
 * Frontend submit: only show and accept event statuses the submitter is allowed to set. Users without publish rights can only submit with the configured "Status for new event" or as Draft, so a requested Draft/Private event can no longer get published by accident. Reported by kudo3228@gmail.com.
 * Frontend submit: the "Status for new event" setting no longer offers Frontend Draft or Trashed

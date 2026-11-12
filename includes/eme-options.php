@@ -1308,7 +1308,7 @@ function eme_sanitize_option( $option_value, $option_name ) {
             } elseif (in_array($key, $maybe_unfiltered)) {
                 $output[$key] = eme_kses_maybe_unfiltered($value);
             } else {
-                $output[$key] = eme_kses($value);
+                $output[$key] = eme_kses($value); // unslash already done, no need to do it again
             }
             if (array_key_exists($key,$numeric_options) && ! is_numeric( $output[$key] ) ) {
                 $output[$key] = $numeric_options[$key];

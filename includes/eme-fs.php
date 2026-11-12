@@ -663,7 +663,7 @@ function eme_fs_process_newevent() {
         $preserved_notes = $_POST['event']['event_notes'] ?? null;
         $preserved_single_event_format = $_POST['event']['event_single_event_format'] ?? null;
         $preserved_location_description = $_POST['event']['location_description'] ?? null;
-        $event_data = eme_kses($_POST['event']);
+        $event_data = eme_kses_request($_POST['event']);
         if ( ! is_array( $event_data ) ) {
             $event_data = [];
         }
@@ -673,21 +673,21 @@ function eme_fs_process_newevent() {
             }
         }
         if ( $preserved_notes !== null ) {
-            $event_data['event_notes'] = eme_kses_maybe_unfiltered( $preserved_notes );
+            $event_data['event_notes'] = eme_kses_request_maybe_unfiltered( $preserved_notes );
         }
         if ( $preserved_single_event_format !== null ) {
-            $event_data['event_single_event_format'] = eme_kses_maybe_unfiltered( $preserved_single_event_format );
+            $event_data['event_single_event_format'] = eme_kses_request_maybe_unfiltered( $preserved_single_event_format );
         }
         if ( $preserved_location_description !== null ) {
-            $event_data['location_description'] = eme_kses_maybe_unfiltered( $preserved_location_description );
+            $event_data['location_description'] = eme_kses_request_maybe_unfiltered( $preserved_location_description );
         }
     }
     // add in the event_attributes and properties
     if (isset($_POST['event_attributes']) && !empty($_POST['event_attributes']) && is_array($_POST['event_attributes'])) {
-        $event_data['event_attributes'] = eme_kses($_POST['event_attributes']);
+        $event_data['event_attributes'] = eme_kses_request($_POST['event_attributes']);
     }
     if (isset($_POST['event_properties']) && !empty($_POST['event_properties']) && is_array($_POST['event_properties'])) {
-        $event_data['event_properties'] = eme_kses($_POST['event_properties']);
+        $event_data['event_properties'] = eme_kses_request($_POST['event_properties']);
         // validate wp_page_template against the theme's allow-list
         if ( ! empty( $event_data['event_properties']['wp_page_template'] ) ) {
             $allowed_templates = array_values( wp_get_theme()->get_page_templates() );

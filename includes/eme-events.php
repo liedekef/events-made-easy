@@ -433,7 +433,7 @@ function eme_events_page() {
         $post_vars  = [ 'event_seats', 'price', 'currency', 'event_author', 'event_contactperson_id', 'event_url', 'event_image_url', 'event_image_id', 'event_prefix', 'event_slug', 'event_page_title_format', 'event_contactperson_email_body', 'event_registration_recorded_ok_html', 'event_respondent_email_body', 'event_registration_pending_email_body', 'event_registration_updated_email_body', 'event_registration_cancelled_email_body', 'event_registration_trashed_email_body', 'event_registration_form_format', 'event_cancel_form_format', 'event_registration_paid_email_body' ];
         foreach ( $post_vars as $post_var ) {
             if ( isset( $_POST[ $post_var ] ) ) {
-                $event[ $post_var ] = eme_kses( $_POST[ $post_var ] );
+                $event[ $post_var ] = eme_kses_request( $_POST[ $post_var ] );
             }
         }
 
@@ -448,8 +448,8 @@ function eme_events_page() {
         }
 
         // event notes and format
-        $event['event_single_event_format'] = eme_kses_maybe_unfiltered( $_POST['event_single_event_format'] ?? '' );
-        $event['event_notes']               = eme_kses_maybe_unfiltered( $_POST['content'] ?? '' );
+        $event['event_single_event_format'] = eme_kses_request_maybe_unfiltered( $_POST['event_single_event_format'] ?? '' );
+        $event['event_notes']               = eme_kses_request_maybe_unfiltered( $_POST['content'] ?? '' );
 
         if ( ! current_user_can( get_option( 'eme_cap_publish_event' ) ) ) {
             $event['event_status'] = EME_EVENT_STATUS_DRAFT;
@@ -551,7 +551,7 @@ function eme_events_page() {
         $i=1;
         while (isset( $_POST[ "eme_attr_{$i}_ref" ] ) && !eme_is_empty_string( $_POST[ "eme_attr_{$i}_ref" ] ) ) {
             if ( !eme_is_empty_string( $_POST[ "eme_attr_{$i}_name" ] ) ) {
-                $event_attributes[ $_POST[ "eme_attr_{$i}_ref" ] ] = eme_kses( $_POST[ "eme_attr_{$i}_name" ] );
+                $event_attributes[ $_POST[ "eme_attr_{$i}_ref" ] ] = eme_kses_request( $_POST[ "eme_attr_{$i}_name" ] );
             }
             $i++;
         }
@@ -568,7 +568,7 @@ function eme_events_page() {
                 } elseif ( $found_key == 'multiprice_desc' ) {
                     $event_properties[ $found_key ] = eme_convert_array2multi( eme_sanitize_request( eme_text_split_newlines( $value ) ) );
                 } else {
-                    $event_properties[ $found_key ] = eme_kses( $value );
+                    $event_properties[ $found_key ] = eme_kses_request( $value );
                 }
             }
             if ( preg_match( '/eme_loc_prop_(.+)/', eme_sanitize_request( $key ), $matches ) ) {
@@ -576,7 +576,7 @@ function eme_events_page() {
                 if ( preg_match( '/password/', $found_key ) ) {
                     $location_properties[ $found_key ] = $value;
                 } else {
-                    $location_properties[ $found_key ] = eme_kses( $value );
+                    $location_properties[ $found_key ] = eme_kses_request( $value );
                 }
             }
         }
@@ -10772,6 +10772,9 @@ function eme_get_cf_event_ids( $val, $field_id, $is_multi = 0 ) {
     if ( empty( $val ) ) {
         return [];
     }
+
+    // let's not filter for more than 20 things
+    $val = array_slice( $val, 0, 20 );
 
     $table = $wpdb->prefix . 'eme_answers';
 

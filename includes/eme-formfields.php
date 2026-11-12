@@ -82,7 +82,7 @@ function eme_formfields_page() {
                 if (eme_is_empty_string($_POST['field_tags'] )) {
                     $field_tags_arr = [];
                 } else {
-                    $field_tags_arr = eme_kses( eme_convert_multi2array(eme_convert_array2multi( eme_text_split_newlines( $_POST['field_tags'] ) )));
+                    $field_tags_arr = eme_kses_request( eme_convert_multi2array(eme_convert_array2multi( eme_text_split_newlines( $_POST['field_tags'] ) )));
                 }
                 if (eme_is_empty_string($_POST['admin_values'] )) {
                     $admin_values_arr = [];
@@ -92,7 +92,7 @@ function eme_formfields_page() {
                 if (eme_is_empty_string($_POST['admin_tags'] )) {
                     $admin_tags_arr = [];
                 } else {
-                    $admin_tags_arr = eme_kses( eme_convert_multi2array(eme_convert_array2multi( eme_text_split_newlines( $_POST['admin_tags'] ) )));
+                    $admin_tags_arr = eme_kses_request( eme_convert_multi2array(eme_convert_array2multi( eme_text_split_newlines( $_POST['admin_tags'] ) )));
                 }
 
                 // some sanity checks

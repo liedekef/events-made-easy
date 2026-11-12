@@ -4250,7 +4250,7 @@ function eme_add_update_person_from_backend( $person_id = 0 ) {
         $groups = [];
     }
     if ( isset( $_POST['properties'] ) ) {
-        $person['properties'] = eme_kses( $_POST['properties'] );
+        $person['properties'] = eme_kses_request( $_POST['properties'] );
     }
 
     // if the email is not empty, it needs to be valid

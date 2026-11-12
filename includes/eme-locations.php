@@ -127,7 +127,7 @@ function eme_locations_page() {
                 }
             }
             //switched to WP TinyMCE field
-            $location['location_description'] = eme_kses_maybe_unfiltered( $_POST['location_description'] );
+            $location['location_description'] = eme_kses_request_maybe_unfiltered( $_POST['location_description'] );
 
             if ( isset( $_POST['location_category_ids'] ) && eme_is_integer_array( $_POST['location_category_ids'] ) ) {
                 $location ['location_category_ids'] = join( ',', array_map( 'intval', $_POST['location_category_ids'] ) );
@@ -139,7 +139,7 @@ function eme_locations_page() {
             $i=1;
             while (isset( $_POST[ "eme_attr_{$i}_ref" ] ) && !eme_is_empty_string( $_POST[ "eme_attr_{$i}_ref" ] ) ) {
                 if ( !eme_is_empty_string( $_POST[ "eme_attr_{$i}_name" ] ) ) {
-                    $location_attributes[ $_POST[ "eme_attr_{$i}_ref" ] ] = eme_kses( $_POST[ "eme_attr_{$i}_name" ] );
+                    $location_attributes[ $_POST[ "eme_attr_{$i}_ref" ] ] = eme_kses_request( $_POST[ "eme_attr_{$i}_name" ] );
                 }
                 $i++;
             }
@@ -152,7 +152,7 @@ function eme_locations_page() {
                     if ( preg_match( '/password/', $found_key ) ) {
                         $location_properties[ $found_key ] = $value;
                     } else {
-                        $location_properties[ $found_key ] = eme_kses( $value );
+                        $location_properties[ $found_key ] = eme_kses_request( $value );
                     }
                 }
             }
@@ -1418,11 +1418,6 @@ function eme_sanitize_location( $location ) {
         }
     }
 
-    $preserved_description = $location['location_description'] ?? null;
-    $location = eme_kses( $location );
-    if ( $preserved_description !== null ) {
-        $location['location_description'] = eme_kses_maybe_unfiltered($preserved_description);
-    }
     return $location;
 }
 
@@ -3403,7 +3398,7 @@ function eme_get_location_post_answers() {
             $field_id  = intval( $matches[1] );
             $formfield = eme_get_formfield( $field_id );
             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
-                $value = eme_kses_maybe_unfiltered( $value );
+                $value = eme_kses_request_maybe_unfiltered( $value );
                 // for multivalue fields like checkbox, the value is in fact an array
                 // to store it, we make it a simple "multi" string using eme_convert_array2multi, so later on when we need to parse the values
                 // (when editing), we can re-convert it to an array with eme_convert_multi2array (see eme_formfields.php)
@@ -3492,6 +3487,9 @@ function eme_get_cf_location_ids( $val, $field_id, $is_multi = 0 ) {
     if ( empty( $val ) ) {
         return [];
     }
+
+    // let's not filter for more than 20 things
+    $val = array_slice( $val, 0, 20 );
 
     $table = $wpdb->prefix . 'eme_answers';
 

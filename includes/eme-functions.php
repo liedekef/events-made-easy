@@ -2590,7 +2590,136 @@ function eme_safe_css_attributes( $array ) {
     return $array;
 }
 
-function _eme_kses_single( $value, $allow_unfiltered ) {
+function _eme_find_html_tag_end( $html, $start ) {
+    $length = strlen( $html );
+    if ( 0 === substr_compare( $html, '<!--', $start, 4 ) ) {
+        $end = strpos( $html, '-->', $start + 4 );
+        return false === $end ? false : $end + 2;
+    }
+    $quote = '';
+    for ( $i = $start + 1; $i < $length; ++$i ) {
+        $char = $html[ $i ];
+        if ( '' !== $quote ) {
+            if ( $char === $quote ) {
+                $quote = '';
+            }
+            continue;
+        }
+        if ( '"' === $char || "'" === $char ) {
+            $quote = $char;
+            continue;
+        }
+        if ( '>' === $char ) {
+            return $i;
+        }
+    }
+    return false;
+}
+
+function _eme_strip_event_attributes_from_tag( $tag ) {
+    $length = strlen( $tag );
+    if ( $length < 2 || '<' !== $tag[0] || '/' === $tag[1] || '!' === $tag[1] || '?' === $tag[1] ) {
+        return $tag;
+    }
+    $i = 1;
+    while ( $i < $length && ! ctype_space( $tag[ $i ] ) && '/' !== $tag[ $i ] && '>' !== $tag[ $i ] ) {
+        ++$i;
+    }
+    $out = substr( $tag, 0, $i );
+    while ( $i < $length ) {
+        $whitespace_start = $i;
+        while ( $i < $length && ( ctype_space( $tag[ $i ] )
+            || ( '/' === $tag[ $i ] && ! ( $i + 1 < $length && '>' === $tag[ $i + 1 ] ) ) ) ) {
+            ++$i;
+        }
+        $whitespace = substr( $tag, $whitespace_start, $i - $whitespace_start );
+        if ( $i >= $length ) {
+            $out .= $whitespace;
+            break;
+        }
+        if ( '>' === $tag[ $i ] || ( '/' === $tag[ $i ] && $i + 1 < $length && '>' === $tag[ $i + 1 ] ) ) {
+            $out .= $whitespace . substr( $tag, $i );
+            break;
+        }
+        $attribute_start = $i;
+        while ( $i < $length ) {
+            $char = $tag[ $i ];
+            if ( ctype_space( $char ) || '=' === $char || '>' === $char || '/' === $char ) {
+                break;
+            }
+            ++$i;
+        }
+        $attribute_name = substr( $tag, $attribute_start, $i - $attribute_start );
+        if ( '' === $attribute_name ) {
+            $out .= $whitespace . $tag[ $i ];
+            ++$i;
+            continue;
+        }
+        while ( $i < $length && ctype_space( $tag[ $i ] ) ) {
+            ++$i;
+        }
+        if ( $i < $length && '=' === $tag[ $i ] ) {
+            ++$i;
+            while ( $i < $length && ctype_space( $tag[ $i ] ) ) {
+                ++$i;
+            }
+            if ( $i < $length ) {
+                $quote = $tag[ $i ];
+                if ( '"' === $quote || "'" === $quote ) {
+                    ++$i;
+                    while ( $i < $length && $tag[ $i ] !== $quote ) {
+                        ++$i;
+                    }
+                    if ( $i < $length ) {
+                        ++$i;
+                    }
+                } else {
+                    while ( $i < $length && ! ctype_space( $tag[ $i ] ) && '>' !== $tag[ $i ] ) {
+                        if ( '/' === $tag[ $i ] && $i + 1 < $length && '>' === $tag[ $i + 1 ] ) {
+                            break;
+                        }
+                        ++$i;
+                    }
+                }
+            }
+        }
+        $attribute = substr( $tag, $attribute_start, $i - $attribute_start );
+        if ( strlen( $attribute_name ) <= 2 || 0 !== stripos( $attribute_name, 'on' ) ) {
+            $out .= $whitespace . $attribute;
+        }
+    }
+    return $out;
+}
+
+function _eme_strip_inline_event_handlers( $html ) {
+    $length = strlen( $html );
+    $out    = '';
+    $offset = 0;
+    while ( $offset < $length ) {
+        $tag_start = strpos( $html, '<', $offset );
+        if ( false === $tag_start ) {
+            $out .= substr( $html, $offset );
+            break;
+        }
+        $out .= substr( $html, $offset, $tag_start - $offset );
+        $next = $tag_start + 1 < $length ? $html[ $tag_start + 1 ] : '';
+        if ( ! ctype_alpha( $next ) && '/' !== $next && '!' !== $next && '?' !== $next ) {
+            $out .= '<';
+            $offset = $tag_start + 1;
+            continue;
+        }
+        $tag_end = _eme_find_html_tag_end( $html, $tag_start );
+        if ( false === $tag_end ) {
+            $out .= _eme_strip_event_attributes_from_tag( substr( $html, $tag_start ) );
+            break;
+        }
+        $out .= _eme_strip_event_attributes_from_tag( substr( $html, $tag_start, $tag_end - $tag_start + 1 ) );
+        $offset = $tag_end + 1;
+    }
+    return $out;
+}
+
+function _eme_kses_single( $value, $allow_unfiltered, $unslash ) {
     if ( empty( $value ) ) {
         return $value;
     }
@@ -2599,15 +2728,17 @@ function _eme_kses_single( $value, $allow_unfiltered ) {
     // &lt;img onerror=...&gt; to sneak past wp_kses and reappear as live markup
     // once the browser decodes it again on render
     $value = html_entity_decode( $value, ENT_QUOTES, 'UTF-8' );
+    // Only request data is slashed by WordPress; stored values must not be unslashed again.
+    if ( $unslash ) {
+        $value = wp_unslash( $value );
+    }
     // To filter out JS, we should use domdocument, but the problem is that sometimes the
     // html is intentional incomplete, which would cause issues with domdocument
     // See https://codereview.stackexchange.com/questions/30045/regex-to-remove-inline-javascript-from-string
     if ( $allow_unfiltered ) {
         // even for unfiltered: strip out javascript
-        $res = preg_replace( '#<\s*script.*?>.*?<\s*/\s*script\s*>#is', '', wp_unslash( $value ) );
-        # also strip out inline javascript (onalert etc)
-        $res = preg_replace_callback( '#<[^>]+>#', function( $m ) { return preg_replace( '#\s+on\w+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)#i', '', $m[0] ); }, $res );
-        return $res;
+        $res = preg_replace( '#<\s*script.*?>.*?<\s*/\s*script\s*>#is', '', $value );
+        return _eme_strip_inline_event_handlers( $res );
     }
     $allowed_html = wp_kses_allowed_html( 'post' );
     // this option is per line
@@ -2637,39 +2768,45 @@ function _eme_kses_single( $value, $allow_unfiltered ) {
     add_filter( 'safe_style_css', 'eme_safe_css_attributes' );
     add_filter( 'safecss_filter_attr_allow_css', 'eme_safe_css_allow_color_functions', 10, 2 );
     // brute-force remove script tags, even if wp_kses wouldn't do it
-    $res = preg_replace( '#<\s*script(.*?)>(.*?)<\s*/\s*script\s*>#is', '', wp_kses( wp_unslash( $value ), $allowed_html ) );
-    # also strip out inline javascript (onalert etc)
-    $res = preg_replace( '#\bon\w+\s*=\s*\S+(?=.*>)#', '', $res );
+    $res = preg_replace( '#<\s*script(.*?)>(.*?)<\s*/\s*script\s*>#is', '', wp_kses( $value, $allowed_html ) );
+    $res = _eme_strip_inline_event_handlers( $res );
     remove_filter( 'safecss_filter_attr_allow_css', 'eme_safe_css_allow_color_functions', 10, 2 );
     remove_filter( 'safe_style_css', 'eme_safe_css_attributes' );
     return $res;
 }
 
-function eme_kses( $value ) {
-    $allow_unfiltered = 0;
+function _eme_kses_value( $value, $allow_unfiltered, $unslash ) {
     if ( is_array( $value ) ) {
-        return array_map( 'eme_kses', $value );
-    } else {
-        return _eme_kses_single( $value, $allow_unfiltered );
+        return array_map( static function( $v ) use ( $allow_unfiltered, $unslash ) {
+            return _eme_kses_value( $v, $allow_unfiltered, $unslash );
+        }, $value );
     }
+    return _eme_kses_single( $value, $allow_unfiltered, $unslash );
+}
+
+function eme_kses_request( $value ) {
+    return _eme_kses_value( $value, 0, true );
+}
+
+function eme_kses( $value ) {
+    return _eme_kses_value( $value, 0, false );
+}
+
+function eme_kses_request_maybe_unfiltered( $value ) {
+    // if allow_unfiltered is on: check if the user is actually allowed do it
+    $allow_unfiltered = current_user_can( 'unfiltered_html' ) ? 1 : 0;
+    return _eme_kses_value( $value, $allow_unfiltered, true );
 }
 
 function eme_kses_maybe_unfiltered( $value ) {
-    $allow_unfiltered = 1;
     // if allow_unfiltered is on: check if the user is actually allowed do it
-    if ( ! current_user_can( 'unfiltered_html' ) ) {
-        $allow_unfiltered = 0;
-    }
-    if ( is_array( $value ) ) {
-        return array_map( 'eme_kses_maybe_unfiltered', $value );
-    } else {
-        return _eme_kses_single( $value, $allow_unfiltered );
-    }
+    $allow_unfiltered = current_user_can( 'unfiltered_html' ) ? 1 : 0;
+    return _eme_kses_value( $value, $allow_unfiltered, false );
 }
 
 // backwards compatible
 function eme_strip_js( $value ) {
-    return eme_kses( $value );
+    return eme_kses_request( $value );
 }
 
 function eme_strip_weird( $value ) {
@@ -4791,7 +4928,7 @@ function eme_neutralize_template_syntax( $value, $target = 'html' ) {
 
 function eme_sanitize_placeholder_output( $replacement, $target, $esc_html = false, $neutralize = true ) {
     if ( $target == 'html' || $target == 'htmlmail' ) {
-        $replacement = eme_kses($replacement);
+        $replacement = eme_kses( $replacement );
         if ( $esc_html ) {
             $replacement = esc_html( $replacement );
         }

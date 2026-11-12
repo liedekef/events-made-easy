@@ -1162,7 +1162,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
             }
         }
         if ( isset( $_POST['properties'] ) ) {
-            $member['properties'] = eme_kses( $_POST['properties'] );
+            $member['properties'] = eme_kses_request( $_POST['properties'] );
         }
         // usage_count needs to be an int
         if ( isset( $member['properties']['usage_count'] ) ) {
@@ -1570,7 +1570,7 @@ function eme_add_update_membership( $membership_id = 0 ) {
             if ( preg_match( '/password/', $key ) ) {
                 $membership_properties[ $key ] = $value;
             } else {
-                $membership_properties[ $key ] = eme_kses( $value );
+                $membership_properties[ $key ] = eme_kses_request( $value );
             }
         }
         $membership['properties'] = $membership_properties;
@@ -7685,7 +7685,7 @@ function eme_get_membership_post_answers() {
             $field_id  = intval( $matches[1] );
             $formfield = eme_get_formfield( $field_id );
             if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'memberships' ) {
-                $value = eme_kses_maybe_unfiltered( $value );
+                $value = eme_kses_request_maybe_unfiltered( $value );
                 // for multivalue fields like checkbox, the value is in fact an array
                 // to store it, we make it a simple "multi" string using eme_convert_array2multi, so later on when we need to parse the values
                 // (when editing), we can re-convert it to an array with eme_convert_multi2array (see eme_formfields.php)

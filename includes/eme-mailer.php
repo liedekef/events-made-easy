@@ -2495,7 +2495,7 @@ function eme_parse_generic_mail_post() {
     }
 
     if ( ! empty( $_POST['generic_mail_message'] ) ) {
-        $mail_message = eme_kses_maybe_unfiltered( $_POST['generic_mail_message'] );
+        $mail_message = eme_kses_request_maybe_unfiltered( $_POST['generic_mail_message'] );
     } elseif ( isset( $_POST['generic_message_template'] ) && intval( $_POST['generic_message_template'] ) > 0 ) {
         $mail_message = eme_get_template_format_plain( intval( $_POST['generic_message_template'] ) );
     } else {
@@ -2554,7 +2554,7 @@ function eme_parse_event_mail_post() {
     }
 
     if ( ! empty( $_POST['event_mail_message'] ) ) {
-        $mail_message = eme_kses_maybe_unfiltered( $_POST['event_mail_message'] );
+        $mail_message = eme_kses_request_maybe_unfiltered( $_POST['event_mail_message'] );
     } elseif ( isset( $_POST['event_message_template'] ) && intval( $_POST['event_message_template'] ) > 0 ) {
         $mail_message = eme_get_template_format_plain( intval( $_POST['event_message_template'] ) );
     } else {

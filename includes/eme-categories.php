@@ -46,7 +46,7 @@ function eme_categories_page() {
 			// category update required
 			$category                  = [];
 			$category['category_name'] = eme_sanitize_request( $_POST['category_name'] );
-			$category['description']   = eme_kses( $_POST['description'] );
+			$category['description']   = eme_kses_request( $_POST['description'] );
 			if ( ! empty( $_POST['category_prefix'] ) ) {
 					$category['category_prefix'] = eme_sanitize_request( $_POST['category_prefix'] );
 			}

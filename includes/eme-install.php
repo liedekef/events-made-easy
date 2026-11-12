@@ -393,7 +393,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		$event['event_start'] = "$in_one_week 16:00:00";
 		$event['event_end']   = "$in_one_week 18:00:00";
 		$event['location_id'] = 1;
-		$event                = eme_sanitize_event( $event );
+		$event                = eme_normalize_event( $event );
 		// the fourth param is 1 to indicate we're in plugin install mode
 		// this will cause eme_db_insert_event to check the prefix itself
 		// since during install plugin globals are not available ...
@@ -404,7 +404,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		$event['event_start'] = "$in_four_weeks 20:00:00";
 		$event['event_end']   = "$in_four_weeks 22:00:00";
 		$event['location_id'] = 2;
-		$event                = eme_sanitize_event( $event );
+		$event                = eme_normalize_event( $event );
 		// the fourth param is 1 to indicate we're in plugin install mode
 		// this will cause eme_db_insert_event to check the prefix itself
 		// since during install plugin globals are not available ...
@@ -415,7 +415,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		$event['event_start'] = "$in_one_year 22:00:00";
 		$event['event_end']   = "$in_one_year 23:59:59";
 		$event['location_id'] = 3;
-		$event                = eme_sanitize_event( $event );
+		$event                = eme_normalize_event( $event );
 		// the fourth param is 1 to indicate we're in plugin install mode
 		// this will cause eme_db_insert_event to check the prefix itself
 		// since during install plugin globals are not available ...

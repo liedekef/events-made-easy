@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 3.3.8
+Stable tag: 3.3.9
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -103,11 +103,12 @@ To prevent user-provided text from being executed as a shortcode or EME placehol
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.3.9  (2026/11/) =
+= 3.3.9  (2026/11/12) =
 * Fix all payment methods to check for valid payment method too
 * Security: fix for CVE-2026-127112 (reported by Wordfence)
 * Custom field filtering (event/location/task lists and signups) now only uses the first 20 selected values per field
 * Removed the deprecated functions eme_strip_js() and eme_apply_output_filters(); use eme_kses_request() and eme_sanitize_placeholder_output() instead
+* Renamed eme_sanitize_event()/eme_sanitize_location() to eme_normalize_event()/eme_normalize_location() to reflect that they do not filter HTML; the old names remain as backwards-compatible wrappers
 
 = 3.3.8  (2026/11/11) =
 * Frontend submit: only show and accept event statuses the submitter is allowed to set. Users without publish rights can only submit with the configured "Status for new event" or as Draft, so a requested Draft/Private event can no longer get published by accident. Reported by kudo3228@gmail.com.

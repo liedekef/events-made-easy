@@ -800,7 +800,7 @@ function eme_fs_process_newevent() {
         if ($eme_fs_options['price']>0 && $pg_count>0) {
             $event_data['event_status'] = EME_EVENT_STATUS_FS_DRAFT;
         }
-        $event_data = eme_sanitize_event($event_data);
+        $event_data = eme_normalize_event($event_data);
         $validation_result = '';
         if (has_filter('eme_fs_validate_event_filter')) {
             $validation_result = apply_filters( 'eme_fs_validate_event_filter', $event_data );
@@ -883,7 +883,7 @@ function eme_fs_processlocation( $event_data, $force=0 ) {
     if (empty($location['location_name']) && empty($location['location_address1']) && empty($location['location_latitude']) && empty($location['location_longitude'])) {
         return 0;
     }
-    $location = eme_sanitize_location($location);
+    $location = eme_normalize_location($location);
     $location_id=eme_get_identical_location_id($location);
     if (!$location_id ) {
         $validation_result = eme_validate_location ( $location );

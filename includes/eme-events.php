@@ -587,8 +587,8 @@ function eme_events_page() {
         $event['event_properties']       = eme_init_event_props( $event_properties );
         $location['location_properties'] = eme_init_location_props( $location_properties );
 
-        $event             = eme_sanitize_event( $event );
-        $location          = eme_sanitize_location( $location );
+        $event             = eme_normalize_event( $event );
+        $location          = eme_normalize_location( $location );
         $validation_result = eme_validate_event( $event );
         if ( !empty($validation_result) ) {
             // validation unsuccessful
@@ -6134,7 +6134,7 @@ function eme_import_csv_events() {
                     $event_id = eme_check_event_external_ref( $line['event_external_ref'] );
                 }
 
-                $line = eme_sanitize_event( $line );
+                $line = eme_normalize_event( $line );
                 if ( $event_id ) {
                     // event_id is returned if update is ok, and we use the location id later on
                     $event_id = eme_db_update_event( $line, $event_id );
@@ -9319,7 +9319,15 @@ function eme_general_footer() {
     }
 }
 
-function eme_sanitize_event( $event ) {
+// Normalizes an event array: removes unwanted fields, fixes the start/end
+// datetimes, seats, prices and derived properties.
+//
+// It deliberately does NOT filter HTML. Free-text fields (e.g. event_notes,
+// event_single_event_format) must be sanitized by the caller at input time
+// using eme_kses_request()/eme_kses_request_maybe_unfiltered(). Re-running kses
+// here would re-evaluate the *current* user's unfiltered_html capability against
+// already-stored data and could silently strip content on a later save.
+function eme_normalize_event( $event ) {
     // remove possible unwanted fields
     if ( isset( $event['event_id'] ) ) {
         unset( $event['event_id'] );
@@ -9462,6 +9470,11 @@ function eme_sanitize_event( $event ) {
     $event['event_properties'] = $event_properties;
 
     return $event;
+}
+
+// backwards compatible
+function eme_sanitize_event( $event ) {
+    return eme_normalize_event( $event );
 }
 
 function eme_db_insert_event( $line, $event_is_part_of_recurrence = 0, $day_difference = 0, $plugin_installing = 0 ) {

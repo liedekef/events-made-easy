@@ -2616,6 +2616,11 @@ function _eme_find_html_tag_end( $html, $start ) {
     return false;
 }
 
+// Best-effort removal of inline event handler attributes (on*) from a single tag.
+// This is defense-in-depth only, NOT a security boundary: it is a hand-rolled
+// tokenizer and is never the sole protection for untrusted input. The filtered
+// (non-unfiltered_html) path relies on wp_kses() instead; the unfiltered path
+// trusts the user by definition (WordPress grants them raw HTML).
 function _eme_strip_event_attributes_from_tag( $tag ) {
     $length = strlen( $tag );
     if ( $length < 2 || '<' !== $tag[0] || '/' === $tag[1] || '!' === $tag[1] || '?' === $tag[1] ) {
@@ -2736,9 +2741,12 @@ function _eme_kses_single( $value, $allow_unfiltered, $unslash ) {
     // html is intentional incomplete, which would cause issues with domdocument
     // See https://codereview.stackexchange.com/questions/30045/regex-to-remove-inline-javascript-from-string
     if ( $allow_unfiltered ) {
-        // even for unfiltered: strip out javascript
-        // remove complete script elements first, then any stray opening/closing
-        // script tags (an unclosed <script src=...> would otherwise survive)
+        // The user has the unfiltered_html capability (WordPress would store their
+        // raw HTML), so this branch cannot be a real security boundary. We still do
+        // a best-effort cleanup (strip script elements and inline on* handlers).
+        // Untrusted input always goes through the wp_kses() branch below.
+        // Remove complete script elements first, then any stray opening/closing
+        // script tags (an unclosed <script src=...> would otherwise survive).
         $res = preg_replace( '#<\s*script\b[^>]*>.*?<\s*/\s*script\s*>#is', '', $value );
         $res = preg_replace( '#<\s*/?\s*script\b[^>]*>#is', '', $res );
         return _eme_strip_inline_event_handlers( $res );

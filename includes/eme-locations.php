@@ -158,7 +158,7 @@ function eme_locations_page() {
             }
             $location['location_properties'] = eme_init_location_props( $location_properties );
 
-            $location          = eme_sanitize_location( $location );
+            $location          = eme_normalize_location( $location );
             $validation_result = eme_validate_location( $location );
             if ( $validation_result == 'OK' ) {
                 if ( $action == 'do_addlocation' ) {
@@ -1368,7 +1368,15 @@ function eme_get_identical_location_id( $location ) {
     return $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
-function eme_sanitize_location( $location ) {
+// Normalizes a location array: removes unwanted fields, fixes URLs, coerces
+// lat/long and id fields, and derives the slug.
+//
+// It deliberately does NOT filter HTML. Free-text fields (e.g.
+// location_description) must be sanitized by the caller at input time using
+// eme_kses_request()/eme_kses_request_maybe_unfiltered(). Re-running kses here
+// would re-evaluate the *current* user's unfiltered_html capability against
+// already-stored data and could silently strip content on a later save.
+function eme_normalize_location( $location ) {
     // remove possible unwanted fields
     if ( isset( $location['location_id'] ) ) {
         unset( $location['location_id'] );
@@ -1419,6 +1427,11 @@ function eme_sanitize_location( $location ) {
     }
 
     return $location;
+}
+
+// backwards compatible
+function eme_sanitize_location( $location ) {
+    return eme_normalize_location( $location );
 }
 
 function eme_validate_location( $location ) {

@@ -2804,11 +2804,6 @@ function eme_kses_maybe_unfiltered( $value ) {
     return _eme_kses_value( $value, $allow_unfiltered, false );
 }
 
-// backwards compatible
-function eme_strip_js( $value ) {
-    return eme_kses_request( $value );
-}
-
 function eme_strip_weird( $value ) {
     if ( empty( $value ) ) {
         return $value;
@@ -4898,10 +4893,6 @@ function eme_message_error_div($message, $is_dismissible = 0) {
     return "<div class='notice notice-error $dismiss_class eme-message-admin'>" . wp_kses_post( $message ) . '</div>';
 }
 
-// backwars compatible
-function eme_apply_output_filters( $replacement, $target, $esc_html = false ) {
-    return eme_sanitize_placeholder_output( $replacement, $target, $esc_html, false );
-}
 function eme_neutralize_template_syntax( $value, $target = 'html' ) {
     if ( is_array( $value ) ) {
         return array_map(

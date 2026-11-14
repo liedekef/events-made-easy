@@ -547,6 +547,7 @@ function eme_if_shortcode($atts, $content) {
             'le'          => '',
             'gt'          => '',
             'ge'          => '',
+            'inrange'     => '',
             'contains'    => '',
             'notcontains' => '',
             'is_empty'    => 0,
@@ -594,6 +595,13 @@ function eme_if_shortcode($atts, $content) {
     } elseif (is_numeric($atts['ge']) || !empty($atts['ge'])) {
         if ($tag >= $atts['ge']) {
             return do_shortcode($content);
+        }
+    } elseif (!empty($atts['inrange'])) {
+        $inrange_arr = explode('..', $atts['inrange']);
+        if (count($inrange_arr) == 2 && is_numeric($tag) && is_numeric($inrange_arr[0]) && is_numeric($inrange_arr[1])) {
+            if ($tag >= $inrange_arr[0] && $tag <= $inrange_arr[1]) {
+                return do_shortcode($content);
+            }
         }
     } elseif (is_numeric($atts['contains']) || !empty($atts['contains'])) {
         if (strpos($tag, $atts['contains']) !== false) {
@@ -650,8 +658,6 @@ function eme_if_shortcode($atts, $content) {
                 $notincsv = trim($notincsv);
                 if (in_array($notincsv, explode(',', $tag)) || in_array($notincsv, explode(', ', $tag))) {
                     $found = 1;
-                } else {
-                    $found = 0;
                 }
             }
             if (!$found) {

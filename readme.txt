@@ -103,6 +103,9 @@ To prevent user-provided text from being executed as a shortcode or EME placehol
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.3.10  (2026/11/) =
+* The eme_if shortcode now supports an "inrange" attribute, which matches when the tag value is numeric and lies between two numeric bounds (inclusive). The range is split on "..", for example: [eme_if tag="#_FIELD{5}" inrange="10..20"]In range![/eme_if]
+
 = 3.3.9  (2026/11/12) =
 * Fix all payment methods to check for valid payment method too
 * Security: fix for CVE-2026-127112 (reported by Wordfence)

@@ -5,7 +5,7 @@ namespace EventsMadeEasy;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Small IMAP4rev1 client shared by Events Made Easy and EME Accounting.
+ * Small IMAP4rev1 client
  *
  * It uses PHP streams instead of ext-imap, which is deprecated and no longer
  * bundled with newer PHP versions. Only the commands needed by the mailbox

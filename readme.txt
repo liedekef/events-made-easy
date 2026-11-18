@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, bookings, maps, payment gateways
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 3.3.9
+Stable tag: 3.3.10
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -103,9 +103,9 @@ To prevent user-provided text from being executed as a shortcode or EME placehol
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.3.10  (2026/11/) =
+= 3.3.10  (2026/11/18) =
 * The eme_if shortcode now supports an "inrange" attribute, which matches when the tag value is numeric and lies between two numeric bounds (inclusive). The range is split on "..", for example: [eme_if tag="#_FIELD{5}" inrange="10..20"]In range![/eme_if]
-* Update stripe api to 23.0
+* Updated Stripe API to 23.0
 * More general imap client, so other plugins can use it too
 * Only add wp user for memberships if the user is actually active
 

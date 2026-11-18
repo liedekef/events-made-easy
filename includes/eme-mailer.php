@@ -4247,6 +4247,9 @@ function eme_process_bounces() {
         return [ 'error' => __( 'IMAP bounce handler is not fully configured.', 'events-made-easy' ) ];
     }
 
+    if ( ! class_exists( '\EventsMadeEasy\ImapClient' ) ) {
+        require_once EME_INCLUDE_DIR . 'class-imap.php';
+    }
     require_once __DIR__ . '/bounce-handler/BounceIMAP.php';
     require_once __DIR__ . '/bounce-handler/BounceRules.php';
     require_once __DIR__ . '/bounce-handler/BounceMailHandler.php';

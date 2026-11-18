@@ -11,7 +11,8 @@ declare(strict_types=1);
  * @license   GPL
  *
  * Rewritten to drop the ext-imap (UW-IMAP) dependency in favour of the
- * bundled BounceIMAP client (see BounceIMAP.php). Since this is now used
+ * shared EME ImapClient, used through the BounceIMAP adapter (see BounceIMAP.php).
+ * Since this is now used
  * strictly read-only, all delete/move/expunge handling (disableDelete,
  * moveHard, moveSoft, moveUnprocessed, purgeUnprocessed, testMode,
  * globalDelete, mailboxExist, openLocal) has been dropped along with it.
@@ -649,14 +650,19 @@ class BounceMailHandler
 
         $this->output('Total: ' . $totalCount . ' messages ');
 
-        if ($this->sinceDate !== null) {
-            $criteria = 'SINCE "' . date('d-M-Y', $this->sinceDate) . '"';
-            $messageNumbers = $this->client->search([$criteria]);
-            sort($messageNumbers);
-            $this->output('Matching ' . $criteria . ': ' . count($messageNumbers) . ' messages ');
-        } else {
-            $messageNumbers = $totalCount > 0 ? range(1, $totalCount) : [];
+        // search() returns UIDs, which stay valid for the whole session even
+        // if another client expunges messages while we are processing.
+        $criteria = $this->sinceDate !== null
+            ? 'SINCE "' . date('d-M-Y', $this->sinceDate) . '"'
+            : 'ALL';
+        $messageNumbers = $this->client->search([$criteria]);
+        sort($messageNumbers);
+        if ($messageNumbers === [] && $this->client->getLastError() !== '') {
+            $this->errorMessage = 'SEARCH failed: ' . $this->client->getLastError();
+            $this->output();
+            return false;
         }
+        $this->output('Matching ' . $criteria . ': ' . count($messageNumbers) . ' messages ');
 
         $fetchedCount = count($messageNumbers);
         $processedCount = 0;

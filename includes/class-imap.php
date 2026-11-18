@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
  * bundled with newer PHP versions. Only the commands needed by the mailbox
  * integrations are implemented:
  * LOGIN, EXAMINE/SELECT, SEARCH, FETCH BODY.PEEK/BODYSTRUCTURE,
- * INTERNALDATE and STORE.
+ * INTERNALDATE, STORE, CAPABILITY and EXPUNGE.
  *
  * All message commands use UIDs (UID SEARCH / UID FETCH / UID STORE), so the
  * numbers returned by search() stay valid for the whole session even when
@@ -245,6 +245,35 @@ class ImapClient {
         [ $ok, , , $response ] = $this->command( "UID STORE {$uid} +FLAGS (\\Seen)" );
         if ( ! $ok ) {
             $this->last_error = "STORE {$uid} failed: " . trim( $response );
+        }
+        return $ok;
+    }
+
+    public function delete_message( int $uid ): bool {
+        return $this->delete_messages( [ $uid ] );
+    }
+
+    /**
+     * @param int[] $uids
+     */
+    public function delete_messages( array $uids ): bool {
+        $uids = array_values( array_unique( array_filter( array_map( 'intval', $uids ), static fn( int $uid ): bool => $uid > 0 ) ) );
+        if ( $uids === [] ) {
+            return false;
+        }
+
+        $set = implode( ',', $uids );
+        [ $ok, , , $response ] = $this->command( "UID STORE {$set} +FLAGS (\\Deleted)" );
+        if ( ! $ok ) {
+            $this->last_error = "STORE {$set} failed: " . trim( $response );
+            return false;
+        }
+
+        [ $capable, $lines ] = $this->command( 'CAPABILITY' );
+        $uid_expunge = $capable && stripos( implode( ' ', $lines ), 'UIDPLUS' ) !== false;
+        [ $ok, , , $response ] = $this->command( $uid_expunge ? "UID EXPUNGE {$set}" : 'EXPUNGE' );
+        if ( ! $ok ) {
+            $this->last_error = 'EXPUNGE failed: ' . trim( $response );
         }
         return $ok;
     }

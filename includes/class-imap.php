@@ -7,10 +7,10 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Small IMAP4rev1 client shared by Events Made Easy and EME Accounting.
  *
- * Based on the former EME BounceIMAP client (GPL). It uses PHP streams instead
- * of ext-imap, which is deprecated and no longer bundled with newer PHP
- * versions. Only the commands needed by the mailbox integrations are
- * implemented: LOGIN, EXAMINE/SELECT, SEARCH, FETCH BODY.PEEK/BODYSTRUCTURE,
+ * It uses PHP streams instead of ext-imap, which is deprecated and no longer
+ * bundled with newer PHP versions. Only the commands needed by the mailbox
+ * integrations are implemented:
+ * LOGIN, EXAMINE/SELECT, SEARCH, FETCH BODY.PEEK/BODYSTRUCTURE,
  * INTERNALDATE and STORE.
  *
  * All message commands use UIDs (UID SEARCH / UID FETCH / UID STORE), so the

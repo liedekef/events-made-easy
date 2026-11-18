@@ -11,14 +11,13 @@ declare(strict_types=1);
  * @license   GPL
  *
  * Rewritten to drop the ext-imap (UW-IMAP) dependency in favour of the
- * shared EME ImapClient, used through the BounceIMAP adapter (see BounceIMAP.php).
- * Since this is now used
- * strictly read-only, all delete/move/expunge handling (disableDelete,
- * moveHard, moveSoft, moveUnprocessed, purgeUnprocessed, testMode,
- * globalDelete, mailboxExist, openLocal) has been dropped along with it.
- * If you need those again later, the ext-imap-based version in version
- * control history is the reference - don't try to bolt them onto this
- * class without adding STORE/EXPUNGE/COPY support to BounceIMAP first.
+ * shared \EventsMadeEasy\ImapClient. Since this is now used strictly
+ * read-only, all delete/move/expunge handling (disableDelete, moveHard,
+ * moveSoft, moveUnprocessed, purgeUnprocessed, testMode, globalDelete,
+ * mailboxExist, openLocal) has been dropped along with it. If you need
+ * those again later, the ext-imap-based version in version control history
+ * is the reference - don't try to bolt them onto this class without adding
+ * STORE/EXPUNGE/COPY support to ImapClient first.
  */
 namespace BounceMailHandler;
 
@@ -245,7 +244,7 @@ class BounceMailHandler
     /**
      * (internal) the connected IMAP client
      *
-     * @var BounceIMAP|null
+     * @var \EventsMadeEasy\ImapClient|null
      */
     protected $client;
 
@@ -299,20 +298,20 @@ class BounceMailHandler
         set_time_limit(self::SECONDS_TIMEOUT);
 
         // 'notls' means no encryption; anything else is passed straight
-        // through to BounceIMAP::connect() ('ssl' or 'tls').
+        // through to ImapClient::connect() ('ssl' or 'tls').
         $encryption = $this->serviceOption === 'notls' ? '' : $this->serviceOption;
 
-        $this->client = new BounceIMAP();
+        $this->client = new \EventsMadeEasy\ImapClient();
 
         if (!$this->client->connect($this->mailhost, $this->port, $encryption)) {
-            $this->errorMessage = 'Cannot create IMAP connection to ' . $this->mailhost . "\n" . 'Error MSG: ' . $this->client->getLastError();
+            $this->errorMessage = 'Cannot create IMAP connection to ' . $this->mailhost . "\n" . 'Error MSG: ' . $this->client->get_last_error();
             $this->output();
 
             return false;
         }
 
         if (!$this->client->login($this->mailboxUserName, $this->mailboxPassword)) {
-            $this->errorMessage = 'Login failed for ' . $this->mailboxUserName . "\n" . 'Error MSG: ' . $this->client->getLastError();
+            $this->errorMessage = 'Login failed for ' . $this->mailboxUserName . "\n" . 'Error MSG: ' . $this->client->get_last_error();
             $this->output();
 
             return false;
@@ -423,11 +422,11 @@ class BounceMailHandler
                 // rather than on the notification itself - check that
                 // part's header section specifically rather than pulling
                 // and scanning the whole body.
-                $originalHeader = $this->client->fetchSection($pos, $dsnOriginalPart . '.HEADER', $this->maxFetchBytes) ?? '';
+                $originalHeader = $this->client->fetch_section($pos, $dsnOriginalPart . '.HEADER', $this->maxFetchBytes) ?? '';
                 $requiredXHeaderValue = $this->findRequiredXHeaderValue($originalHeader);
             }
             if ($requiredXHeaderValue === false && $type === 'BODY') {
-                $bodyFull = $this->client->fetchSection($pos, 'TEXT', $this->maxFetchBytes) ?? '';
+                $bodyFull = $this->client->fetch_section($pos, 'TEXT', $this->maxFetchBytes) ?? '';
                 $requiredXHeaderValue = $this->findRequiredXHeaderValue($bodyFull);
             }
 
@@ -442,18 +441,18 @@ class BounceMailHandler
         // common DSN case), since dsnMsg/dsnReport already carry the
         // meaningful content for that path.
         if ($bodyFull === null && ($type === 'BODY' || $this->actionFunctionOnAllMessages)) {
-            $bodyFull = $this->client->fetchSection($pos, 'TEXT', $this->maxFetchBytes) ?? '';
+            $bodyFull = $this->client->fetch_section($pos, 'TEXT', $this->maxFetchBytes) ?? '';
         }
         $body = '';
 
         if ($type === 'DSN') {
             // human-readable explanation part of the DSN (Delivery Status Notification)
-            $dsnMsg = $this->client->fetchSection($pos, $dsnMsgPart, $this->maxFetchBytes) ?? '';
-            $dsnMsg = $this->decodeBySection($dsnMsg, $this->client->fetchSection($pos, $dsnMsgPart . '.MIME', $this->maxFetchBytes), $headerFull);
+            $dsnMsg = $this->client->fetch_section($pos, $dsnMsgPart, $this->maxFetchBytes) ?? '';
+            $dsnMsg = $this->decodeBySection($dsnMsg, $this->client->fetch_section($pos, $dsnMsgPart . '.MIME', $this->maxFetchBytes), $headerFull);
 
             // machine-parsable delivery-status part of the DSN
             if ($dsnMsgPart !== $dsnReportPart) {
-                $dsnReport = $this->client->fetchSection($pos, $dsnReportPart, $this->maxFetchBytes) ?? '';
+                $dsnReport = $this->client->fetch_section($pos, $dsnReportPart, $this->maxFetchBytes) ?? '';
             } else {
                 $dsnReport = $dsnMsg;
             }
@@ -462,8 +461,8 @@ class BounceMailHandler
             $result = is_callable($this->customDSNRulesCallback) ? call_user_func($this->customDSNRulesCallback, $result, $dsnMsg, $dsnReport, $this->debugDsnRule) : $result;
         } elseif ($type === 'BODY') {
             if (preg_match("/^Content-Type:\s*multipart\//mi", $headerFull)) {
-                $body = $this->client->fetchSection($pos, '1', $this->maxFetchBytes) ?? $bodyFull;
-                $body = $this->decodeBySection($body, $this->client->fetchSection($pos, '1.MIME', $this->maxFetchBytes), $headerFull);
+                $body = $this->client->fetch_section($pos, '1', $this->maxFetchBytes) ?? $bodyFull;
+                $body = $this->decodeBySection($body, $this->client->fetch_section($pos, '1.MIME', $this->maxFetchBytes), $headerFull);
             } else {
                 // section '1' of a non-multipart message is byte-identical to
                 // TEXT, and it has no separate '1.MIME' sub-header - we already
@@ -553,7 +552,7 @@ class BounceMailHandler
 
     /**
      * Finds the DSN-relevant parts within a flattened BODYSTRUCTURE (as
-     * returned by BounceIMAP::fetchStructure()): the message/delivery-status
+     * returned by ImapClient::fetch_structure()): the message/delivery-status
      * part, and the human-readable explanation part alongside it.
      *
      * Only looks at top-level parts (no '.' in the part number) - a
@@ -639,10 +638,10 @@ class BounceMailHandler
             $this->maxMessages = $max;
         }
 
-        $totalCount = $this->client->openMailboxReadOnly($this->boxname);
+        $totalCount = $this->client->open_mailbox_read_only($this->boxname);
 
         if ($totalCount === false) {
-            $this->errorMessage = 'Could not open mailbox "' . $this->boxname . '": ' . $this->client->getLastError();
+            $this->errorMessage = 'Could not open mailbox "' . $this->boxname . '": ' . $this->client->get_last_error();
             $this->output();
 
             return false;
@@ -657,8 +656,8 @@ class BounceMailHandler
             : 'ALL';
         $messageNumbers = $this->client->search([$criteria]);
         sort($messageNumbers);
-        if ($messageNumbers === [] && $this->client->getLastError() !== '') {
-            $this->errorMessage = 'SEARCH failed: ' . $this->client->getLastError();
+        if ($messageNumbers === [] && $this->client->get_last_error() !== '') {
+            $this->errorMessage = 'SEARCH failed: ' . $this->client->get_last_error();
             $this->output();
             return false;
         }
@@ -678,7 +677,7 @@ class BounceMailHandler
         $this->output('Running read-only: nothing will be deleted, moved, or marked as read');
 
         foreach ($messageNumbers as $x) {
-            $headerFull = $this->client->fetchHeader($x, $this->maxFetchBytes) ?? '';
+            $headerFull = $this->client->fetch_header($x, $this->maxFetchBytes) ?? '';
 
             $type = 'BODY';
             $dsnMsgPart = '1';
@@ -694,7 +693,7 @@ class BounceMailHandler
                     // multipart/mixed and lose the report-type marker from
                     // the outer Content-Type. Fall back to the message's
                     // actual MIME structure
-                    $structure = $this->client->fetchStructure($x);
+                    $structure = $this->client->fetch_structure($x);
                     $dsnParts = $structure !== null ? $this->findDsnParts($structure) : null;
 
                     if ($dsnParts !== null) {

@@ -299,16 +299,24 @@ function eme_db_insert_membership( $membership ) {
     }
 }
 
+function eme_member_maybe_create_wp_user( $member_id ) {
+    $member = eme_get_member( $member_id );
+    if ( empty( $member ) || ! eme_is_active_member( $member ) ) {
+        return;
+    }
+    $membership = eme_get_membership( $member['membership_id'] );
+    if ( empty( $membership['properties']['create_wp_user'] ) ) {
+        return;
+    }
+    $person = eme_get_person( $member['person_id'] );
+    if ( ! empty( $person ) && empty( $person['wp_id'] ) && ! email_exists( $person['email'] ) ) {
+        eme_create_wp_user( $person );
+    }
+}
+
 function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-
-    if ( $membership['properties']['create_wp_user'] ) {
-        $person = eme_get_person( $line['person_id'] );
-        if ( ! empty( $person ) && empty( $person['wp_id'] ) && ! email_exists( $person['email'] ) ) {
-            eme_create_wp_user( $person );
-        }
-    }
 
     $tmp_member = eme_new_member();
     // we only want the columns that interest us
@@ -346,6 +354,7 @@ function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
         }
         eme_update_person_lastseen( $member['person_id'] );
         eme_store_member_answers( member: $member, original_post_memberdata: $line );
+        eme_member_maybe_create_wp_user( $member_id );
         return $member_id;
     }
 }
@@ -387,6 +396,7 @@ function eme_db_update_member( $member_id, $line, $membership, $update_answers =
         eme_member_recalculate_status( $member_id );
         // now get the updated member before doing other actions
         $member = eme_get_member( $member_id );
+        eme_member_maybe_create_wp_user( $member_id );
         // in case we edit a head of family, $update_answers is 0 for the family members (in the function eme_add_update_member), otherwise those will get the same answers as the head, which is not the intention
         if ( $update_answers ) {
             eme_store_member_answers( member: $member, original_post_memberdata: $line );
@@ -4557,6 +4567,7 @@ function eme_member_set_status( $member_id, $status ) {
     if ( ! empty( $member ) ) {
         eme_update_person_lastseen( $member['person_id'] );
     }
+    eme_member_maybe_create_wp_user( $member_id );
     if ( has_action( 'eme_member_status_change_action' ) ) {
         do_action( 'eme_member_status_change_action', $member_id, $status );
     }
@@ -7389,6 +7400,9 @@ function eme_accept_member_payment( $payment_id, $pg = '', $pg_pid = '' ) {
         $res    = eme_extend_member( $member, $pg, $pg_pid );
         $action = 'extendMember';
         break;
+    default:
+        // currently not possible: all states are handled, but we want to make sure
+        return;
     }
     if ( $res ) {
         $membership = eme_get_membership( $member['membership_id'] );
@@ -7396,6 +7410,7 @@ function eme_accept_member_payment( $payment_id, $pg = '', $pg_pid = '' ) {
             eme_add_persongroups( $member['person_id'], $membership['properties']['addpersontogroup'] );
         }
         $member = eme_get_member( $member['member_id'] );
+        eme_member_maybe_create_wp_user( $member['member_id'] );
         eme_email_member_action( $member, $action );
         $related_member_ids = eme_get_family_member_ids( $member['member_id'] );
         if ( ! empty( $related_member_ids ) ) {
@@ -7404,6 +7419,7 @@ function eme_accept_member_payment( $payment_id, $pg = '', $pg_pid = '' ) {
                 if ( ! empty( $membership['properties']['addpersontogroup'] ) ) {
                     eme_add_persongroups( $related_member['person_id'], $membership['properties']['addpersontogroup'] );
                 }
+                eme_member_maybe_create_wp_user( $related_member_id );
                 eme_email_member_action( $related_member, $action );
             }
         }

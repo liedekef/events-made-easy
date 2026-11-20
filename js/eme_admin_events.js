@@ -426,6 +426,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     if (emeadmin.translate_map_is_active === 'true') {
                         loadMapLatLong(item.name, item.address1, item.address2, item.city, item.state, item.zip, item.country, item.latitude, item.longitude);
+                        eme_scheduleBalloonRefresh();
                     }
                 });
             });

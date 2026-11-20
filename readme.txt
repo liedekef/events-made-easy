@@ -103,6 +103,9 @@ To prevent user-provided text from being executed as a shortcode or EME placehol
 4. Recurrence editing of an event
 
 == Changelog ==
+= 3.3.11  (2026/11/) =
+* Location edit now uses the configured balloon format live (also frontend)
+
 = 3.3.10  (2026/11/18) =
 * The eme_if shortcode now supports an "inrange" attribute, which matches when the tag value is numeric and lies between two numeric bounds (inclusive). The range is split on "..", for example: [eme_if tag="#_FIELD{5}" inrange="10..20"]In range![/eme_if]
 * Updated Stripe API to 23.0

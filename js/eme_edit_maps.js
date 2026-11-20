@@ -34,6 +34,7 @@ function destroyMap(containerId) {
         container._leaflet_map.off();
         container._leaflet_map.remove();
         delete container._leaflet_map;
+        delete container._leaflet_marker;
     }
 }
 
@@ -124,21 +125,117 @@ function eme_displayAddress(ignore_coord){
 function eme_SelectdisplayAddress(){
     if (EME.$('input[name="location-select-name"]')) {
         const v = eme_locationMapValues((id, key) => `input[name="location-select-${key}"]`);
-        const mapIcon = EME.$('input#eme_loc_prop_map_icon');
-        loadMapLatLong(v.location_name || '', v.location_address1 || '', v.location_address2 || '', v.location_city || '', v.location_state || '', v.location_zip || '', v.location_country || '', v.location_latitude || 0, v.location_longitude || 0, mapIcon ? mapIcon.value : '');
+        loadMapLatLong(v.location_name || '', v.location_address1 || '', v.location_address2 || '', v.location_city || '', v.location_state || '', v.location_zip || '', v.location_country || '', v.location_latitude || 0, v.location_longitude || 0, v.eme_loc_prop_map_icon || '');
     }
+}
+
+const emeEditMapsBalloonSanitizer = new Sanitizer();
+emeEditMapsBalloonSanitizer.allowElement({
+    name: 'img',
+    attributes: ['src', 'alt', 'width', 'height']
+});
+emeEditMapsBalloonSanitizer.allowElement({
+    name: 'a',
+    attributes: ['href', 'hreflang', 'type', 'target', 'rel']
+});
+
+function eme_editMapIcon(map_icon) {
+    const icon_url = eme_safeIconUrl(map_icon);
+    if (icon_url) return icon_url;
+    const container = document.getElementById('eme-edit-location-map');
+    return container ? eme_safeIconUrl(container.dataset.map_icon) : '';
 }
 
 function eme_buildLocationPopup(loc_name, address1, address2, city, state, zip, country) {
     // giving this back to bindPopup avoids any possible XSS in the variables being executed
     const div = document.createElement('div');
     div.className = 'eme-location-balloon';
+    const container = document.getElementById('eme-edit-location-map');
+    if (container && container.dataset.map_text) {
+        div.setHTML(container.dataset.map_text, { sanitizer: emeEditMapsBalloonSanitizer });
+        return div;
+    }
     const strong = document.createElement('strong');
     strong.textContent = loc_name;
     const p = document.createElement('p');
     p.append(`${address1} ${address2}`, document.createElement('br'), `${city} ${state} ${zip} ${country}`);
     div.append(strong, p);
     return div;
+}
+
+let eme_balloonTimer = null;
+let eme_balloonRequest = 0;
+let eme_balloonEditorHooked = false;
+
+function eme_balloonFormatValue() {
+    const field = EME.$('textarea#eme_loc_prop_balloon_format');
+    if (!field) return '';
+    if (typeof Jodit !== 'undefined' && Jodit.instances) {
+        const editor = Jodit.instances[`joditdiv_${field.id}`];
+        if (editor) return editor.value;
+    }
+    if (typeof tinyMCE !== 'undefined' && tinyMCE.get) {
+        const editor = tinyMCE.get(field.id);
+        if (editor) return editor.getContent();
+    }
+    return field.value;
+}
+
+function eme_hookBalloonEditor() {
+    if (eme_balloonEditorHooked) return;
+    const field = EME.$('textarea#eme_loc_prop_balloon_format');
+    if (!field) return;
+    if (typeof Jodit !== 'undefined' && Jodit.instances) {
+        const editor = Jodit.instances[`joditdiv_${field.id}`];
+        if (editor && editor.events) {
+            editor.events.on('change', eme_scheduleBalloonRefresh);
+            eme_balloonEditorHooked = true;
+        }
+    }
+    if (!eme_balloonEditorHooked && typeof tinyMCE !== 'undefined' && tinyMCE.get) {
+        const editor = tinyMCE.get(field.id);
+        if (editor) {
+            editor.on('change', eme_scheduleBalloonRefresh);
+            eme_balloonEditorHooked = true;
+        }
+    }
+}
+
+function eme_scheduleBalloonRefresh() {
+    eme_hookBalloonEditor();
+    clearTimeout(eme_balloonTimer);
+    eme_balloonTimer = setTimeout(eme_refreshBalloon, 400);
+}
+
+function eme_refreshBalloon() {
+    const container = document.getElementById('eme-edit-location-map');
+    if (!container || !emeeditmaps || !emeeditmaps.translate_ajax_url) return;
+    const form = container.closest('form');
+    if (!form) return;
+
+    const data = new FormData(form);
+    data.set('action', 'eme_render_location_balloon');
+    data.set(emeeditmaps.translate_nonce_field, emeeditmaps.translate_nonce);
+    if (EME.$('textarea#eme_loc_prop_balloon_format')) {
+        data.set('eme_loc_prop_balloon_format', eme_balloonFormatValue());
+    }
+
+    const request = ++eme_balloonRequest;
+    fetch(emeeditmaps.translate_ajax_url, { method: 'POST', body: data, credentials: 'same-origin' })
+        .then(response => response.json())
+        .then(res => {
+            if (request !== eme_balloonRequest || !res || !res.success || !res.data) return;
+            const html = res.data.html || '';
+            container.dataset.map_text = html;
+            const marker = container._leaflet_marker;
+            if (marker && typeof marker.setPopupContent === 'function' && marker.getPopup()) {
+                const div = document.createElement('div');
+                div.className = 'eme-location-balloon';
+                div.setHTML(html, { sanitizer: emeEditMapsBalloonSanitizer });
+                marker.setPopupContent(div);
+            }
+        })
+        .catch(() => {});
 }
 
 // map icons end up as an img src, so only pass through http(s) or data:image
@@ -221,7 +318,7 @@ function loadMap(loc_name, address1, address2, city, state, zip, country, map_ic
                     return;
                 }
                 map.panTo([data[0].lat, data[0].lon]);
-                const icon_url = eme_safeIconUrl(map_icon) || eme_safeIconUrl(emeeditmaps.translate_default_map_icon);
+                const icon_url = eme_editMapIcon(map_icon);
                 let myIcon;
                 if (icon_url) {
                     myIcon = L.icon({iconUrl: icon_url, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
@@ -230,6 +327,7 @@ function loadMap(loc_name, address1, address2, city, state, zip, country, map_ic
                 }
                 let marker = L.marker([data[0].lat, data[0].lon], {icon: myIcon}).addTo(map);
                 marker.bindPopup(eme_buildLocationPopup(loc_name, address1, address2, city, state, zip, country)).openPopup();
+                mapContainer._leaflet_marker = marker;
 
                 const latInput = EME.$('input#location_latitude');
                 const lonInput = EME.$('input#location_longitude');
@@ -287,7 +385,7 @@ function loadMapLatLong(loc_name, address1, address2, city, state, zip, country,
         // go to the coordinates
         map.panTo(latlng);
 
-        const icon_url = eme_safeIconUrl(map_icon) || eme_safeIconUrl(emeeditmaps.translate_default_map_icon);
+        const icon_url = eme_editMapIcon(map_icon);
         let myIcon;
         if (icon_url) {
             myIcon = L.icon({iconUrl: icon_url, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
@@ -296,6 +394,7 @@ function loadMapLatLong(loc_name, address1, address2, city, state, zip, country,
         }
         let marker = L.marker(latlng, {icon: myIcon}).addTo(map);
         marker.bindPopup(eme_buildLocationPopup(loc_name, address1, address2, city, state, zip, country)).openPopup();
+        mapContainer._leaflet_marker = marker;
     } else {
         loadMap(loc_name, address1, address2, city, state, zip, country, map_icon);
     }
@@ -331,10 +430,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const mapContainer = EME.$('#eme-edit-location-map');
     if (mapContainer) eme_toggle(mapContainer, false);
+    setTimeout(eme_hookBalloonEditor, 0);
 
     //eme_displayAddress(0); // already called in eme_activateTab
 
     // Event listeners
+    const balloonFormatInput = EME.$('textarea#eme_loc_prop_balloon_format');
+    if (balloonFormatInput) {
+        balloonFormatInput.addEventListener('input', eme_scheduleBalloonRefresh);
+        balloonFormatInput.addEventListener('change', eme_scheduleBalloonRefresh);
+    }
+
     const mapIconInput = EME.$('input[name="eme_loc_prop_map_icon"]');
     if (mapIconInput) {
         mapIconInput.addEventListener("change", function() {
@@ -352,9 +458,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // typed or autofilled name waits for the burst to be over
             locationNameInput.addEventListener("change", function() {
                 eme_scheduleAddressRefresh(0);
+                eme_scheduleBalloonRefresh();
             });
             locationNameInput.addEventListener("input", function() {
                 eme_scheduleAddressRefresh(0);
+                eme_scheduleBalloonRefresh();
             });
         }
     }
@@ -368,9 +476,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // let eme_scheduleAddressRefresh collapse it into one geocode of the final values
             field.addEventListener("change", function() {
                 eme_scheduleAddressRefresh(1);
+                eme_scheduleBalloonRefresh();
             });
             field.addEventListener("input", function() {
                 eme_scheduleAddressRefresh(1);
+                eme_scheduleBalloonRefresh();
             });
         }
     });
@@ -381,6 +491,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (field) {
             field.addEventListener("change", function() {
                 eme_displayAddress(0);
+                eme_scheduleBalloonRefresh();
             });
         }
     });

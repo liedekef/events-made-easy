@@ -8517,12 +8517,15 @@ function eme_meta_box_div_event_location( $event ) {
         <input type='hidden' name='location-select-country' value='<?php echo esc_attr( eme_translate( $selected_location['location_country'] ) ); ?>'>
         <input type='hidden' name='location-select-latitude' value='<?php echo esc_attr( eme_translate( $selected_location['location_latitude'] ) ); ?>'>
         <input type='hidden' name='location-select-longitude' value='<?php echo esc_attr( eme_translate( $selected_location['location_longitude'] ) ); ?>'>
+        <input type='hidden' name='location-select-map_icon' value='<?php echo esc_attr( eme_location_map_icon( $selected_location ) ); ?>'>
         </td>
 <?php
         if ( $map_is_active ) {
+            $map_data = " data-map_icon='" . esc_attr( eme_location_map_icon( $selected_location ) ) . "'";
+            $map_data .= " data-map_text='" . esc_attr( eme_location_balloon_text( $selected_location ) ) . "'";
 ?>
         <td>
-        <div id='eme-edit-location-map' class='eme-adminedit-location-map'></div></td>
+        <div id='eme-edit-location-map' class='eme-adminedit-location-map'<?php echo $map_data; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built from esc_attr() values ?>></div></td>
 <?php
         }
 ?>
@@ -9987,10 +9990,12 @@ function eme_admin_enqueue_js() {
         if ( get_option( 'eme_map_is_active' ) ) {
             wp_enqueue_style( 'eme-leaflet-css' );
             $translation_array = [
-                'translate_map_zooming'   => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
-                'translate_default_map_icon'  => get_option( 'eme_location_map_icon' ),
+                'translate_map_zooming'      => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
                 'translate_osm_url'          => get_option( 'eme_osm_url', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ),
                 'translate_osm_attribution'  => get_option( 'eme_osm_attribution', 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>' ),
+                'translate_ajax_url'         => esc_url( admin_url( 'admin-ajax.php' ) ),
+                'translate_nonce_field'      => 'eme_admin_nonce',
+                'translate_nonce'            => wp_create_nonce( 'eme_admin' ),
             ];
             wp_localize_script( 'eme-edit-maps', 'emeeditmaps', $translation_array );
             wp_enqueue_script( 'eme-edit-maps' );

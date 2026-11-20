@@ -4,6 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
+function eme_fs_can_submit_event() {
+    $eme_fs_options = get_option( 'eme_fs' );
+    if ( is_user_logged_in() ) {
+        return current_user_can( $eme_fs_options['cap_add_event'] ?? DEFAULT_CAP_ADD_EVENT );
+    }
+    return ! empty( $eme_fs_options['guest_submit'] );
+}
+
 function eme_email_fs_event_action( $event, $action ) {
     $eme_fs_options = get_option('eme_fs');
     if (empty($eme_fs_options['contact_person']) || $eme_fs_options['contact_person']<=0)
@@ -157,9 +165,8 @@ function eme_add_event_form_shortcode( $atts ) {
     $atts = array_change_key_case( (array) $atts, CASE_LOWER );
 
     $eme_fs_options = get_option('eme_fs');
-    $is_user_logged_in=is_user_logged_in();
 
-    if ((!$is_user_logged_in && !$eme_fs_options['guest_submit']) || ($is_user_logged_in && !current_user_can($eme_fs_options['cap_add_event'])) ) {
+    if ( ! eme_fs_can_submit_event() ) {
         if (!empty($eme_fs_options['redirect_to_login'])) {
             //auth_redirect();
             global $wp;
@@ -345,7 +352,7 @@ function eme_event_fs_form( $format, $startdatetime = '' ) {
                 $replacement = eme_generate_captchas_html($eme_fs_options['selected_captcha']);
             }
         } elseif ( preg_match( '/#_MAP$/', $result ) ) {
-            $replacement = "<div id='eme-edit-location-map' class='eme-frontendedit-location-map'></div>";
+            $replacement = "<div id='eme-edit-location-map' class='eme-frontendedit-location-map' data-map_icon='" . esc_attr( get_option( 'eme_location_map_icon' ) ) . "'></div>";
         } elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
             if ( isset( $matches[1] ) ) {
                 // remove { and } (first and last char of second match)
@@ -921,9 +928,7 @@ function eme_frontend_submit_ajax() {
         wp_die();
     }
 
-    $eme_fs_options = get_option('eme_fs');
-    $is_user_logged_in=is_user_logged_in();
-    if ((!$is_user_logged_in && empty($eme_fs_options['guest_submit'])) || ($is_user_logged_in && !current_user_can($eme_fs_options['cap_add_event'])) ) {
+    if ( ! eme_fs_can_submit_event() ) {
         $form_html = __("Sorry, but you're not allowed to submit new events.","events-made-easy");
         echo wp_json_encode(
             [

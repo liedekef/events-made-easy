@@ -66,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let max_longitude = -500.1;
             let min_longitude = 500.1;
 
-            let default_map_icon=data.default_map_icon;
             let zoom_factor=parseInt(data.zoom_factor);
             let enable_zooming=false;
             let letter_icons=false;
@@ -150,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (letter_icons) {
                     myIcon = L.divIcon({className: 'eme-map-marker', iconSize: [28,28], html: letter});
                 } else {
-                    const icon_url = eme_safeIconUrl(item.map_icon) || eme_safeIconUrl(default_map_icon);
+                    const icon_url = eme_safeIconUrl(item.map_icon);
                     if (icon_url) {
                         myIcon = L.icon({iconUrl: icon_url, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
                     } else {
@@ -208,7 +207,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let lat_id = parseFloat(currentDiv.dataset.lat);
             let lon_id = parseFloat(currentDiv.dataset.lon);
             let map_icon = currentDiv.dataset.map_icon;
-            let default_map_icon = currentDiv.dataset.default_map_icon;
             let mapCenter = L.latLng(lat_id + 0.005, lon_id - 0.003);
             let myOptions = {
                 zoom: parseInt(currentDiv.dataset.zoom_factor),
@@ -219,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
             let myIcon;
-            const icon_url = eme_safeIconUrl(map_icon) || eme_safeIconUrl(default_map_icon);
+            const icon_url = eme_safeIconUrl(map_icon);
             if (icon_url) {
                 myIcon = L.icon({iconUrl: icon_url, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
             } else {

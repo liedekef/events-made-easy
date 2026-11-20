@@ -476,10 +476,12 @@ function eme_register_scripts() {
         wp_register_script( 'eme-leaflet-routing', EME_PLUGIN_URL . 'js/leaflet-routing-machine-3.2.12/leaflet-routing-machine.min.js', [ 'eme-leaflet-maps' ], EME_VERSION, [ 'in_footer' => true ] );
         wp_register_style( 'eme-leaflet-routing-css', EME_PLUGIN_URL . 'js/leaflet-routing-machine-3.2.12/leaflet-routing-machine.css', [ 'eme-leaflet-css' ], EME_VERSION );
         $translation_array = [
-            'translate_map_zooming'   => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
-            'translate_default_map_icon'  => get_option( 'eme_location_map_icon' ),
+            'translate_map_zooming'      => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
             'translate_osm_url'          => get_option( 'eme_osm_url', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' ),
             'translate_osm_attribution'  => get_option( 'eme_osm_attribution', 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a>' ),
+            'translate_ajax_url'         => esc_url( admin_url( 'admin-ajax.php' ) ),
+            'translate_nonce_field'      => 'eme_frontend_nonce',
+            'translate_nonce'            => wp_create_nonce( 'eme_frontend' ),
         ];
         wp_localize_script( 'eme-edit-maps', 'emeeditmaps', $translation_array );
         wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'eme-basic', 'eme-leaflet-maps', 'eme-edit-maps', 'eme-sethtml' ], EME_VERSION, [ 'in_footer' => true ] );

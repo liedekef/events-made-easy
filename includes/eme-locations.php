@@ -460,7 +460,20 @@ function eme_locations_edit_layout( $location, $message = '' ) {
 ?>
     </div>
 
-<p class="submit"><input type="submit" class="button-primary eme_submit_button" name="submit" value="<?php if ( $action == 'add' ) { esc_html_e( 'Add location', 'events-made-easy' ); } else { esc_html_e( 'Update location', 'events-made-easy' ); } ?>"></p>
+<p class="submit">
+    <input type="submit" class="button-primary eme_submit_button" name="submit" value="<?php if ( $action == 'add' ) { esc_html_e( 'Add location', 'events-made-easy' ); } else { esc_html_e( 'Update location', 'events-made-easy' ); } ?>">
+<?php if ( $action == 'edit' ) : ?>
+    <?php
+    $view_button_text = __( 'View location', 'events-made-easy' );
+    $view_button      = sprintf(
+        '%s<span class="screen-reader-text"> %s</span> &raquo;',
+        $view_button_text,
+        __( '(opens in a new tab)', 'events-made-easy' )
+    );
+    ?>
+    <a class="button-primary" href="<?php echo esc_url( eme_location_url( $location ) ); ?>" target="wp-view-<?php echo intval( $location['location_id'] ); ?>" id="location-view"><?php echo $view_button; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted sprintf() with __() ?></a>
+<?php endif; ?>
+</p>
 </div>
 <!-- END OF MAIN -->
 <!-- SIDEBAR -->
@@ -636,8 +649,10 @@ function eme_meta_box_div_location_details( $location ) {
             <div class="inside" style="float:left;">
 <?php
     if ( $map_is_active ) {
+        $map_data = " data-map_icon='" . esc_attr( eme_location_map_icon( $location ) ) . "'";
+        $map_data .= " data-map_text='" . esc_attr( eme_location_balloon_text( $location ) ) . "'";
 ?>
-        <div id='eme-edit-location-map' class='eme-adminedit-location-map'></div>
+        <div id='eme-edit-location-map' class='eme-adminedit-location-map'<?php echo $map_data; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built from esc_attr() values ?>></div>
 <?php
     }
 ?>
@@ -2956,6 +2971,24 @@ function eme_add_directions_form( $location ) {
     return $res;
 }
 
+function eme_location_map_icon( $location ) {
+    if ( ! eme_is_empty_string( $location['location_properties']['map_icon'] ) ) {
+        return $location['location_properties']['map_icon'];
+    }
+    return get_option( 'eme_location_map_icon' );
+}
+
+function eme_location_balloon_text( $location ) {
+    if ( ! eme_is_empty_string( $location['location_properties']['balloon_format'] ) ) {
+        $balloon_format = $location['location_properties']['balloon_format'];
+    } else {
+        $balloon_format = get_option( 'eme_location_balloon_format' );
+    }
+    $map_text = eme_replace_locations_placeholders( $balloon_format, $location );
+    // no other white chars but spaces allowed (wp_json_encode allows them, but the JS-json parses fails)
+    return preg_replace( '/\s+/', ' ', $map_text );
+}
+
 function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
     $json_locations = [];
     foreach ( $locations as $location ) {
@@ -2967,18 +3000,7 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
         }
 
         # first we set the balloon info
-        if (!eme_is_empty_string($location['location_properties']['balloon_format'] )) {
-            $balloon_format = $location['location_properties']['balloon_format'];
-        } else {
-            $balloon_format = get_option( 'eme_location_balloon_format' );
-        }
-        $tmp_loc = eme_replace_locations_placeholders( $balloon_format, $location );
-        // newlines are already replaced by eme_replace_locations_placeholders
-                //    no newlines allowed, otherwise no map is shown
-                //    $tmp_loc = eme_nl2br( $tmp_loc );
-        # no other white chars but spaces allowed (wp_json_encode allows them, but the JS-json parses fails)
-        $tmp_loc                           = preg_replace( '/\s+/', ' ', $tmp_loc );
-        $json_location['location_balloon'] = eme_translate( $tmp_loc );
+        $json_location['location_balloon'] = eme_translate( eme_location_balloon_text( $location ) );
 
         # second, we fill in the rest of the info
         foreach ( $location as $key => $value ) {
@@ -2988,9 +3010,9 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
                 $value                 = eme_nl2br( $value );
                 $json_location[ $key ] = eme_translate( $value );
             }
-            $json_location['map_icon'] = $location['location_properties']['map_icon'];
         }
-        $json_locations[] = $json_location;
+        $json_location['map_icon'] = eme_location_map_icon( $location );
+        $json_locations[]          = $json_location;
     }
 
     $marker_clustering_val = ( $marker_clustering ) ? 'true' : 'false';
@@ -2998,7 +3020,6 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
     $json = [
         'locations'         => $json_locations,
         'enable_zooming'    => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
-        'default_map_icon'  => get_option( 'eme_location_map_icon' ),
         'letter_icons'      => $letter_icons ? 'true' : 'false',
         'marker_clustering' => $marker_clustering_val,
         'gestures'          => get_option( 'eme_map_gesture_handling' ) ? 'true' : 'false',
@@ -3014,17 +3035,7 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
     if ( $zoom_factor <= 0 ) { $zoom_factor = (int) get_option( 'eme_indiv_zoom_factor' ); }
     $zoom_factor = min( 14, max( 1, $zoom_factor ) );
 
-    if (!eme_is_empty_string($location['location_properties']['balloon_format'] )) {
-        $balloon_format = $location['location_properties']['balloon_format'];
-    } else {
-        $balloon_format = get_option( 'eme_location_balloon_format' );
-    }
-    $map_text = eme_replace_locations_placeholders( $balloon_format, $location );
-    // newlines are already replaced by eme_replace_locations_placeholders
-    //    no newlines allowed, otherwise no map is shown
-    //    $map_text = eme_nl2br_save_html( $map_text );
-    // no other white chars but spaces allowed (wp_json_encode allows them, but the JS-json parses fails)
-    $map_text = preg_replace( '/\s+/', ' ', $map_text );
+    $map_text = eme_location_balloon_text( $location );
     // if map is not active: we don't show the map
     // if the location name is empty: we don't show the map. But that can never happen since it's checked when creating the location
     if ( $map_is_active && isset( $location['location_id'] ) && $location['location_id'] > 0 && ! empty( $location['location_latitude'] ) && ! empty( $location['location_longitude'] ) ) {
@@ -3048,16 +3059,14 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
         $id             = 'eme-location-map_' . $id_base;
         $enable_zooming = get_option( 'eme_map_zooming' ) ? 'true' : 'false';
         $gestures       = get_option( 'eme_map_gesture_handling' ) ? 'true' : 'false';
-        $map_icon       = get_option( 'eme_location_map_icon' );
         //$map_div = "<div id='$id' style=' background: green; width: 400px; height: 300px'></div>" ;
         $style = eme_css_size_style( $width, $height );
         $data    = "data-lat='" . esc_attr( $location['location_latitude'] ) . "'";
         $data   .= " data-lon='" . esc_attr( $location['location_longitude'] ) . "'";
-        $data   .= " data-map_icon='" . esc_attr( $location['location_properties']['map_icon'] ) . "'";
+        $data   .= " data-map_icon='" . esc_attr( eme_location_map_icon( $location ) ) . "'";
         $data   .= " data-map_text='" . esc_attr( $map_text ) . "'";
         $data   .= " data-enable_zooming='$enable_zooming'";
         $data   .= " data-gestures='$gestures'";
-        $data   .= " data-default_map_icon='". esc_attr( $map_icon ) . "'";
         $data   .= " data-zoom_factor='$zoom_factor'";
         $map_div = "<div id='". esc_attr($id)."' class='eme-location-map' $style $data></div>";
     } else {
@@ -3088,9 +3097,20 @@ function eme_locations_search_ajax() {
 function eme_ajax_locations_autocomplete( $no_wp_die = 0 ) {
     header( 'Content-type: application/json; charset=utf-8' );
     if ( $no_wp_die == 0 ) {
+        $eme_admin_nonce_valid    = isset( $_REQUEST['eme_admin_nonce'] ) && wp_verify_nonce( $_REQUEST['eme_admin_nonce'], 'eme_admin' );
+        $eme_frontend_nonce_valid = isset( $_REQUEST['eme_frontend_nonce'] ) && wp_verify_nonce( $_REQUEST['eme_frontend_nonce'], 'eme_frontend' );
         if ( ( ! isset( $_REQUEST['eme_admin_nonce'] ) && ! isset( $_REQUEST['eme_frontend_nonce'] ) ) ||
-            ( isset( $_REQUEST['eme_admin_nonce'] ) && ! wp_verify_nonce( $_REQUEST['eme_admin_nonce'], 'eme_admin' ) ) ||
-            ( isset( $_REQUEST['eme_frontend_nonce'] ) && ! wp_verify_nonce( $_REQUEST['eme_frontend_nonce'], 'eme_frontend' ) ) ) {
+            ( isset( $_REQUEST['eme_admin_nonce'] ) && ! $eme_admin_nonce_valid ) ||
+            ( isset( $_REQUEST['eme_frontend_nonce'] ) && ! $eme_frontend_nonce_valid ) ) {
+            wp_die();
+        }
+        if ( $eme_admin_nonce_valid ) {
+            if ( ! current_user_can( get_option( 'eme_cap_edit_locations' ) ) &&
+                ! current_user_can( get_option( 'eme_cap_add_locations' ) ) &&
+                ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
+                wp_die();
+            }
+        } elseif ( $eme_frontend_nonce_valid && ! eme_fs_can_submit_event() ) {
             wp_die();
         }
     }
@@ -3161,6 +3181,66 @@ function eme_ajax_locations_autocomplete( $no_wp_die = 0 ) {
 
 add_action( 'wp_ajax_eme_autocomplete_locations', 'eme_ajax_locations_autocomplete' );
 add_action( 'wp_ajax_nopriv_eme_autocomplete_locations', 'eme_ajax_locations_autocomplete' );
+add_action( 'wp_ajax_eme_render_location_balloon', 'eme_ajax_render_location_balloon' );
+add_action( 'wp_ajax_nopriv_eme_render_location_balloon', 'eme_ajax_render_location_balloon' );
+function eme_ajax_render_location_balloon() {
+    if ( isset( $_REQUEST['eme_admin_nonce'] ) ) {
+        check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+        if ( ! current_user_can( get_option( 'eme_cap_edit_locations' ) ) &&
+            ! current_user_can( get_option( 'eme_cap_add_locations' ) ) &&
+            ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
+            wp_send_json_error( 'Unauthorized', 403 );
+        }
+    } elseif ( isset( $_REQUEST['eme_frontend_nonce'] ) ) {
+        check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
+        if ( ! eme_fs_can_submit_event() ) {
+            wp_send_json_error( 'Unauthorized', 403 );
+        }
+    } else {
+        wp_send_json_error( 'No nonce received', 403 );
+    }
+
+    $location_id = 0;
+    if ( ! empty( $_POST['location_id'] ) ) {
+        $location_id = intval( $_POST['location_id'] );
+    } elseif ( ! empty( $_POST['location-select-id'] ) ) {
+        $location_id = intval( $_POST['location-select-id'] );
+    }
+    $location = $location_id ? eme_get_location( $location_id ) : eme_new_location();
+    if ( empty( $location ) ) {
+        $location = eme_new_location();
+    }
+
+    $fields = [
+        'location_name'      => [ 'location_name', 'location-select-name', 'name' ],
+        'location_address1'  => [ 'location_address1', 'location-select-address1', 'address1' ],
+        'location_address2'  => [ 'location_address2', 'location-select-address2', 'address2' ],
+        'location_city'      => [ 'location_city', 'location-select-city', 'city' ],
+        'location_state'     => [ 'location_state', 'location-select-state', 'state' ],
+        'location_zip'       => [ 'location_zip', 'location-select-zip', 'zip' ],
+        'location_country'   => [ 'location_country', 'location-select-country', 'country' ],
+        'location_latitude'  => [ 'location_latitude', 'location-select-latitude', 'latitude' ],
+        'location_longitude' => [ 'location_longitude', 'location-select-longitude', 'longitude' ],
+        'location_url'       => [ 'location_url' ],
+    ];
+    foreach ( $fields as $key => $names ) {
+        foreach ( $names as $name ) {
+            if ( isset( $_POST[ $name ] ) ) {
+                $location[ $key ] = eme_sanitize_request( $_POST[ $name ] );
+                break;
+            }
+        }
+    }
+
+    $props = $location['location_properties'];
+    if ( isset( $_POST['eme_loc_prop_balloon_format'] ) ) {
+        $props['balloon_format'] = eme_kses_request( $_POST['eme_loc_prop_balloon_format'] );
+    }
+    $location['location_properties'] = eme_init_location_props( $props );
+
+    wp_send_json_success( [ 'html' => eme_location_balloon_text( $location ) ] );
+}
+
 add_action( 'wp_ajax_eme_locations_list', 'eme_ajax_locations_list' );
 add_action( 'wp_ajax_eme_manage_locations', 'eme_ajax_manage_locations' );
 function eme_ajax_locations_list() {

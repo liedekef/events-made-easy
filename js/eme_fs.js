@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     eme_initLocationAutocomplete({
         url: emefs.translate_ajax_url,
-        nonceField: 'frontend_nonce',
+        nonceField: 'eme_frontend_nonce',
         nonceValue: emefs.translate_frontendnonce,
         nomatchText: emefs.translate_nomatchlocation,
         // a prefilled location name shows the suggestions straight away

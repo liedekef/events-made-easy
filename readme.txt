@@ -105,6 +105,7 @@ To prevent user-provided text from being executed as a shortcode or EME placehol
 == Changelog ==
 = 3.3.11  (2026/11/) =
 * Location edit now uses the configured balloon format live (also frontend)
+* Optional per-event seat layouts: define a grid of seats linked to the RSVP price categories in a new event tab, let visitors pick seats with the #_SEATMAP placeholder, and block each chosen seat for only one booking. The chosen seat labels are available via #_SEATLABELS.
 
 = 3.3.10  (2026/11/18) =
 * The eme_if shortcode now supports an "inrange" attribute, which matches when the tag value is numeric and lies between two numeric bounds (inclusive). The range is split on "..", for example: [eme_if tag="#_FIELD{5}" inrange="10..20"]In range![/eme_if]

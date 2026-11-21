@@ -145,7 +145,183 @@ function calculateRsvpCutoffDisplay() {
     displayElement.textContent = formattedStart;
 }
 
+function emeSeatLetter(n) {
+    let letter = '';
+    n = parseInt(n) + 1;
+    while (n > 0) {
+        n--;
+        letter = String.fromCharCode(65 + (n % 26)) + letter;
+        n = Math.floor(n / 26);
+    }
+    return letter;
+}
+
+function emeInitSeatLayoutEditor() {
+    const grid = document.getElementById('eme-seatlayout-grid');
+    if (!grid) return;
+    const rowsInput = document.getElementById('eme_seatlayout_rows');
+    const colsInput = document.getElementById('eme_seatlayout_cols');
+    const nameInput = document.getElementById('eme_seatlayout_name');
+    const dataInput = document.getElementById('eme_seatlayout_data');
+    const generateBtn = document.getElementById('eme_seatlayout_generate');
+    const form = grid.closest('form');
+    let categories = [];
+    try {
+        categories = JSON.parse(grid.dataset.categories || '[]');
+    } catch (e) {
+        categories = [];
+    }
+
+    function gridRows() {
+        return Math.min(60, Math.max(0, parseInt(rowsInput ? rowsInput.value : 0, 10) || 0));
+    }
+
+    function gridCols() {
+        return Math.min(60, Math.max(0, parseInt(colsInput ? colsInput.value : 0, 10) || 0));
+    }
+
+    function collectSeats() {
+        const seats = {};
+        grid.querySelectorAll('tbody tr').forEach((row, rowIndex) => {
+            row.querySelectorAll('td.eme-seatlayout-cell').forEach((cell, colIndex) => {
+                const checkbox = cell.querySelector('.eme-seatlayout-enabled');
+                const select = cell.querySelector('.eme-seatlayout-price');
+                const labelInput = cell.querySelector('.eme-seatlayout-label');
+                if (!checkbox) return;
+                seats[`${rowIndex + 1}:${colIndex + 1}`] = {
+                    e: checkbox.checked ? 1 : 0,
+                    l: labelInput ? labelInput.value : '',
+                    p: select ? parseInt(select.value, 10) || 0 : 0
+                };
+            });
+        });
+        return seats;
+    }
+
+    function syncData() {
+        if (!dataInput) return;
+        dataInput.value = JSON.stringify({
+            name: nameInput ? nameInput.value : '',
+            rows: gridRows(),
+            cols: gridCols(),
+            seats: collectSeats()
+        });
+    }
+
+    function currentGridSize() {
+        const rowEls = grid.querySelectorAll('tbody tr');
+        const cols = rowEls.length ? rowEls[0].querySelectorAll('td.eme-seatlayout-cell').length : 0;
+        return { rows: rowEls.length, cols: cols };
+    }
+
+    function buildGrid() {
+        const rows = gridRows();
+        const cols = gridCols();
+        const seats = collectSeats();
+        grid.innerHTML = '';
+        if (!rows || !cols) {
+            syncData();
+            return;
+        }
+        const table = document.createElement('table');
+        table.className = 'eme-seatlayout-grid-table';
+        const colgroup = document.createElement('colgroup');
+        const rowCol = document.createElement('col');
+        rowCol.className = 'eme-seatlayout-rowlabel-col';
+        colgroup.appendChild(rowCol);
+        for (let col = 1; col <= cols; col++) {
+            const seatCol = document.createElement('col');
+            seatCol.className = 'eme-seatlayout-seat-col';
+            colgroup.appendChild(seatCol);
+        }
+        table.appendChild(colgroup);
+        const thead = document.createElement('thead');
+        const headRow = document.createElement('tr');
+        headRow.appendChild(document.createElement('th'));
+        for (let col = 1; col <= cols; col++) {
+            const th = document.createElement('th');
+            th.scope = 'col';
+            th.textContent = col;
+            headRow.appendChild(th);
+        }
+        thead.appendChild(headRow);
+        table.appendChild(thead);
+        const tbody = document.createElement('tbody');
+        for (let row = 1; row <= rows; row++) {
+            const rowEl = document.createElement('tr');
+            const rowHeader = document.createElement('th');
+            rowHeader.scope = 'row';
+            rowHeader.className = 'eme-seatlayout-rowlabel';
+            rowHeader.textContent = emeSeatLetter(row - 1);
+            rowEl.appendChild(rowHeader);
+            for (let col = 1; col <= cols; col++) {
+                const seatLabel = emeSeatLetter(row - 1) + col;
+                const seat = seats[`${row}:${col}`] || {};
+                const labelValue = seat.l === undefined || seat.l === '' ? seatLabel : seat.l;
+                const cell = document.createElement('td');
+                cell.className = 'eme-seatlayout-cell';
+                const wrapper = document.createElement('label');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'eme-seatlayout-enabled';
+                checkbox.value = '1';
+                checkbox.checked = seat.e === undefined ? true : !!seat.e;
+                wrapper.appendChild(checkbox);
+                wrapper.appendChild(document.createTextNode(labelValue));
+                cell.appendChild(wrapper);
+                const labelInput = document.createElement('input');
+                labelInput.type = 'text';
+                labelInput.className = 'eme-seatlayout-label';
+                labelInput.value = labelValue;
+                labelInput.maxLength = 20;
+                labelInput.addEventListener('input', function() {
+                    if (wrapper.lastChild) wrapper.lastChild.textContent = labelInput.value || seatLabel;
+                });
+                cell.appendChild(labelInput);
+                const select = document.createElement('select');
+                select.className = 'eme-seatlayout-price';
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.value;
+                    option.textContent = category.label;
+                    option.selected = String(category.value) === String(seat.p || 0);
+                    select.appendChild(option);
+                });
+                cell.appendChild(select);
+                rowEl.appendChild(cell);
+            }
+            tbody.appendChild(rowEl);
+        }
+        table.appendChild(tbody);
+        grid.appendChild(table);
+        syncData();
+    }
+
+    if (generateBtn) generateBtn.addEventListener('click', buildGrid);
+    [rowsInput, colsInput].forEach(input => {
+        if (input) input.addEventListener('change', buildGrid);
+    });
+    grid.addEventListener('change', syncData);
+    grid.addEventListener('input', syncData);
+    if (nameInput) {
+        nameInput.addEventListener('input', syncData);
+        nameInput.addEventListener('change', syncData);
+    }
+    if (form) {
+        form.addEventListener('submit', function() {
+            const size = currentGridSize();
+            if (size.rows !== gridRows() || size.cols !== gridCols()) {
+                buildGrid();
+            } else {
+                syncData();
+            }
+        });
+    }
+    syncData();
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+    emeInitSeatLayoutEditor();
     const EventsTableContainer = EME.$('#EventsTableContainer');
     let EventsTable;
     const RecurrencesTableContainer = EME.$('#RecurrencesTableContainer');

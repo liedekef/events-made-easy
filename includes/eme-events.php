@@ -653,6 +653,7 @@ function eme_events_page() {
                     $feedback_message = eme_message_error_div( __( 'Database insert failed!', 'events-made-easy' ), 1 );
                 } else {
                     eme_event_store_answers( $event_id );
+                    eme_seatlayout_save_from_post( $event_id );
                     eme_upload_files( $event_id, 'events' );
                     // the eme_insert_event_action is only executed for single events, not those part of a recurrence
                     if ( has_action( 'eme_insert_event_action' ) ) {
@@ -728,6 +729,7 @@ function eme_events_page() {
                     $event['recurrence_id'] = 0;
                     if ( eme_db_update_event( $event, $event_ID ) ) {
                         eme_event_store_answers( $event_ID );
+                        eme_seatlayout_save_from_post( $event_ID );
                         eme_upload_files( $event_ID, 'events' );
                         if ( has_action( 'eme_update_event_action' ) ) {
                             $event = eme_get_event( $event_ID );
@@ -6562,6 +6564,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
     <div class="eme-tab" data-tab="tab-locationdetails"><?php esc_html_e( 'Location', 'events-made-easy' ); ?></div>
     <?php if ( get_option( 'eme_rsvp_enabled' ) ) : ?>
     <div class="eme-tab" data-tab="tab-rsvp"><?php esc_html_e( 'RSVP', 'events-made-easy' ); ?></div>
+    <div class="eme-tab" data-tab="tab-seatlayout"><?php esc_html_e( 'Seat layout', 'events-made-easy' ); ?></div>
     <?php endif; ?>
     <?php if ( get_option( 'eme_tasks_enabled' ) ) : ?>
         <div class="eme-tab" data-tab="tab-tasks"><?php esc_html_e( 'Tasks', 'events-made-easy' ); ?></div>
@@ -6668,6 +6671,14 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
     echo '</div></details>';
 ?>
     </div>
+    </div>
+    <?php endif; ?>
+
+    <?php if ( get_option( 'eme_rsvp_enabled' ) ) : ?>
+    <div class="eme-tab-content" id="tab-seatlayout">
+<?php
+    eme_seatlayout_render_admin( $event );
+?>
     </div>
     <?php endif; ?>
 
@@ -7084,10 +7095,13 @@ function eme_validate_event( $event ) {
                 if ( ! eme_is_multi( $event['price'] ) ) {
                     // this will show if people mix #_SEATS and #_SEATS{xx}
                     // for new events the function eme_validate_event already prevents this too
-                    $troubles .= '<li>' . __( "Your event seems to have only one price, so you can't use #_SEATS{xx} in your event RSVP form format. Please correct the RSVP form format to use #_SEATS (or #_SPACES).", 'events-made-easy' ) . '</li>';
+                    $troubles .= '<li>' . __( "Your event seems to have only one price, so you can't use #_SEATS{xx} in your RSVP form format. Please correct the RSVP form format to use #_SEATS (or #_SPACES).", 'events-made-easy' ) . '</li>';
                 } else {
                     $seats_found++;
                 }
+            }
+            if ( preg_match( '/#_SEATMAP$/', $result ) ) {
+                $seats_found = $seats_count;
             }
             if ( preg_match( '/#_PASSWORD/', $result ) ) {
                 $password_found = 1;
@@ -9676,6 +9690,7 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
         eme_delete_uploaded_files( $event_id, 'events' );
         eme_delete_event_tasks( $event_id );
         eme_delete_event_todos( $event_id );
+        eme_seatlayout_delete_event( $event_id );
         wp_cache_delete( "eme_event $event_id" );
     }
 }

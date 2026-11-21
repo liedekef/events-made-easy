@@ -2406,6 +2406,10 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         return [ 'html' => $replacement ];
     };
 
+    $handlers['/#_SEATMAP$/'] = function( $result, $matches, $ctx ) use ( $event, $is_multibooking ) {
+        return eme_seatlayout_render_frontend( $event, $is_multibooking );
+    };
+
     $handlers['/#_PASSWORD(\{.+?\})?$/'] = function( $result, $matches, $ctx ) use ( $event, $eme_is_admin_request, $is_multibooking ) {
         if ( ! empty( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request && ! $is_multibooking ) {
             $placeholder_text = esc_html__( 'Password', 'events-made-easy' );
@@ -2560,6 +2564,9 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         $has_seats = preg_match( '/#(REQ|ESC)?_(SEATS|SPACES)\{(\d+)\}/', $format );
     } else {
         $has_seats = preg_match( '/#(REQ|ESC)?_(SEATS|SPACES)/', $format );
+    }
+    if ( ! $has_seats && strstr( $format, '#_SEATMAP' ) && eme_seatlayout_get_layout( $event_id ) ) {
+        $has_seats = 1;
     }
 
     if ( ! $has_lastname || ! $has_email || ! $has_password || ! $has_seats ) {

@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 445 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 444 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -34,9 +34,6 @@ define( 'EME_ATTENDANCES_TBNAME', 'eme_attendances' );
 define( 'EME_TODOS_TBNAME', 'eme_todos' );
 define( 'EME_TASKS_TBNAME', 'eme_tasks' );
 define( 'EME_TASK_SIGNUPS_TBNAME', 'eme_task_signups' );
-define( 'EME_SEATLAYOUTS_TBNAME', 'eme_seatlayouts' );
-define( 'EME_SEATS_TBNAME', 'eme_seats' );
-define( 'EME_BOOKING_SEATS_TBNAME', 'eme_booking_seats' );
 
 function eme_install( $networkwide ) {
 	if ( function_exists( 'is_multisite' ) && is_multisite() ) {
@@ -249,7 +246,7 @@ function _eme_uninstall( $force_drop = 0 ) {
 	if ( $drop_data || $force_drop ) {
 		// during uninstall, we only take the prefix per blog (not based on the settings "is_multisite() && get_option( 'eme_multisite_active' )" in the function  eme_get_db_prefix)
 		$db_prefix = $wpdb->prefix;
-        $tables = [ EME_EVENTS_TBNAME, EME_BOOKINGS_TBNAME, EME_LOCATIONS_TBNAME, EME_RECURRENCE_TBNAME, EME_ANSWERS_TBNAME, EME_PAYMENTS_TBNAME, EME_PEOPLE_TBNAME, EME_GROUPS_TBNAME, EME_USERGROUPS_TBNAME, EME_MEMBERS_TBNAME, EME_MEMBERSHIPS_TBNAME, EME_MEMBER_STATS_TBNAME, EME_ATTENDANCES_TBNAME, EME_CATEGORIES_TBNAME, EME_HOLIDAYS_TBNAME, EME_TEMPLATES_TBNAME, EME_FORMFIELDS_TBNAME, EME_COUNTRIES_TBNAME, EME_STATES_TBNAME, EME_FIELDTYPES_TBNAME, EME_DISCOUNTS_TBNAME, EME_DISCOUNTGROUPS_TBNAME, EME_MQUEUE_TBNAME, EME_MAILINGS_TBNAME, EME_TODOS_TBNAME, EME_TASKS_TBNAME, EME_TASK_SIGNUPS_TBNAME, EME_SEATLAYOUTS_TBNAME, EME_SEATS_TBNAME, EME_BOOKING_SEATS_TBNAME ];
+        $tables = [ EME_EVENTS_TBNAME, EME_BOOKINGS_TBNAME, EME_LOCATIONS_TBNAME, EME_RECURRENCE_TBNAME, EME_ANSWERS_TBNAME, EME_PAYMENTS_TBNAME, EME_PEOPLE_TBNAME, EME_GROUPS_TBNAME, EME_USERGROUPS_TBNAME, EME_MEMBERS_TBNAME, EME_MEMBERSHIPS_TBNAME, EME_MEMBER_STATS_TBNAME, EME_ATTENDANCES_TBNAME, EME_CATEGORIES_TBNAME, EME_HOLIDAYS_TBNAME, EME_TEMPLATES_TBNAME, EME_FORMFIELDS_TBNAME, EME_COUNTRIES_TBNAME, EME_STATES_TBNAME, EME_FIELDTYPES_TBNAME, EME_DISCOUNTS_TBNAME, EME_DISCOUNTGROUPS_TBNAME, EME_MQUEUE_TBNAME, EME_MAILINGS_TBNAME, EME_TODOS_TBNAME, EME_TASKS_TBNAME, EME_TASK_SIGNUPS_TBNAME ];
 
         foreach ( $tables as $table ) {
             eme_drop_table( $db_prefix . $table );
@@ -321,7 +318,6 @@ function eme_create_tables( $db_version ) {
 	eme_create_attendances_table( $charset, $collate, $db_version, $db_prefix );
 	eme_create_task_tables( $charset, $collate, $db_version, $db_prefix );
 	eme_create_todos_tables( $charset, $collate, $db_version, $db_prefix );
-	eme_create_seatlayout_tables( $charset, $collate, $db_version, $db_prefix );
 }
 
 function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) {
@@ -1967,54 +1963,6 @@ function eme_delete_events_page() {
 	$events_page_id = eme_get_events_page_id();
 	if ( $events_page_id ) {
 		wp_delete_post( $events_page_id );
-	}
-}
-
-function eme_create_seatlayout_tables( $charset, $collate, $db_version, $db_prefix ) {
-	$layouts_table = $db_prefix . EME_SEATLAYOUTS_TBNAME;
-	if ( ! eme_table_exists( $layouts_table ) ) {
-		$sql = 'CREATE TABLE IF NOT EXISTS ' . $layouts_table . " (
-          layout_id int unsigned NOT NULL AUTO_INCREMENT,
-          event_id int unsigned NOT NULL,
-          layout_name tinytext,
-          layout_rows smallint unsigned NOT NULL DEFAULT 0,
-          layout_cols smallint unsigned NOT NULL DEFAULT 0,
-          UNIQUE KEY  (layout_id),
-          UNIQUE KEY event_id (event_id)
-          ) $charset $collate;";
-		maybe_create_table( $layouts_table, $sql );
-	}
-
-	$seats_table = $db_prefix . EME_SEATS_TBNAME;
-	if ( ! eme_table_exists( $seats_table ) ) {
-		$sql = 'CREATE TABLE IF NOT EXISTS ' . $seats_table . " (
-          seat_id int unsigned NOT NULL AUTO_INCREMENT,
-          layout_id int unsigned NOT NULL,
-          seat_row smallint unsigned NOT NULL DEFAULT 0,
-          seat_col smallint unsigned NOT NULL DEFAULT 0,
-          seat_label varchar(20) NOT NULL DEFAULT '',
-          price_index smallint unsigned NOT NULL DEFAULT 0,
-          disabled bool NOT NULL DEFAULT 0,
-          UNIQUE KEY  (seat_id),
-          UNIQUE KEY layout_position (layout_id, seat_row, seat_col),
-          KEY layout_id (layout_id)
-          ) $charset $collate;";
-		maybe_create_table( $seats_table, $sql );
-	}
-
-	$booking_seats_table = $db_prefix . EME_BOOKING_SEATS_TBNAME;
-	if ( ! eme_table_exists( $booking_seats_table ) ) {
-		$sql = 'CREATE TABLE IF NOT EXISTS ' . $booking_seats_table . " (
-          bookingseat_id int unsigned NOT NULL AUTO_INCREMENT,
-          booking_id int unsigned NOT NULL,
-          event_id int unsigned NOT NULL,
-          seat_id int unsigned NOT NULL,
-          UNIQUE KEY  (bookingseat_id),
-          UNIQUE KEY booking_seat (booking_id, seat_id),
-          UNIQUE KEY event_seat (event_id, seat_id),
-          KEY seat_id (seat_id)
-          ) $charset $collate;";
-		maybe_create_table( $booking_seats_table, $sql );
 	}
 }
 

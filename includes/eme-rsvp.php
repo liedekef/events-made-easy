@@ -1326,18 +1326,6 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
         $bookedSeats    = $tmp_booking['booking_seats'];
         $bookedSeats_mp = eme_convert_multi2array( $tmp_booking['booking_seats_mp'] );
 
-        if ( eme_seatlayout_get_layout( $event_id ) && eme_seatlayout_form_uses_seatmap( $event ) && ! $eme_is_admin_request && ! $is_multibooking ) {
-            $seat_ids = eme_seatlayout_get_submitted_seat_ids( $event_id );
-            if ( empty( $seat_ids ) ) {
-                $form_html .= __( 'Please select at least one seat.', 'events-made-easy' );
-                continue;
-            }
-            if ( ! eme_seatlayout_are_available( $event_id, $seat_ids ) ) {
-                $form_html .= __( 'One or more selected seats are no longer available. Please choose other seats.', 'events-made-easy' );
-                continue;
-            }
-        }
-
         $min_allowed     = $event['event_properties']['min_allowed'];
         $max_allowed     = $event['event_properties']['max_allowed'];
         $take_attendance = 0;
@@ -2096,13 +2084,7 @@ function eme_db_insert_booking( $event, $booker, $booking ) {
     global $wpdb, $plugin_page;
     $eme_is_admin_request = eme_is_admin_request();
     $bookings_table       = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-    $seat_ids             = $booking['eme_seat_ids'] ?? [];
-    unset( $booking['eme_seat_ids'] );
     $booking['person_id'] = intval( $booker['person_id'] );
-
-    if ( ! empty( $seat_ids ) && ! eme_seatlayout_are_available( $event['event_id'], $seat_ids ) ) {
-        return false;
-    }
 
     if ( ! $eme_is_admin_request && $booking['waitinglist'] ) {
         // if we're adding a booking via the frontend and the waitinglist is on, approval needed
@@ -2135,10 +2117,6 @@ function eme_db_insert_booking( $event, $booker, $booking ) {
     if ( $wpdb->insert( $bookings_table, $booking ) ) {
         $booking_id            = $wpdb->insert_id;
         $booking['booking_id'] = $booking_id;
-        if ( ! empty( $seat_ids ) && ! eme_seatlayout_book_seats( $booking_id, $event['event_id'], $seat_ids ) ) {
-            $wpdb->delete( $bookings_table, [ 'booking_id' => $booking_id ], [ '%d' ] );
-            return false;
-        }
         eme_add_persongroups( $booking['person_id'], $event['event_properties']['rsvp_addpersontogroup'] );
         eme_store_booking_answers( $booking );
         return $booking_id;
@@ -2459,8 +2437,6 @@ function eme_delete_all_bookings_for_event_id( $event_id ) {
     $prepared_sql   = $wpdb->prepare( "DELETE FROM $answers_table WHERE type='booking' AND related_id IN (SELECT booking_id from $bookings_table WHERE event_id = %d)", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $wpdb->delete( $bookings_table, [ 'event_id' => $event_id ], ['%d'] );
-    $booking_seats_table = EME_DB_PREFIX . EME_BOOKING_SEATS_TBNAME;
-    $wpdb->delete( $booking_seats_table, [ 'event_id' => $event_id ], ['%d'] );
 }
 
 function eme_trash_person_bookings_future_events( $person_ids ) {
@@ -2473,14 +2449,8 @@ function eme_trash_person_bookings_future_events( $person_ids ) {
         $ids_arr = array_map('intval', explode(',', $person_ids));
         $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
         $args = array_merge( [ EME_RSVP_STATUS_TRASH ], $ids_arr, [ $today ] );
-        $prepared_sql = $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE person_id IN ($placeholders) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", ...array_slice( $args, 1 ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $booking_ids  = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- query is prepared
         $prepared_sql = $wpdb->prepare( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($placeholders) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", ...$args ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        $booking_seats_table = EME_DB_PREFIX . EME_BOOKING_SEATS_TBNAME;
-        foreach ( $booking_ids as $booking_id ) {
-            $wpdb->delete( $booking_seats_table, [ 'booking_id' => intval( $booking_id ) ], [ '%d' ] );
-        }
     }
 }
 
@@ -2492,9 +2462,6 @@ function eme_delete_person_bookings( $person_ids ) {
         $ids_arr = array_map('intval', explode(',', $person_ids));
         $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
         $prepared_sql = $wpdb->prepare( "DELETE FROM $answers_table WHERE type='booking' AND related_id IN (SELECT booking_id from $bookings_table WHERE person_id IN ($placeholders))", ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        $booking_seats_table = EME_DB_PREFIX . EME_BOOKING_SEATS_TBNAME;
-        $prepared_sql        = $wpdb->prepare( "DELETE FROM $booking_seats_table WHERE booking_id IN (SELECT booking_id FROM $bookings_table WHERE person_id IN ($placeholders))", ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         $prepared_sql = $wpdb->prepare( "DELETE FROM $bookings_table WHERE person_id IN ($placeholders)", ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -2520,14 +2487,8 @@ function eme_trash_bookings_for_event_ids( $ids ) {
     if (eme_is_list_of_int( $ids ) ) {
         $ids_arr = array_map('intval', explode(',', $ids));
         $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-        $booking_seats_table = EME_DB_PREFIX . EME_BOOKING_SEATS_TBNAME;
-        $prepared_sql        = $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE event_id IN ($placeholders)", ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $booking_ids         = $wpdb->get_col( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- query is prepared
-        $prepared_sql        = $wpdb->prepare("UPDATE $bookings_table SET status = %d WHERE event_id IN ($placeholders)", EME_RSVP_STATUS_TRASH, ...$ids_arr); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $prepared_sql = $wpdb->prepare("UPDATE $bookings_table SET status = %d WHERE event_id IN ($placeholders)", EME_RSVP_STATUS_TRASH, ...$ids_arr); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        foreach ( $booking_ids as $booking_id ) {
-            $wpdb->delete( $booking_seats_table, [ 'booking_id' => intval( $booking_id ) ], [ '%d' ] );
-        }
     }
 }
 
@@ -2546,7 +2507,6 @@ function eme_trash_booking( $booking_id ) {
     if ( $res === false ) {
         return false;
     } else {
-        eme_seatlayout_release_booking_seats( $booking_id );
         return true;
     }
 }
@@ -2562,7 +2522,6 @@ function eme_delete_booking( $booking_id ) {
         do_action( 'eme_delete_rsvp_action', $booking );
     }
     $wpdb->delete( $bookings_table, [ 'booking_id' => $booking_id ], ['%d'] );
-    eme_seatlayout_release_booking_seats( $booking_id );
     // delete optional attachments
     eme_delete_uploaded_files( $booking_id, 'bookings' );
     eme_delete_booking_answers( $booking_id );
@@ -2821,9 +2780,6 @@ function eme_db_update_booking( $line ) {
     }
 
     if ( $res ) {
-        if ( isset( $line['status'] ) && $line['status'] == EME_RSVP_STATUS_TRASH ) {
-            eme_seatlayout_release_booking_seats( $line['booking_id'] );
-        }
         $booking = eme_get_booking( $line['booking_id'] );
         //eme_delete_booking_answers($booking_id);
         eme_store_booking_answers( $booking );
@@ -3642,9 +3598,6 @@ function eme_get_booking_placeholder_handler_definitions() {
     }
 
     $handlers = [
-        '/#_SEATLABELS/' => function( $result, $matches, $ctx ) {
-            return eme_sanitize_placeholder_output( implode( ', ', eme_seatlayout_get_booking_labels( $ctx['booking']['booking_id'] ) ), $ctx['target'], true );
-        },
         '/#_(RESP)?COMMENT/' => function( $result, $matches, $ctx ) {
             return eme_sanitize_placeholder_output( $ctx['booking']['booking_comment'], $ctx['target'], true );
         },

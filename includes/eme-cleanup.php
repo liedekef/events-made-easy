@@ -121,9 +121,6 @@ function eme_cleanup_trashed_bookings( $eme_number, $eme_period ) {
     $datetime = $eme_date_obj->getDateTime();
     $prepared_sql = $wpdb->prepare("SELECT COUNT(*) FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
     $count        = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-    $booking_seats_table = EME_DB_PREFIX . EME_BOOKING_SEATS_TBNAME;
-    $prepared_sql        = $wpdb->prepare( "DELETE FROM $booking_seats_table WHERE booking_id IN (SELECT booking_id FROM $bookings_table WHERE modif_date < %s AND status = %d)", $datetime, EME_RSVP_STATUS_TRASH ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $prepared_sql = $wpdb->prepare("DELETE FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
     $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     return $count;

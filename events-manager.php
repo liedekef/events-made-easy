@@ -51,7 +51,6 @@ require_once EME_INCLUDE_DIR . 'eme-events.php';
 require_once EME_INCLUDE_DIR . 'eme-calendar.php';
 require_once EME_INCLUDE_DIR . 'eme-widgets.php';
 require_once EME_INCLUDE_DIR . 'eme-rsvp.php';
-require_once EME_INCLUDE_DIR . 'eme-seatlayouts.php';
 require_once EME_INCLUDE_DIR . 'eme-locations.php';
 require_once EME_INCLUDE_DIR . 'eme-people.php';
 require_once EME_INCLUDE_DIR . 'eme-recurrence.php';

@@ -1016,33 +1016,7 @@ function eme_scrollToInvalidInput(el) {
     }
 }
 
-function emeRefreshSeatmap(seatmap) {
-    const inputs = Array.from(seatmap.querySelectorAll('.eme-seatmap-input'));
-    const selected = inputs.filter(input => input.checked && !input.disabled);
-    const maxSeats = parseInt(seatmap.dataset.maxSeats, 10) || 0;
-    inputs.forEach(input => {
-        if (input.checked) return;
-        input.disabled = input.dataset.taken === '1' || (maxSeats > 0 && selected.length >= maxSeats);
-    });
-    const selection = seatmap.querySelector('.eme-seatmap-selection');
-    if (selection) {
-        selection.textContent = selected.map(input => input.dataset.label || input.value).join(', ');
-    }
-}
-
-function emeInitSeatmaps() {
-    EME.$$('.eme-seatmap').forEach(seatmap => emeRefreshSeatmap(seatmap));
-}
-
 document.addEventListener('DOMContentLoaded', function() {
-    emeInitSeatmaps();
-    document.addEventListener('change', function(e) {
-        if (e.target && e.target.classList && e.target.classList.contains('eme-seatmap-input')) {
-            const seatmap = e.target.closest('.eme-seatmap');
-            if (seatmap) emeRefreshSeatmap(seatmap);
-        }
-    });
-
     // Show elements that should be visible with JS
     EME.$$('.eme-showifjs').forEach(el => {
         eme_toggle(el, true);

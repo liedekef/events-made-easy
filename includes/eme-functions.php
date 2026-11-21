@@ -2184,8 +2184,6 @@ function eme_booking_from_form( $event ) {
             }
         }
     }
-    eme_seatlayout_apply_to_booking( $event, $booking );
-
     if ( isset( $_POST['bookings'][ $event_id ] ) ) {
         foreach ( wp_unslash( $_POST['bookings'][ $event_id ] ) as $key => $value ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             if ( preg_match( '/^DISCOUNT/', eme_sanitize_request( $key ), $matches ) ) {

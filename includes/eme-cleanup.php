@@ -121,6 +121,10 @@ function eme_cleanup_trashed_bookings( $eme_number, $eme_period ) {
     $datetime = $eme_date_obj->getDateTime();
     $prepared_sql = $wpdb->prepare("SELECT COUNT(*) FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
     $count        = $wpdb->get_var( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    // the seats of these bookings go first, they are found via the bookings
+    $seat_bookings_table = EME_DB_PREFIX . EME_SEAT_BOOKINGS_TBNAME;
+    $prepared_sql = $wpdb->prepare("DELETE FROM $seat_bookings_table WHERE booking_id IN (SELECT booking_id FROM $bookings_table WHERE modif_date < %s AND status = %d)", $datetime, EME_RSVP_STATUS_TRASH); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $prepared_sql = $wpdb->prepare("DELETE FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
     $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     return $count;
@@ -224,6 +228,12 @@ function eme_cleanup_events( $eme_number, $eme_period ) {
     }
     $end_datetime = $eme_date_obj->getDateTime();
     $end_date     = $eme_date_obj->getDate();
+    $seat_bookings_table = EME_DB_PREFIX . EME_SEAT_BOOKINGS_TBNAME;
+    $seat_layouts_table  = EME_DB_PREFIX . EME_SEATLAYOUTS_TBNAME;
+    $seats_table         = EME_DB_PREFIX . EME_SEATLAYOUT_SEATS_TBNAME;
+    $wpdb->query( $wpdb->prepare( "DELETE FROM $seat_bookings_table WHERE event_id IN (SELECT event_id FROM $events_table WHERE event_end<%s)", $end_datetime ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $wpdb->prepare( "DELETE FROM $seats_table WHERE layout_id IN (SELECT layout_id FROM $seat_layouts_table WHERE event_id IN (SELECT event_id FROM $events_table WHERE event_end<%s))", $end_datetime ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $wpdb->prepare( "DELETE FROM $seat_layouts_table WHERE event_id IN (SELECT event_id FROM $events_table WHERE event_end<%s)", $end_datetime ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $wpdb->prepare( "DELETE FROM $bookings_table WHERE event_id IN (SELECT event_id FROM $events_table WHERE event_end<%s)", $end_datetime ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $wpdb->prepare( "DELETE FROM $answers_table WHERE type='event' AND related_id IN (SELECT event_id FROM $events_table WHERE event_end<%s)", $end_datetime ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='event' AND related_id in (SELECT event_id FROM $events_table WHERE event_end<%s)", $end_datetime ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -234,7 +244,7 @@ function eme_cleanup_events( $eme_number, $eme_period ) {
 function eme_cleanup_all_event_related_data( $other_data ) {
     global $wpdb;
 
-    $tables = [ EME_EVENTS_TBNAME, EME_BOOKINGS_TBNAME, EME_LOCATIONS_TBNAME, EME_RECURRENCE_TBNAME, EME_ANSWERS_TBNAME, EME_PAYMENTS_TBNAME, EME_PEOPLE_TBNAME, EME_GROUPS_TBNAME, EME_MEMBERS_TBNAME, EME_MEMBERSHIPS_TBNAME, EME_ATTENDANCES_TBNAME, EME_TODOS_TBNAME, EME_TASKS_TBNAME, EME_TASK_SIGNUPS_TBNAME ];
+    $tables = [ EME_EVENTS_TBNAME, EME_BOOKINGS_TBNAME, EME_SEATLAYOUTS_TBNAME, EME_SEATLAYOUT_SEATS_TBNAME, EME_SEAT_BOOKINGS_TBNAME, EME_LOCATIONS_TBNAME, EME_RECURRENCE_TBNAME, EME_ANSWERS_TBNAME, EME_PAYMENTS_TBNAME, EME_PEOPLE_TBNAME, EME_GROUPS_TBNAME, EME_MEMBERS_TBNAME, EME_MEMBERSHIPS_TBNAME, EME_ATTENDANCES_TBNAME, EME_TODOS_TBNAME, EME_TASKS_TBNAME, EME_TASK_SIGNUPS_TBNAME ];
     if ( $other_data ) {
         $tables2 = [ EME_CATEGORIES_TBNAME, EME_HOLIDAYS_TBNAME, EME_TEMPLATES_TBNAME, EME_FORMFIELDS_TBNAME, EME_COUNTRIES_TBNAME, EME_STATES_TBNAME, EME_DISCOUNTS_TBNAME, EME_DISCOUNTGROUPS_TBNAME, EME_MQUEUE_TBNAME, EME_MAILINGS_TBNAME ];
         $tables  = array_merge( $tables, $tables2 );

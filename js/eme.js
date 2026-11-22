@@ -1016,6 +1016,25 @@ function eme_scrollToInvalidInput(el) {
     }
 }
 
+// seatmap: when the maximum number of seats is reached, the other free seats cannot be selected anymore
+function eme_init_seatmaps() {
+    EME.$$('.eme-seatmap').forEach(map => {
+        const max = parseInt(map.dataset.maxSeats, 10) || 0;
+        if (!max) {
+            return;
+        }
+        const update = () => {
+            const checked = map.querySelectorAll('input.eme-seat-checkbox:checked').length;
+            map.querySelectorAll('input.eme-seat-checkbox').forEach(box => {
+                box.disabled = !box.checked && checked >= max;
+                box.closest('.eme-seat').classList.toggle('eme-seat-limit', box.disabled);
+            });
+        };
+        map.addEventListener('change', update);
+        update();
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Show elements that should be visible with JS
     EME.$$('.eme-showifjs').forEach(el => {
@@ -1265,4 +1284,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize widgets
     eme_init_widgets();
+    eme_init_seatmaps();
 });

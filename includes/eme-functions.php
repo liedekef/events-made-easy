@@ -2159,7 +2159,18 @@ function eme_booking_from_form( $event ) {
     $bookedSeats_mp = [];
     $dcodes_entered = [];
     $event_id       = $event['event_id'];
-    if ( ! eme_is_multi( $event['price'] ) ) {
+    // with a seatmap, the selected seats define the number of seats (and the number per price category)
+    // seatmap mode is decided by the event, not by posted data
+    $seatmap_mode = eme_seatlayout_event_uses_seatmap( $event );
+    if ( $seatmap_mode ) {
+        $seat_ids        = eme_seatlayout_get_posted_seat_ids( $event_id );
+        $seat_counts     = eme_seatlayout_counts_for_seat_ids( $event, $seat_ids );
+        $bookedSeats     = $seat_counts['total'];
+        if ( eme_is_multi( $event['price'] ) ) {
+            $bookedSeats_mp = $seat_counts['mp'];
+        }
+        $booking['seat_ids'] = $seat_ids;
+    } elseif ( ! eme_is_multi( $event['price'] ) ) {
         if ( isset( $_POST['bookings'][ $event_id ]['bookedSeats'] ) ) {
             $bookedSeats = intval( $_POST['bookings'][ $event_id ]['bookedSeats'] );
         } else {
@@ -2195,8 +2206,8 @@ function eme_booking_from_form( $event ) {
         }
     }
 
-    // for non-multi event seats, let's check the waitinglist option too
-    if ( ! eme_is_multi( $event['event_seats'] ) ) {
+    // for non-multi event seats, let's check the waitinglist option too (not for seatmap events: you pick free seats)
+    if ( ! $seatmap_mode && ! eme_is_multi( $event['event_seats'] ) ) {
         $waitinglist_seats = $event['event_properties']['waitinglist_seats'];
         // check for real available seats excluding waitinglis
         $avail_seats = eme_get_available_seats( $event_id, 1 );

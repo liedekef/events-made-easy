@@ -145,6 +145,182 @@ function calculateRsvpCutoffDisplay() {
     displayElement.textContent = formattedStart;
 }
 
+// seat layout editor: pick a tool, click or drag over the grid; the result is kept in one hidden JSON field
+function eme_init_seatlayout_editor() {
+    const root = EME.$('.eme-seatlayout-editor');
+    if (!root) {
+        return;
+    }
+    const hidden = root.querySelector('#eme_seatlayout_json');
+    const gridEl = root.querySelector('.eme-seatlayout-grid');
+    const rowsInput = root.querySelector('.eme-seatlayout-rows');
+    const colsInput = root.querySelector('.eme-seatlayout-cols');
+    const countEl = root.querySelector('.eme-seatlayout-count');
+    const warnEl = root.querySelector('.eme-seatlayout-warning');
+    const capacity = parseInt(root.dataset.capacity, 10) || 0;
+    let data;
+    try {
+        data = JSON.parse(hidden.value);
+    } catch (e) {
+        data = { rows: 0, cols: 0, seats: [] };
+    }
+    const cells = new Map(); // "row:col" => { l: label, p: price index, d: disabled, b: booked }
+    (data.seats || []).forEach(s => cells.set(s.r + ':' + s.c, { l: s.l || '', p: s.p || 0, d: s.d ? 1 : 0, b: s.b ? 1 : 0 }));
+    let tool = 'price:0';
+    let painting = false;
+    let dragged = false;
+    let touched = new Set();
+
+    const letter = (row) => {
+        let out = '';
+        while (row > 0) {
+            row--;
+            out = String.fromCharCode(65 + (row % 26)) + out;
+            row = Math.floor(row / 26);
+        }
+        return out;
+    };
+    const dim = (input) => Math.min(60, Math.max(0, parseInt(input.value, 10) || 0));
+
+    const paintCell = (btn) => {
+        const key = btn.dataset.r + ':' + btn.dataset.c;
+        const cell = cells.get(key);
+        if (touched.has(key) || (dragged && tool === 'rename')) {
+            return;
+        }
+        touched.add(key);
+        if (tool === 'remove') {
+            if (cell && cell.b) {
+                alert(root.dataset.msgReserved);
+            } else {
+                cells.delete(key);
+            }
+        } else if (tool === 'disable') {
+            if (cell) {
+                cell.d = cell.d ? 0 : 1;
+            }
+        } else if (tool === 'rename') {
+            if (cell) {
+                const label = prompt(root.dataset.prompt, cell.l || letter(parseInt(btn.dataset.r, 10)) + btn.dataset.c);
+                if (label !== null) {
+                    cell.l = label.trim().substring(0, 20);
+                }
+            }
+        } else if (tool.startsWith('price:')) {
+            const price = parseInt(tool.substring(6), 10) || 0;
+            if (cell && cell.b) {
+                if (cell.p !== price) {
+                    alert(root.dataset.msgReserved);
+                }
+            } else if (cell) {
+                cell.p = price;
+            } else {
+                cells.set(key, { l: '', p: price, d: 0, b: 0 });
+            }
+        }
+        showCell(btn);
+    };
+
+    const showCell = (btn) => {
+        const r = parseInt(btn.dataset.r, 10);
+        const c = parseInt(btn.dataset.c, 10);
+        const cell = cells.get(r + ':' + c);
+        let cls = 'eme-seat eme-seatlayout-cell';
+        if (!cell) {
+            cls += ' eme-seat-empty';
+            btn.textContent = '';
+        } else {
+            cls += ' eme-seat-price-' + (cell.p % 10);
+            if (cell.d) {
+                cls += ' eme-seat-unavailable';
+            }
+            if (cell.b) {
+                cls += ' is-reserved';
+            }
+            btn.textContent = cell.l || letter(r) + c;
+        }
+        btn.className = cls;
+    };
+
+    const serialize = () => {
+        const rows = dim(rowsInput);
+        const cols = dim(colsInput);
+        const seats = [];
+        let count = 0;
+        cells.forEach((cell, key) => {
+            const [r, c] = key.split(':').map(Number);
+            if (r <= rows && c <= cols) {
+                seats.push({ r: r, c: c, l: cell.l, p: cell.p, d: cell.d });
+                if (!cell.d) {
+                    count++;
+                }
+            }
+        });
+        hidden.value = JSON.stringify({ rows: rows, cols: cols, seats: seats });
+        countEl.textContent = count;
+        warnEl.style.display = capacity > 0 && count !== capacity ? '' : 'none';
+    };
+
+    const build = () => {
+        const rows = dim(rowsInput);
+        const cols = dim(colsInput);
+        gridEl.style.gridTemplateColumns = 'repeat(' + cols + ', 2.8em)';
+        gridEl.textContent = '';
+        const frag = document.createDocumentFragment();
+        for (let r = 1; r <= rows; r++) {
+            for (let c = 1; c <= cols; c++) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.dataset.r = r;
+                btn.dataset.c = c;
+                showCell(btn);
+                frag.appendChild(btn);
+            }
+        }
+        gridEl.appendChild(frag);
+        serialize();
+    };
+
+    gridEl.addEventListener('mousedown', (e) => {
+        const btn = e.target.closest('.eme-seatlayout-cell');
+        if (!btn) {
+            return;
+        }
+        e.preventDefault();
+        painting = true;
+        dragged = false;
+        touched = new Set();
+        paintCell(btn);
+    });
+    gridEl.addEventListener('mouseover', (e) => {
+        const btn = e.target.closest('.eme-seatlayout-cell');
+        if (painting && btn) {
+            dragged = true;
+            paintCell(btn);
+        }
+    });
+    document.addEventListener('mouseup', () => {
+        if (painting) {
+            painting = false;
+            serialize();
+        }
+    });
+    root.querySelectorAll('.eme-seatlayout-tool').forEach(btn => {
+        btn.addEventListener('click', () => {
+            tool = btn.dataset.tool;
+            root.querySelectorAll('.eme-seatlayout-tool').forEach(b => b.classList.toggle('button-primary', b === btn));
+        });
+    });
+    root.querySelector('.eme-seatlayout-tool').classList.add('button-primary');
+    rowsInput.addEventListener('input', build);
+    colsInput.addEventListener('input', build);
+    const form = hidden.closest('form');
+    if (form) {
+        form.addEventListener('submit', serialize);
+    }
+    build();
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const EventsTableContainer = EME.$('#EventsTableContainer');
     let EventsTable;
@@ -1124,6 +1300,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateShowHideTime();
         updateShowHideMultiPriceDescription();
         updateShowHideLocMaxCapWarning();
+        eme_init_seatlayout_editor();
         calculateRsvpStart();
         calculateRsvpEnd();
 

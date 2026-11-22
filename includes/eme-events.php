@@ -654,12 +654,16 @@ function eme_events_page() {
                 } else {
                     eme_event_store_answers( $event_id );
                     eme_upload_files( $event_id, 'events' );
+                    $seatlayout_notice = eme_seatlayout_save_from_post( $event_id, $event );
                     // the eme_insert_event_action is only executed for single events, not those part of a recurrence
                     if ( has_action( 'eme_insert_event_action' ) ) {
                         $event = eme_get_event( $event_id );
                         do_action( 'eme_insert_event_action', $event );
                     }
                     $feedback_message = eme_message_ok_div( __( 'New event successfully inserted!', 'events-made-easy' ), 1 );
+                    if ( ! empty( $seatlayout_notice ) ) {
+                        $feedback_message .= eme_message_error_div( $seatlayout_notice, 1 );
+                    }
                     if ( $stay_on_edit_page ) {
                         // translators: %s is the event name
                         $info             = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ) ];
@@ -729,12 +733,16 @@ function eme_events_page() {
                     if ( eme_db_update_event( $event, $event_ID ) ) {
                         eme_event_store_answers( $event_ID );
                         eme_upload_files( $event_ID, 'events' );
+                        $seatlayout_notice = eme_seatlayout_save_from_post( $event_ID, $event );
                         if ( has_action( 'eme_update_event_action' ) ) {
                             $event = eme_get_event( $event_ID );
                             do_action( 'eme_update_event_action', $event );
                         }
                         // translators: %s is the event name
                         $feedback_message = eme_message_ok_div( sprintf( __( "Updated '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ), 1);
+                        if ( ! empty( $seatlayout_notice ) ) {
+                            $feedback_message .= eme_message_error_div( $seatlayout_notice, 1 );
+                        }
                         if ( $stay_on_edit_page ) {
                             // translators: %s is the event name
                             $info             = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ) ];
@@ -6621,6 +6629,13 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
     eme_meta_box_div_event_cancel_form_format( $event, $templates_array );
     eme_meta_box_div_event_captcha_settings( $event );
     echo '</div></details>';
+    // seat layouts are per single event, not for recurrences
+    if ( ! $edit_recurrence ) {
+        echo '<details name="eme_details_rsvp" class="eme_accordion">';
+        echo '<summary>' . esc_html__( 'Seat layout', 'events-made-easy' ) . '</summary><div>';
+        eme_seatlayout_render_admin( $event );
+        echo '</div></details>';
+    }
     echo '<details name="eme_details_rsvp" class="eme_accordion">';
     echo '<summary>' . esc_html__( 'Attendance settings', 'events-made-easy' ) . '</summary><div>';
     eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templates_array );
@@ -9671,6 +9686,7 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
     $res = $wpdb->delete( $table_name, [ 'event_id' => $event_id ], ['%d'] );
     if ( $res ) { // we need at least 1 row deleted ...
         eme_delete_all_bookings_for_event_id( $event_id );
+        eme_seatlayout_delete_event_seats( $event_id );
         eme_delete_event_attendances( $event_id );
         eme_delete_event_answers( $event_id );
         eme_delete_uploaded_files( $event_id, 'events' );

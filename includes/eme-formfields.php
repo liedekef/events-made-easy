@@ -2341,7 +2341,22 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         return "<textarea {$ctx['required_att']} name='eme_rsvpcomment' $dfc placeholder='$placeholder_text' >$bookerComment</textarea>";
     };
 
-    $handlers['/#_SEATS$|#_SPACES$/'] = function( $result, $matches, $ctx ) use ( $event_id, $event, $is_multibooking, $editing_booking_from_backend, $bookedSeats, $booked_seats_options, $waitinglist, $new_booking_in_frontend, $min_allowed_is_multi, $min_allowed, $max_allowed, $dynamic_price_class_basic ) {
+    $handlers['/#_SEATMAP$/'] = function( $result, $matches, $ctx ) use ( $event, $is_multibooking, $booking, $editing_booking_from_backend, $dynamic_price_class_basic ) {
+        if ( $is_multibooking ) {
+            return '';
+        }
+        if ( empty( eme_seatlayout_get_layout( $event['event_id'] ) ) ) {
+            $error_msg = esc_html__( 'The seat layout for this event has not been defined.', 'events-made-easy' );
+            return [ 'html' => '', 'early_return' => "<div class='eme-message-error eme-rsvp-message-error'>$error_msg</div>" ];
+        }
+        return eme_seatlayout_render_frontend( $event, $booking, $editing_booking_from_backend, "$dynamic_price_class_basic {$ctx['dfc_basic']}" );
+    };
+
+    $handlers['/#_SEATS$|#_SPACES$/'] = function( $result, $matches, $ctx ) use ( $event_id, $event, $is_multibooking, $editing_booking_from_backend, $bookedSeats, $booked_seats_options, $waitinglist, $new_booking_in_frontend, $min_allowed_is_multi, $min_allowed, $max_allowed, $dynamic_price_class_basic, $format ) {
+        // with a seatmap the seats are selected on the map: no separate seats field
+        if ( ! $is_multibooking && eme_seatlayout_event_uses_seatmap( $event, $format ) ) {
+            return '';
+        }
         $var_prefix  = "bookings[$event_id][";
         $var_postfix = ']';
         $fieldname   = "{$var_prefix}bookedSeats{$var_postfix}";
@@ -2375,7 +2390,10 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
         return [ 'html' => $replacement ];
     };
 
-    $handlers['/#_(SEATS|SPACES)\{(\d+)\}/'] = function( $result, $matches, $ctx ) use ( $event_id, $event, $editing_booking_from_backend, $booking_seats_mp, $booked_seats_options, $min_allowed_is_multi, $multi_min_allowed, $multi_max_allowed, $dynamic_price_class_basic ) {
+    $handlers['/#_(SEATS|SPACES)\{(\d+)\}/'] = function( $result, $matches, $ctx ) use ( $event_id, $event, $is_multibooking, $editing_booking_from_backend, $booking_seats_mp, $booked_seats_options, $min_allowed_is_multi, $multi_min_allowed, $multi_max_allowed, $dynamic_price_class_basic, $format ) {
+        if ( ! $is_multibooking && eme_seatlayout_event_uses_seatmap( $event, $format ) ) {
+            return '';
+        }
         $field_id    = intval( $matches[2] );
         $fieldname   = "bookings[$event_id][bookedSeats{$field_id}]";
         $entered_val = ( $editing_booking_from_backend && $field_id > 0 && isset( $booking_seats_mp[ $field_id - 1 ] ) )
@@ -2557,9 +2575,9 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
     $has_password = $eme_is_admin_request || $is_multibooking || empty( $event['event_properties']['rsvp_password'] ) || preg_match( '/#(REQ|ESC)?_PASSWORD/', $format );
 
     if ( eme_is_multi( $event['price'] ) ) {
-        $has_seats = preg_match( '/#(REQ|ESC)?_(SEATS|SPACES)\{(\d+)\}/', $format );
+        $has_seats = preg_match( '/#(REQ|ESC)?_(SEATS|SPACES)\{(\d+)\}|#(REQ|ESC)?_SEATMAP/', $format );
     } else {
-        $has_seats = preg_match( '/#(REQ|ESC)?_(SEATS|SPACES)/', $format );
+        $has_seats = preg_match( '/#(REQ|ESC)?_(SEATS|SPACES|SEATMAP)/', $format );
     }
 
     if ( ! $has_lastname || ! $has_email || ! $has_password || ! $has_seats ) {

@@ -1326,6 +1326,20 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
         $bookedSeats    = $tmp_booking['booking_seats'];
         $bookedSeats_mp = eme_convert_multi2array( $tmp_booking['booking_seats_mp'] );
 
+        // events with a seatmap: the selected seats must exist, be bookable and free
+        // (they are checked again inside the seat lock when the booking is inserted)
+        if ( eme_seatlayout_event_uses_seatmap( $event ) ) {
+            if ( $is_multibooking ) {
+                $form_html .= __( 'Seat selection is not available when booking multiple events at once.', 'events-made-easy' );
+                continue;
+            }
+            $seat_validation = eme_seatlayout_validate_seat_ids( $event_id, $tmp_booking['seat_ids'] ?? [] );
+            if ( ! $seat_validation['valid'] ) {
+                $form_html .= $seat_validation['message'];
+                continue;
+            }
+        }
+
         $min_allowed     = $event['event_properties']['min_allowed'];
         $max_allowed     = $event['event_properties']['max_allowed'];
         $take_attendance = 0;
@@ -1469,7 +1483,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
                 $eme_address1_string     = get_option( 'eme_address1_string' );
                 $eme_address2_string     = get_option( 'eme_address2_string' );
                 foreach ( $all_required_fields as $required_field ) {
-                    if ( preg_match( '/LASTNAME|EMAIL|SEATS|SPACES|DISCOUNT|PASSWORD/', $required_field ) ) {
+                    if ( preg_match( '/LASTNAME|EMAIL|SEATS|SPACES|SEATMAP|DISCOUNT|PASSWORD/', $required_field ) ) {
                         // we already check these separately, and EMAIL regex also catches _HTML5_EMAIL
                         // discount can return multiple times, so we rely on the form logic
                         continue;
@@ -2085,6 +2099,12 @@ function eme_db_insert_booking( $event, $booker, $booking ) {
     $eme_is_admin_request = eme_is_admin_request();
     $bookings_table       = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
     $booking['person_id'] = intval( $booker['person_id'] );
+    // the seats of a seatmap booking are stored in their own table
+    $seat_ids = [];
+    if ( isset( $booking['seat_ids'] ) ) {
+        $seat_ids = $booking['seat_ids'];
+        unset( $booking['seat_ids'] );
+    }
 
     if ( ! $eme_is_admin_request && $booking['waitinglist'] ) {
         // if we're adding a booking via the frontend and the waitinglist is on, approval needed
@@ -2114,15 +2134,28 @@ function eme_db_insert_booking( $event, $booker, $booking ) {
     $booking['creation_date'] = current_time( 'mysql', false );
     $booking['modif_date'] = $booking['creation_date'];
 
-    if ( $wpdb->insert( $bookings_table, $booking ) ) {
-        $booking_id            = $wpdb->insert_id;
-        $booking['booking_id'] = $booking_id;
-        eme_add_persongroups( $booking['person_id'], $event['event_properties']['rsvp_addpersontogroup'] );
-        eme_store_booking_answers( $booking );
-        return $booking_id;
-    } else {
+    $do_insert = function () use ( $wpdb, $bookings_table, $event, &$booking, $seat_ids ) {
+        // for seatmap bookings: check the seats once more, now we hold the seat lock
+        if ( ! empty( $seat_ids ) && ! eme_seatlayout_validate_seat_ids( $event['event_id'], $seat_ids )['valid'] ) {
+            return false;
+        }
+        if ( $wpdb->insert( $bookings_table, $booking ) ) {
+            $booking_id            = $wpdb->insert_id;
+            $booking['booking_id'] = $booking_id;
+            if ( ! empty( $seat_ids ) && ! eme_seatlayout_insert_booking_seats( $booking_id, $event['event_id'], $seat_ids ) ) {
+                $wpdb->delete( $bookings_table, [ 'booking_id' => $booking_id ], [ '%d' ] );
+                return false;
+            }
+            eme_add_persongroups( $booking['person_id'], $event['event_properties']['rsvp_addpersontogroup'] );
+            eme_store_booking_answers( $booking );
+            return $booking_id;
+        }
         return false;
+    };
+    if ( ! empty( $seat_ids ) ) {
+        return eme_seatlayout_with_lock( $event['event_id'], $do_insert );
     }
+    return $do_insert();
 }
 
 // API function so people easily get the booking answers from a post, primarily used for discounts
@@ -2437,6 +2470,7 @@ function eme_delete_all_bookings_for_event_id( $event_id ) {
     $prepared_sql   = $wpdb->prepare( "DELETE FROM $answers_table WHERE type='booking' AND related_id IN (SELECT booking_id from $bookings_table WHERE event_id = %d)", $event_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $wpdb->delete( $bookings_table, [ 'event_id' => $event_id ], ['%d'] );
+    eme_seatlayout_delete_seat_bookings_for_event( $event_id );
 }
 
 function eme_trash_person_bookings_future_events( $person_ids ) {
@@ -2463,6 +2497,8 @@ function eme_delete_person_bookings( $person_ids ) {
         $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
         $prepared_sql = $wpdb->prepare( "DELETE FROM $answers_table WHERE type='booking' AND related_id IN (SELECT booking_id from $bookings_table WHERE person_id IN ($placeholders))", ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        // the seat rows must go first, they are found via the bookings
+        eme_seatlayout_delete_seat_bookings_for_persons( $ids_arr );
         $prepared_sql = $wpdb->prepare( "DELETE FROM $bookings_table WHERE person_id IN ($placeholders)", ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     }
@@ -2522,6 +2558,7 @@ function eme_delete_booking( $booking_id ) {
         do_action( 'eme_delete_rsvp_action', $booking );
     }
     $wpdb->delete( $bookings_table, [ 'booking_id' => $booking_id ], ['%d'] );
+    eme_seatlayout_delete_booking_seats( $booking_id );
     // delete optional attachments
     eme_delete_uploaded_files( $booking_id, 'bookings' );
     eme_delete_booking_answers( $booking_id );
@@ -2634,7 +2671,7 @@ function eme_mark_booking_paid_approved( $booking, $pg = '', $pg_pid = '' ) {
     if ( $res === false ) {
         return false;
     } else {
-        return true;
+        return eme_seatlayout_restore_booking( $booking['booking_id'] );
     }
 }
 
@@ -2650,7 +2687,7 @@ function eme_mark_booking_pending( $booking_id ) {
     if ( $res === false ) {
         return false;
     } else {
-        return true;
+        return eme_seatlayout_restore_booking( $booking_id );
     }
 }
 
@@ -2710,6 +2747,9 @@ function eme_mark_booking_userconfirm( $booking_ids ) {
         $placeholders = implode(',', array_fill(0, count($ids_arr), '%d'));
         $prepared_sql = $wpdb->prepare( "UPDATE $bookings_table SET status=%d WHERE booking_id IN ($placeholders)", EME_RSVP_STATUS_USERPENDING, ...$ids_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        foreach ( $ids_arr as $booking_id ) {
+            eme_seatlayout_restore_booking( $booking_id );
+        }
     }
 }
 
@@ -2759,7 +2799,7 @@ function eme_approve_booking( $booking_id ) {
     if ( $res === false ) {
         return false;
     } else {
-        return true;
+        return eme_seatlayout_restore_booking( $booking_id );
     }
 }
 
@@ -3852,6 +3892,12 @@ function eme_get_booking_placeholder_handler_definitions() {
         },
         '/#_RESPSPACES$|#_SPACES$|#_RESPSEATS$|#_SEATS$/' => function( $result, $matches, $ctx ) {
             return eme_get_total( $ctx['booking']['booking_seats'] );
+        },
+        '/#_SEATLABELS$/' => function( $result, $matches, $ctx ) {
+            if ( empty( $ctx['booking']['booking_id'] ) ) {
+                return '';
+            }
+            return eme_sanitize_placeholder_output( implode( ', ', eme_seatlayout_get_labels_for_booking( $ctx['booking']['booking_id'] ) ), $ctx['target'], true );
         },
         '/#_CREATIONDATE\{(.+?)\}/' => function( $result, $matches, $ctx ) {
             return eme_localized_date( $ctx['booking']['creation_date'], EME_TIMEZONE, $matches[1] );
@@ -5188,6 +5234,11 @@ function eme_registration_seats_page( $pending = 0 ) {
 
             // transferto_id is only given for moving a booking to another event
             $transferto_id         = intval( $_POST ['transferto_id'] ?? 0 );
+            if ( $transferto_id && $booking['event_id'] != $transferto_id && ! empty( eme_seatlayout_get_seat_ids_for_booking( $booking_id ) ) ) {
+                print eme_message_error_div( __( 'A booking with selected seats cannot be transferred to another event.', 'events-made-easy' ), 1 );
+                eme_registration_seats_form_table( $pending );
+                return;
+            }
             if ( $transferto_id && $booking['event_id'] != $transferto_id ) {
                 $orig_event_id       = $booking['event_id'];
                 $booking['event_id'] = $transferto_id;
@@ -5232,8 +5283,25 @@ function eme_registration_seats_page( $pending = 0 ) {
             $update_message  = '';
             $enough_seats    = 1;
             $total_seats     = eme_get_total_seats( $event_id );
-            // we need to check the available number of seats
-            if ( eme_is_multi( $booking['event_price'] ) ) {
+            $seatmap_booking = eme_seatlayout_event_uses_seatmap( $event );
+            $seat_ids        = [];
+            $seat_error      = '';
+            if ( $seatmap_booking ) {
+                // the selected seats define the number of seats (also per price category)
+                $seat_ids   = eme_seatlayout_get_posted_seat_ids( $event_id );
+                $validation = eme_seatlayout_validate_seat_ids( $event_id, $seat_ids, $booking_id );
+                if ( ! $validation['valid'] ) {
+                    $enough_seats = 0;
+                    $seat_error   = $validation['message'];
+                } else {
+                    $seat_counts              = eme_seatlayout_counts_for_seat_ids( $event, $seat_ids );
+                    $booking['booking_seats'] = $seat_counts['total'];
+                    if ( eme_is_multi( $booking['event_price'] ) ) {
+                        $booking['booking_seats_mp'] = eme_convert_array2multi( $seat_counts['mp'] );
+                    }
+                }
+            } elseif ( eme_is_multi( $booking['event_price'] ) ) {
+                // we need to check the available number of seats
                 // it is a multiprice event, but the max number of seats can be a single number too, we need to account for that
                 if ( eme_is_multi( $event['event_seats'] ) ) {
                     $available_multiseats = eme_get_available_multiseats( $event_id );
@@ -5296,8 +5364,34 @@ function eme_registration_seats_page( $pending = 0 ) {
                 }
             }
             // now do the update
-            if ( $enough_seats || get_option( 'eme_rsvp_admin_allow_overbooking' ) ) {
-                eme_db_update_booking( $booking );
+            if ( $seatmap_booking && $seat_error === '' ) {
+                // replace the seats and update the booking in one go, inside the seat lock
+                $seats_ok = eme_seatlayout_with_lock(
+                    $event_id,
+                    function () use ( $event_id, $booking_id, $booking, $seat_ids ) {
+                        if ( ! eme_seatlayout_validate_seat_ids( $event_id, $seat_ids, $booking_id )['valid'] ) {
+                            return false;
+                        }
+                        $old_seat_ids = eme_seatlayout_get_seat_ids_for_booking( $booking_id );
+                        eme_seatlayout_delete_booking_seats( $booking_id );
+                        if ( eme_seatlayout_insert_booking_seats( $booking_id, $event_id, $seat_ids ) && eme_db_update_booking( $booking ) ) {
+                            return true;
+                        }
+                        eme_seatlayout_delete_booking_seats( $booking_id );
+                        eme_seatlayout_insert_booking_seats( $booking_id, $event_id, $old_seat_ids );
+                        return false;
+                    }
+                );
+                if ( ! $seats_ok ) {
+                    print eme_message_error_div( __( 'The seats could not be updated, please try again.', 'events-made-easy' ), 1 );
+                    eme_registration_seats_form_table( $pending );
+                    return;
+                }
+            }
+            if ( $seat_error === '' && ( $enough_seats || get_option( 'eme_rsvp_admin_allow_overbooking' ) ) ) {
+                if ( ! $seatmap_booking ) {
+                    eme_db_update_booking( $booking );
+                }
                 eme_manage_waitinglist( $event, $send_mail );
                 // for transferred bookings, check the original event also for waitinglist updates
                 if ( $orig_event_id > 0 ) {
@@ -5321,7 +5415,7 @@ function eme_registration_seats_page( $pending = 0 ) {
                     }
                 }
             } else {
-                print eme_message_error_div( __( 'During the time of your change, some free seats were taken leaving not enough free seats available anymore', 'events-made-easy' ), 1 );
+                print eme_message_error_div( $seat_error !== '' ? $seat_error : __( 'During the time of your change, some free seats were taken leaving not enough free seats available anymore', 'events-made-easy' ), 1 );
             }
         }
     }

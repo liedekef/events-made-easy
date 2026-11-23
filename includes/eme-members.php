@@ -633,11 +633,11 @@ function eme_member_stats_calc_period( $period ) {
     $limit_end   = date( 'Y-m-t', strtotime( $limit_start ) );
     $queries = [
         // sql for new members
-        'new_nbr'     => [ "SELECT membership_id,COUNT(*) AS nbr FROM $table WHERE start_date>=%s AND start_date <= %s AND renewal_count=0 GROUP BY membership_id", [ $limit_start, $limit_end ] ],
+        'new_nbr'     => [ "SELECT membership_id,COUNT(*) AS nbr FROM $table WHERE COALESCE(NULLIF(DATE(payment_date), '0000-00-00'), start_date)>=%s AND COALESCE(NULLIF(DATE(payment_date), '0000-00-00'), start_date) <= %s AND renewal_count=0 AND status<>0 GROUP BY membership_id", [ $limit_start, $limit_end ] ],
         // sql for expired members
         'expired_nbr' => [ "SELECT membership_id,COUNT(*) AS nbr FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 GROUP BY membership_id", [ $limit_start, $limit_end ] ],
         // sql for renewed members
-        'renewed_nbr' => [ "SELECT membership_id,COUNT(*) AS nbr FROM $table WHERE payment_date>=%s AND payment_date <= %s AND renewal_count>0 GROUP BY membership_id", [ $limit_start, $limit_end ] ],
+        'renewed_nbr' => [ "SELECT membership_id,COUNT(*) AS nbr FROM $table WHERE DATE(payment_date)>=%s AND DATE(payment_date) <= %s AND renewal_count>0 GROUP BY membership_id", [ $limit_start, $limit_end ] ],
     ];
     if ( $period == eme_member_stats_current_period() ) {
         // for current month: just count active members

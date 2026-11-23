@@ -182,6 +182,57 @@ function eme_init_seatlayout_editor() {
     };
     const dim = (input) => Math.min(60, Math.max(0, parseInt(input.value, 10) || 0));
 
+    // small modal (native <dialog>, appended to the body so it is not nested in the event form)
+    // resolves to the new label, or null when cancelled (button or Esc)
+    const askLabel = (current) => new Promise((resolve) => {
+        const dlg = document.createElement('dialog');
+        dlg.className = 'eme-seatlayout-dialog';
+        const form = document.createElement('form');
+        form.method = 'dialog';
+        const label = document.createElement('label');
+        label.textContent = root.dataset.prompt;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.maxLength = 20;
+        input.value = current;
+        label.append(document.createElement('br'), input);
+        const ok = document.createElement('button');
+        ok.type = 'submit';
+        ok.value = 'ok';
+        ok.className = 'button button-primary';
+        ok.textContent = root.dataset.save;
+        const cancel = document.createElement('button');
+        cancel.type = 'button';
+        cancel.className = 'button';
+        cancel.textContent = root.dataset.cancel;
+        cancel.addEventListener('click', () => dlg.close('cancel'));
+        const actions = document.createElement('p');
+        actions.append(ok, ' ', cancel);
+        form.append(label, actions);
+        dlg.appendChild(form);
+        dlg.addEventListener('close', () => {
+            resolve(dlg.returnValue === 'ok' ? input.value : null);
+            dlg.remove();
+        });
+        document.body.appendChild(dlg);
+        dlg.showModal();
+        input.select();
+    });
+
+    const renameCell = async (btn) => {
+        const cell = cells.get(btn.dataset.r + ':' + btn.dataset.c);
+        if (!cell) {
+            return;
+        }
+        painting = false; // the mouseup may end up in the dialog
+        const label = await askLabel(cell.l || letter(parseInt(btn.dataset.r, 10)) + btn.dataset.c);
+        if (label !== null) {
+            cell.l = label.trim().substring(0, 20);
+            showCell(btn);
+            serialize();
+        }
+    };
+
     const paintCell = (btn) => {
         const key = btn.dataset.r + ':' + btn.dataset.c;
         const cell = cells.get(key);
@@ -200,12 +251,7 @@ function eme_init_seatlayout_editor() {
                 cell.d = cell.d ? 0 : 1;
             }
         } else if (tool === 'rename') {
-            if (cell) {
-                const label = prompt(root.dataset.prompt, cell.l || letter(parseInt(btn.dataset.r, 10)) + btn.dataset.c);
-                if (label !== null) {
-                    cell.l = label.trim().substring(0, 20);
-                }
-            }
+            renameCell(btn);
         } else if (tool.startsWith('price:')) {
             const price = parseInt(tool.substring(6), 10) || 0;
             if (cell && cell.b) {
@@ -297,6 +343,13 @@ function eme_init_seatlayout_editor() {
         if (painting && btn) {
             dragged = true;
             paintCell(btn);
+        }
+    });
+    // double-click a seat to change its label, whatever tool is active (the remove tool is left alone)
+    gridEl.addEventListener('dblclick', (e) => {
+        const btn = e.target.closest('.eme-seatlayout-cell');
+        if (btn && tool !== 'remove' && tool !== 'rename') {
+            renameCell(btn);
         }
     });
     document.addEventListener('mouseup', () => {

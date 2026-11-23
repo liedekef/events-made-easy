@@ -494,6 +494,8 @@ function eme_seatlayout_render_admin( $event ) {
 	data-categories="<?php echo esc_attr( wp_json_encode( array_values( $categories ) ) ); ?>"
 	data-capacity="<?php echo esc_attr( intval( $capacity ) ); ?>"
 	data-prompt="<?php echo esc_attr__( 'Seat label', 'events-made-easy' ); ?>"
+	data-save="<?php echo esc_attr__( 'Save', 'events-made-easy' ); ?>"
+	data-cancel="<?php echo esc_attr__( 'Cancel', 'events-made-easy' ); ?>"
 	data-msg-reserved="<?php echo esc_attr__( 'This seat is part of a booking and cannot be removed or get another price category.', 'events-made-easy' ); ?>">
 	<input type="hidden" name="eme_seatlayout_json" id="eme_seatlayout_json" value="<?php echo esc_attr( wp_json_encode( $payload ) ); ?>">
 	<p class="eme_smaller"><?php esc_html_e( 'Define a seat layout for this event and add #_SEATMAP to the booking form (it replaces #_SEATS). Seats that are part of a booking can never be removed.', 'events-made-easy' ); ?></p>
@@ -509,7 +511,7 @@ function eme_seatlayout_render_admin( $event ) {
 		<button type="button" class="button eme-seatlayout-tool" data-tool="rename"><?php esc_html_e( 'Rename', 'events-made-easy' ); ?></button>
 		<button type="button" class="button eme-seatlayout-tool" data-tool="remove"><?php esc_html_e( 'Remove', 'events-made-easy' ); ?></button>
 	</p>
-	<p class="eme_smaller"><?php esc_html_e( 'Pick a tool, then click or drag over the grid. A seat that is disabled cannot be booked.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'Pick a tool, then click or drag over the grid. Double-click a seat to change its label. A seat that is disabled cannot be booked.', 'events-made-easy' ); ?></p>
 	<div class="eme-seatlayout-grid"></div>
 	<p class="eme_smaller"><?php esc_html_e( 'Number of seats that can be booked:', 'events-made-easy' ); ?> <strong class="eme-seatlayout-count">0</strong></p>
 	<p class="eme-seatlayout-warning eme-message-error" style="display:none"><?php esc_html_e( 'Warning: the number of seats in the layout differs from the number of seats set for this event in the RSVP settings.', 'events-made-easy' ); ?></p>

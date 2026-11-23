@@ -345,13 +345,6 @@ function eme_init_seatlayout_editor() {
             paintCell(btn);
         }
     });
-    // double-click a seat to change its label, whatever tool is active (the remove tool is left alone)
-    gridEl.addEventListener('dblclick', (e) => {
-        const btn = e.target.closest('.eme-seatlayout-cell');
-        if (btn && tool !== 'remove' && tool !== 'rename') {
-            renameCell(btn);
-        }
-    });
     document.addEventListener('mouseup', () => {
         if (painting) {
             painting = false;

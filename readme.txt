@@ -103,7 +103,7 @@ To prevent user-provided text from being executed as a shortcode or EME placehol
 4. Recurrence editing of an event
 
 == Changelog ==
-= 3.3.11  (2026/11/) =
+= 3.3.11  (2026/11/24) =
 * Location edit now uses the configured balloon format live (also frontend)
 * New: seat maps. Define a seat layout per event (RSVP tab, "Seat layout") and add #_SEATMAP to the booking form (it replaces #_SEATS, also with multiple prices); the selected seats define the number of seats and the price per category. #_SEATLABELS shows the seats of a booking. Not available for recurrences, multibooking or waiting lists.
 

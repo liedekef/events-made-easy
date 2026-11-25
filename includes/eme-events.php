@@ -4976,8 +4976,9 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
     }
     if ( $offset > 0 ) {
         if ( $limit == 0 ) {
-            $limit_string = 'LIMIT ' . intval( $offset );
-            $event_limit  = intval( $offset );
+            // OFFSET needs LIMIT, take a high number ...
+            $limit_string = 'LIMIT 1000';
+            $event_limit  = 10000;
         }
         $offset_string = 'OFFSET ' . intval( $offset );
     } else {

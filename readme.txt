@@ -32,7 +32,7 @@ Main features:
 * Calendar management, with holidays integration
 * Several widgets for event listings and calendar
 * Location management, with optional OpenStreetMap integration
-* RSVP bookings with custom fields and dynamic fields, payment tracking, optional approval, discounts
+* RSVP bookings with custom fields and dynamic fields, payment tracking, optional approval, discounts, optional seatmap
 * Protection of forms with internal captcha, Google reCaptcha or hCaptcha
 * Templating for emails, event lists, single events, feeds, RSVP forms, ... with specific placeholders for each
 * Lots of shortcodes and options

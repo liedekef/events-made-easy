@@ -173,6 +173,8 @@ function eme_cron_cleanup_function() {
         }
     }
 
+    eme_process_scheduled_event_status_changes();
+
     // also make sure the queue is managed (if the cron was accidentally removed)
     eme_maybe_plan_queue_mails();
 }

@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 446 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 447 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
@@ -334,6 +334,8 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . " (
 			event_id int unsigned NOT NULL AUTO_INCREMENT,
 			event_status mediumint(9) DEFAULT 1,
+			event_status_target mediumint(9) DEFAULT NULL,
+			event_status_change_date datetime DEFAULT NULL,
 			event_author bigint(20) unsigned DEFAULT 0,
 			event_name text NOT NULL,
 			event_prefix text,
@@ -375,7 +377,8 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 			event_external_ref text, 
 			UNIQUE KEY (event_id),
 			KEY (event_start),
-			KEY (event_end)
+			KEY (event_end),
+			KEY (event_status_change_date)
 		) $charset $collate;";
 
 		maybe_create_table( $table_name, $sql );
@@ -557,6 +560,11 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
             // pre-existing -1 was either clamped to 0 (already correct) or wrapped to the max unsigned
             // value. 0 is the new sentinel for the same meaning, so normalize the wrapped case.
             $wpdb->query( "UPDATE $table_name SET event_contactperson_id = 0 WHERE event_contactperson_id = 18446744073709551615;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is a safe variable
+        }
+        if ( $db_version < 447 ) {
+            maybe_add_column( $table_name, 'event_status_target', "ALTER TABLE $table_name ADD event_status_target mediumint(9) DEFAULT NULL;" );
+            maybe_add_column( $table_name, 'event_status_change_date', "ALTER TABLE $table_name ADD event_status_change_date datetime DEFAULT NULL;" );
+            eme_add_index_if_not_exists( $table_name, 'event_status_change_date' );
         }
 	}
 }

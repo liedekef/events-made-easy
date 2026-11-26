@@ -10,6 +10,8 @@ function eme_new_event() {
     $event         = [
         'event_name'                              => '',
         'event_status'                            => get_option( 'eme_event_initial_state' ),
+        'event_status_target'                     => null,
+        'event_status_change_date'                => null,
         'event_start'                             => $this_datetime,
         'event_end'                               => '',
         'event_notes'                             => '',
@@ -48,6 +50,24 @@ function eme_new_event() {
     ];
     $event['event_properties'] = eme_init_event_props( );
     return $event;
+}
+
+function eme_scheduled_status_array() {
+    $status_array = eme_status_array();
+    $allowed      = [ EME_EVENT_STATUS_PUBLIC, EME_EVENT_STATUS_PRIVATE, EME_EVENT_STATUS_UNLISTED, EME_EVENT_STATUS_DRAFT ];
+    return array_intersect_key( $status_array, array_flip( $allowed ) );
+}
+
+function eme_normalize_scheduled_status_change( $date, $target ) {
+    $empty_change = [ 'event_status_change_date' => null, 'event_status_target' => null ];
+    $target       = is_scalar( $target ) ? intval( $target ) : 0;
+    if ( empty( $date ) || ! is_string( $date ) || ! eme_is_datetime( $date ) || ! isset( eme_scheduled_status_array()[ $target ] ) ) {
+        return $empty_change;
+    }
+    return [
+        'event_status_change_date' => eme_sanitize_request( $date ),
+        'event_status_target'      => $target,
+    ];
 }
 
 function eme_init_event_props( $props = [], $new_event=0 ) {
@@ -452,12 +472,28 @@ function eme_events_page() {
         $event['event_notes']               = eme_kses_request_maybe_unfiltered( $_POST['content'] ?? '' );
 
         if ( ! current_user_can( get_option( 'eme_cap_publish_event' ) ) ) {
-            $event['event_status'] = EME_EVENT_STATUS_DRAFT;
+            $event['event_status']             = EME_EVENT_STATUS_DRAFT;
+            $event['event_status_target']      = null;
+            $event['event_status_change_date'] = null;
         } else {
             $event_status_array    = eme_status_array();
-            $event['event_status'] = intval( $_POST['event_status'] );
+            $event['event_status'] = intval( $_POST['event_status'] ?? 0 );
             if (empty($event_status_array[ $event['event_status'] ]))
                 $event['event_status'] = EME_EVENT_STATUS_DRAFT;
+            $scheduled_change = eme_normalize_scheduled_status_change( $_POST['event_status_change_date'] ?? '', $_POST['event_status_target'] ?? '' );
+            $orig_target      = isset( $orig_event['event_status_target'] ) ? intval( $orig_event['event_status_target'] ) : null;
+            // a manual status change cancels an existing schedule, unless a different one is entered
+            if ( $orig_event && $event['event_status'] != $orig_event['event_status'] &&
+                 $scheduled_change['event_status_change_date'] === ( $orig_event['event_status_change_date'] ?? null ) &&
+                 $scheduled_change['event_status_target'] === $orig_target ) {
+                $scheduled_change = eme_normalize_scheduled_status_change( '', '' );
+            }
+            $event['event_status_change_date'] = $scheduled_change['event_status_change_date'];
+            $event['event_status_target']      = $scheduled_change['event_status_target'];
+        }
+        if ( $action == 'insert_recurrence' || $action == 'update_recurrence' || ! empty( $_POST['repeated_event'] ) ) {
+            $event['event_status_target']      = null;
+            $event['event_status_change_date'] = null;
         }
 
         $eme_date_obj = new emeExpressiveDate( 'now', EME_TIMEZONE );
@@ -6833,6 +6869,19 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
         esc_html_e( 'Private events are only visible for logged in users. Draft events are not visible from the front end. Unlisted (hidden) events are not shown in any list or calendar. Frontend Draft is normally the status for events submitted via the frontend submit form.', 'events-made-easy' );
 ?>
                         </p>
+<?php
+        if ( ! $edit_recurrence && current_user_can( get_option( 'eme_cap_publish_event' ) ) ) {
+?>
+                        <p>
+                            <label for="event_status_change_date"><?php esc_html_e( 'Change status on', 'events-made-easy' ); ?></label><br>
+                            <input id="event_status_change_date" type="text" name="event_status_change_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Date and time', 'events-made-easy' ); ?>" data-date='<?php echo ! empty( $event['event_status_change_date'] ) ? esc_attr( eme_js_datetime( $event['event_status_change_date'] ) ) : ''; ?>' class='eme_formfield_fdatetime'>
+                            <?php echo eme_ui_select( $event['event_status_target'] ?? '', 'event_status_target', eme_scheduled_status_array(), __( 'No scheduled status change', 'events-made-easy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
+                            <br>
+                            <span class="eme_smaller"><?php esc_html_e( 'At the chosen date and time the event status will change to the selected status. Leave both fields empty to cancel a scheduled change.', 'events-made-easy' ); ?></span>
+                        </p>
+<?php
+        }
+?>
                     </div>
                     </div>
                     <?php } ?>
@@ -9593,11 +9642,16 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
         $line = apply_filters( 'eme_event_preupdate_filter', $line );
     }
 
-    $event = eme_new_event();
+    $event             = eme_new_event();
+    $has_schedule_data = array_key_exists( 'event_status_change_date', $line ) || array_key_exists( 'event_status_target', $line );
     // we only want the columns that interest us
     // we need to do this since this function is also called for csv import
     $keys                              = array_intersect_key( $line, $event );
     $updated_event                     = array_merge( $event, $keys );
+    if ( ! $has_schedule_data && ! empty( $orig_event ) && $updated_event['event_status'] != $orig_event['event_status'] ) {
+        $updated_event['event_status_change_date'] = null;
+        $updated_event['event_status_target']      = null;
+    }
     $updated_event['event_attributes'] = eme_json_encode_safe( $updated_event['event_attributes'] );
     $updated_event['event_properties'] = eme_json_encode_safe( $updated_event['event_properties'] );
 
@@ -9643,9 +9697,44 @@ function eme_change_event_status( $events, $status ) {
     } else {
         $events_arr = array_map( 'intval', explode( ',', $events ) );
     }
+    if ( empty( $events_arr ) ) {
+        return;
+    }
     $placeholders = implode( ',', array_fill( 0, count( $events_arr ), '%d' ) );
-    $prepared_sql = $wpdb->prepare( "UPDATE $table_name set event_status=%d WHERE event_id in ($placeholders)", $status, ...$events_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $prepared_sql = $wpdb->prepare( "UPDATE $table_name set event_status=%d, event_status_target=NULL, event_status_change_date=NULL WHERE event_id in ($placeholders)", $status, ...$events_arr ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $prepared_sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    foreach ( $events_arr as $event_id ) {
+        wp_cache_delete( "eme_event $event_id" );
+    }
+}
+
+function eme_process_scheduled_event_status_changes() {
+    global $wpdb;
+    $events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+    $now          = current_time( 'mysql', false );
+    $prepared_sql = $wpdb->prepare( "SELECT event_id, event_status_target FROM $events_table WHERE event_status_change_date IS NOT NULL AND event_status_change_date <= %s AND event_status_target IS NOT NULL ORDER BY event_status_change_date ASC LIMIT 100", $now ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $rows         = $wpdb->get_results( $prepared_sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    if ( empty( $rows ) ) {
+        return;
+    }
+
+    $allowed_statuses = eme_scheduled_status_array();
+    $grouped          = [];
+    foreach ( $rows as $row ) {
+        $status = intval( $row['event_status_target'] );
+        if ( ! isset( $allowed_statuses[ $status ] ) ) {
+            continue;
+        }
+        $grouped[ $status ][] = intval( $row['event_id'] );
+    }
+    foreach ( $grouped as $status => $event_ids ) {
+        eme_change_event_status( $event_ids, $status );
+        if ( has_action( 'eme_scheduled_event_status_change' ) ) {
+            foreach ( $event_ids as $event_id ) {
+                do_action( 'eme_scheduled_event_status_change', $event_id, $status );
+            }
+        }
+    }
 }
 
 // for GDPR cron
@@ -10617,8 +10706,11 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
     }
 
     $placeholders = implode( ',', array_fill( 0, count( $event_ids ), '%d' ) );
-    $sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($placeholders)", array_merge( [ EME_EVENT_STATUS_TRASH ], $event_ids ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d, event_status_target = NULL, event_status_change_date = NULL WHERE event_id IN ($placeholders)", array_merge( [ EME_EVENT_STATUS_TRASH ], $event_ids ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+    foreach ( $event_ids as $event_id ) {
+        wp_cache_delete( "eme_event $event_id" );
+    }
 
     if ( $send_trashmails || has_action( 'eme_trash_rsvp_action' ) ) {
         foreach ( $event_ids as $event_id ) {
@@ -10660,8 +10752,11 @@ function eme_untrash_events( $ids ) {
     if (eme_is_list_of_int( $ids ) ) {
         $ids_arr      = array_map( 'intval', explode( ',', $ids ) );
         $placeholders = implode( ',', array_fill( 0, count( $ids_arr ), '%d' ) );
-        $sql = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($placeholders)", array_merge( [ EME_EVENT_STATUS_DRAFT ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $sql = $wpdb->prepare("UPDATE $table_name SET event_status = %d, event_status_target = NULL, event_status_change_date = NULL WHERE event_id IN ($placeholders)", array_merge( [ EME_EVENT_STATUS_DRAFT ], $ids_arr ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        foreach ( $ids_arr as $event_id ) {
+            wp_cache_delete( "eme_event $event_id" );
+        }
     }
 }
 

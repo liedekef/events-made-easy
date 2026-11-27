@@ -9642,16 +9642,11 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
         $line = apply_filters( 'eme_event_preupdate_filter', $line );
     }
 
-    $event             = eme_new_event();
-    $has_schedule_data = array_key_exists( 'event_status_change_date', $line ) || array_key_exists( 'event_status_target', $line );
+    $event = eme_new_event();
     // we only want the columns that interest us
     // we need to do this since this function is also called for csv import
     $keys                              = array_intersect_key( $line, $event );
     $updated_event                     = array_merge( $event, $keys );
-    if ( ! $has_schedule_data && ! empty( $orig_event ) && $updated_event['event_status'] != $orig_event['event_status'] ) {
-        $updated_event['event_status_change_date'] = null;
-        $updated_event['event_status_target']      = null;
-    }
     $updated_event['event_attributes'] = eme_json_encode_safe( $updated_event['event_attributes'] );
     $updated_event['event_properties'] = eme_json_encode_safe( $updated_event['event_properties'] );
 

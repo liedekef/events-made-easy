@@ -3694,7 +3694,7 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
     $eme_dyndata_conditions = eme_get_dyndata_conditions();
     ?>
     <div id="div_dyndata">
-        <b><?php esc_html_e( 'Dynamically show fields based on a number of conditions', 'events-made-easy' ); ?></b>
+        <b><?php esc_html_e( 'Dynamically show fields based on a number of conditions', 'events-made-easy' ); ?></b><?php echo eme_help_button( 'eme-help-formfields-dynamic-data', __( 'Dynamically show fields based on a number of conditions', 'events-made-easy' ) ); ?>
         <table class="eme_dyndata">
         <thead>
             <tr>
@@ -3756,16 +3756,20 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
             ?>
         </tbody>
         </table>
-        <p class='eme_smaller'>
-        <?php esc_html_e( 'This will additionally show the selected template in the form if the condition is met.', 'events-made-easy' ); ?>
-        <br>
-        <?php esc_html_e( "The 'Field' parameter is to be filled out with any valid placeholder allowed in the form.", 'events-made-easy' ); ?>
-        <br>
-        <?php esc_html_e( "The selected template will be shown several times if the repeat option is used (based on the number of times the field is different from the condition value. This is not used for the 'equal to' condition selector.", 'events-made-easy' ); ?>
-        <br>
-        <?php esc_html_e( 'The selected template can contain html and also have placeholders for custom form fields (no other placeholders allowed).', 'events-made-easy' ); ?>
-        <?php esc_html_e( 'Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form.', 'events-made-easy' ); ?>
-        </p>
+<?php
+    eme_help(
+        'eme-help-formfields-dynamic-data',
+        __( 'Dynamic data', 'events-made-easy' ),
+        [
+            __( 'This will additionally show the selected template in the form if the condition is met.', 'events-made-easy' ),
+            __( "The 'Field' parameter is to be filled out with any valid placeholder allowed in the form.", 'events-made-easy' ),
+            __( "The selected template will be shown several times if the repeat option is used (based on the number of times the field is different from the condition value. This is not used for the 'equal to' condition selector.", 'events-made-easy' ),
+            __( 'The selected template can contain html and also have placeholders for custom form fields (no other placeholders allowed).', 'events-made-easy' ),
+            __( 'Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form.', 'events-made-easy' ),
+        ],
+        false
+    );
+?>
     </div>
     <?php
 }

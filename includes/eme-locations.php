@@ -488,10 +488,18 @@ function eme_locations_edit_layout( $location, $message = '' ) {
     }
 ?>
             <div class="postbox" id="eme_authordiv">
-            <h2 class='hndle'><span><?php esc_html_e( 'Author', 'events-made-easy' ); ?></span></h2>
+            <h2 class='hndle'><span><?php esc_html_e( 'Author', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-location-author', __( 'Author', 'events-made-easy' ) ); ?></h2>
                 <div class="inside">
-                <p><?php esc_html_e( 'Author of this location: ', 'events-made-easy' ); ?>
 <?php
+    eme_help(
+        'eme-help-location-author',
+        __( 'Author', 'events-made-easy' ),
+        [
+            __( 'The author is the WordPress user who owns the location.', 'events-made-easy' ),
+            __( 'For a new location, the author defaults to the current user.', 'events-made-easy' ),
+        ],
+        false
+    );
     $eme_wp_user_arr = [];
     if ( $location_author > 0 ) {
         $user_info = get_userdata( $location_author );
@@ -500,14 +508,22 @@ function eme_locations_edit_layout( $location, $message = '' ) {
     }
     echo eme_ui_select( $location_author, 'location_author', $eme_wp_user_arr, '', 0, 'eme_snapselect_wpuser_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()
 ?>
-                </p>
                 </div>
             </div>
             <!-- categories postbox -->
             <div class="postbox" id="eme_categoriesdiv">
-            <h2 class='hndle'><span><?php esc_html_e( 'Category', 'events-made-easy' ); ?></span></h2>
+            <h2 class='hndle'><span><?php esc_html_e( 'Category', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-location-category', __( 'Category', 'events-made-easy' ) ); ?></h2>
                 <div class="inside">
 <?php
+    eme_help(
+        'eme-help-location-category',
+        __( 'Category', 'events-made-easy' ),
+        [
+            __( 'Categories group locations and can be used to filter them.', 'events-made-easy' ),
+            __( 'Categories can be used in templates and placeholders.', 'events-made-easy' ),
+        ],
+        false
+    );
     $categories = eme_get_categories();
     if ( empty( $categories ) ) {
 ?>
@@ -716,6 +732,7 @@ function eme_meta_box_div_location_notes( $location ) {
         <div class="postbox" id="loc_description">
             <h2>
                 <?php esc_html_e( 'Location description', 'events-made-easy' ); ?>
+                <?php echo eme_help_button( 'eme-help-location-description', __( 'Location description', 'events-made-easy' ) ); ?>
             </h2>
             <div class="inside">
                 <div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea">
@@ -728,9 +745,17 @@ function eme_meta_box_div_location_notes( $location ) {
     }
 ?>
                 </div>
-                <?php esc_html_e( 'A description of the location. You may include any kind of info here.', 'events-made-easy' ); ?>
-                <br>
             </div>
+<?php
+    eme_help(
+        'eme-help-location-description',
+        __( 'Location description', 'events-made-easy' ),
+        [
+            __( 'A description of the location. You may include any kind of info here.', 'events-made-easy' ),
+        ],
+        false
+    );
+?>
         </div>
 <?php
 }
@@ -783,12 +808,21 @@ function eme_meta_box_div_location_url( $location ) {
     </td>
     </tr>
     <tr>
-    <td><label for="eme_loc_prop_online_only"><?php esc_html_e( 'Only online location', 'events-made-easy' ); ?></label></td>
+    <td><label for="eme_loc_prop_online_only"><?php esc_html_e( 'Only online location', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-location-online-only', __( 'Only online location', 'events-made-easy' ) ); ?></label></td>
     <td><input id="eme_loc_prop_online_only" name='eme_loc_prop_online_only' value='1' type='checkbox' <?php checked( $location['location_properties']['online_only'] ); ?>>
-    <br><span class="eme_smaller"><?php esc_html_e( 'Check this is the location is purely virtual (like a meeting url or so).', 'events-made-easy' ); ?></span>
     </td>
     </tr>
     </table>
+<?php
+    eme_help(
+        'eme-help-location-online-only',
+        __( 'Only online location', 'events-made-easy' ),
+        [
+            __( 'Check if this location is purely virtual (like a meeting URL).', 'events-made-easy' ),
+        ],
+        false
+    );
+?>
     </div>
 </div>
 <?php

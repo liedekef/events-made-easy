@@ -3488,11 +3488,19 @@ function eme_emails_page() {
             $label      = esc_html__( 'Select the event(s)', 'events-made-easy' );
             $aria_label = 'aria-label="' . $label . '"';
             echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
+            echo eme_help_button( 'eme-help-mailer-event-multiple', __( 'Select the event(s)', 'events-made-easy' ) );
         ?>
         </td>
         <td><?php echo eme_ui_multiselect( $event_ids, 'event_ids', $myevents, 5, '', 1, 'eme_snapselect_events_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?>
         <br><label><input id="eventsearch_all" name='eventsearch_all' value='1' type='checkbox'> <?php esc_html_e( 'Check this box to search through all events and not just future ones.', 'events-made-easy' ); ?> </label>
-            <p class='eme_smaller'><?php esc_html_e( 'Remark: if you select multiple events, a mailing will be created for each selected event', 'events-made-easy' ); ?></p>
+<?php
+            eme_help(
+                'eme-help-mailer-event-multiple',
+                __( 'Select the event(s)', 'events-made-easy' ),
+                [ __( 'Remark: if you select multiple events, a mailing will be created for each selected event', 'events-made-easy' ) ],
+                false
+            );
+?>
         </td>
         </tr>
         <tr>

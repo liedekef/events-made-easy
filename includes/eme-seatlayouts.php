@@ -498,7 +498,18 @@ function eme_seatlayout_render_admin( $event ) {
 	data-cancel="<?php echo esc_attr__( 'Cancel', 'events-made-easy' ); ?>"
 	data-msg-reserved="<?php echo esc_attr__( 'This seat is part of a booking and cannot be removed or get another price category.', 'events-made-easy' ); ?>">
 	<input type="hidden" name="eme_seatlayout_json" id="eme_seatlayout_json" value="<?php echo esc_attr( wp_json_encode( $payload ) ); ?>">
-	<p class="eme_smaller"><?php esc_html_e( 'Define a seat layout for this event and add #_SEATMAP to the booking form (it replaces #_SEATS). Seats that are part of a booking can never be removed.', 'events-made-easy' ); ?></p>
+	<p><strong><?php esc_html_e( 'Seat layout', 'events-made-easy' ); ?></strong><?php echo eme_help_button( 'eme-help-seatlayout-intro', __( 'Seat layout', 'events-made-easy' ) ); ?></p>
+<?php
+	eme_help(
+		'eme-help-seatlayout-intro',
+		__( 'Seat layout', 'events-made-easy' ),
+		[
+			__( 'Define a seat layout for this event and add #_SEATMAP to the booking form (it replaces #_SEATS).', 'events-made-easy' ),
+			__( 'Seats that are part of a booking can never be removed.', 'events-made-easy' ),
+		],
+		false
+	);
+?>
 	<p>
 		<label><?php esc_html_e( 'Rows', 'events-made-easy' ); ?> <input type="number" class="eme-seatlayout-rows" min="0" max="60" value="<?php echo esc_attr( $payload['rows'] ); ?>"></label>
 		<label><?php esc_html_e( 'Columns', 'events-made-easy' ); ?> <input type="number" class="eme-seatlayout-cols" min="0" max="60" value="<?php echo esc_attr( $payload['cols'] ); ?>"></label>

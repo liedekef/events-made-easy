@@ -460,6 +460,27 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    document.addEventListener('click', (e) => {
+        const helpButton = e.target.closest('.eme-help-btn[data-eme-help-target]');
+        if (helpButton) {
+            e.stopPropagation();
+            if (helpButton.closest('summary, label')) {
+                const dialog = document.getElementById(helpButton.dataset.emeHelpTarget);
+                if (dialog && !dialog.open) {
+                    e.preventDefault();
+                    dialog.showModal();
+                    const closeButton = dialog.querySelector('[data-eme-help-close]');
+                    if (closeButton) closeButton.focus();
+                }
+            }
+            return;
+        }
+
+        if (e.target.matches('dialog.eme-help-dialog')) {
+            e.target.close();
+        }
+    }, true);
+
     // Collapsible filter panels
     EME.$$('.eme-filters-toggle').forEach(btn => {
         const targetId = btn.dataset.showhide;

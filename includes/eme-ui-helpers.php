@@ -640,6 +640,35 @@ function eme_ui_number( $option_value, $name, $required = 0, $class = '', $extra
     return "<input type='number' $extra_attributes name='" . esc_attr( $name ) . "' id='" . esc_attr( $name ) . "' value='" . esc_attr( $option_value ) . "'>";
 }
 
+function eme_help_button( $dialog_id, $aria_label = '' ) {
+    $dialog_id = sanitize_html_class( $dialog_id );
+    if ( empty( $aria_label ) ) {
+        $aria_label = __( 'Help', 'events-made-easy' );
+    }
+    return "<button type='button' class='eme-help-btn' aria-label='" . esc_attr( $aria_label ) . "' aria-haspopup='dialog' command='show-modal' commandfor='" . esc_attr( $dialog_id ) . "' data-eme-help-target='" . esc_attr( $dialog_id ) . "'>?</button>";
+}
+
+function eme_help_dialog( $dialog_id, $title, $content ) {
+    $dialog_id = sanitize_html_class( $dialog_id );
+    $title_id  = $dialog_id . '-title';
+    if ( is_array( $content ) ) {
+        $body = '';
+        foreach ( $content as $paragraph ) {
+            $body .= '<p>' . wp_kses_post( $paragraph ) . '</p>';
+        }
+    } else {
+        $body = wp_kses_post( $content );
+    }
+    return "<dialog id='" . esc_attr( $dialog_id ) . "' class='eme-help-dialog' aria-labelledby='" . esc_attr( $title_id ) . "'><h4 id='" . esc_attr( $title_id ) . "'>" . esc_html( $title ) . '</h4>' . $body . "<div class='dialog-footer'><button type='button' command='close' commandfor='" . esc_attr( $dialog_id ) . "' data-eme-help-close>" . esc_html__( 'Close', 'events-made-easy' ) . '</button></div></dialog>';
+}
+
+function eme_help( $dialog_id, $title, $content, $show_button = true ) {
+    if ( $show_button ) {
+        echo eme_help_button( $dialog_id, $title );
+    }
+    echo eme_help_dialog( $dialog_id, $title, $content );
+}
+
 function eme_get_field_id ( $field_name, $number = 1) {
     $field_name = str_replace( [ '[]', '[', ']' ], [ '', '-', '' ], $field_name );
     $field_name = trim( $field_name, '-' );

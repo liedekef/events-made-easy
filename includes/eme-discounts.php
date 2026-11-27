@@ -645,9 +645,16 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			</td>
 		</tr>
 		<tr class='form-field'>
-			<th scope='row' style='vertical-align:top'><label for='properties[voucher]'><?php esc_html_e( 'Credit Voucher', 'events-made-easy' ); ?></label></th>
+			<th scope='row' style='vertical-align:top'><label for='properties[voucher]'><?php esc_html_e( 'Credit Voucher', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-discounts-credit-voucher', __( 'Credit Voucher', 'events-made-easy' ) ); ?></label></th>
 			<td><?php echo eme_ui_select_binary( $discount['properties']['voucher'], 'properties[voucher]' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
-			<br><p class='eme_smaller'><?php esc_html_e( 'Applies to fixed discounts only. When used as a credit voucher, the discount can be redeemed multiple times until the full value is consumed. The discount value will always show the remaining voucher balance.', 'events-made-easy' ); ?></p>
+<?php
+			eme_help(
+				'eme-help-discounts-credit-voucher',
+				__( 'Credit Voucher', 'events-made-easy' ),
+				[ __( 'Applies to fixed discounts only. When used as a credit voucher, the discount can be redeemed multiple times until the full value is consumed. The discount value will always show the remaining voucher balance.', 'events-made-easy' ) ],
+				false
+			);
+?>
 			</td>
 		</tr>
 		<tr class='form-field'>
@@ -683,13 +690,20 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			</td>
 		</tr>
 		<tr class='form-field'>
-			<th scope='row' style='vertical-align:top'><label for='properties[group_ids]'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label></th>
+			<th scope='row' style='vertical-align:top'><label for='properties[group_ids]'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-discounts-require-groups', __( 'Require EME groups', 'events-made-easy' ) ); ?></label></th>
 			<td><?php echo eme_ui_multiselect_key_value( $discount['properties']['group_ids'], 'properties[group_ids]', $groups, 'group_id', 'name', 5, '', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?>
-			<br><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups for this discount to apply.', 'events-made-easy' ); ?></p>
+<?php
+			eme_help(
+				'eme-help-discounts-require-groups',
+				__( 'Require EME groups', 'events-made-easy' ),
+				[ __( 'Require logged-in user to be in of one of the selected EME groups for this discount to apply.', 'events-made-easy' ) ],
+				false
+			);
+?>
 			</td>
 		</tr>
 		<tr class='form-field'>
-			<th scope='row' style='vertical-align:top'><label for='properties[membership_ids]'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?></label></th>
+			<th scope='row' style='vertical-align:top'><label for='properties[membership_ids]'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-discounts-require-memberships', __( 'Require EME membership', 'events-made-easy' ) ); ?></label></th>
 			<td>
 			<?php
 			if ( ! empty( $memberships ) ) {
@@ -698,8 +712,13 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			} else {
 				esc_html_e( 'No memberships defined yet!', 'events-made-easy' );
 			}
+			eme_help(
+				'eme-help-discounts-require-memberships',
+				__( 'Require EME membership', 'events-made-easy' ),
+				[ __( 'Require logged-in user to be a member of one of the selected EME memberships for this discount to apply.', 'events-made-easy' ) ],
+				false
+			);
 			?>
-			<br><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships for this discount to apply.', 'events-made-easy' ); ?></p>
 			</td>
 		</tr>
 		<tr class='form-field'>

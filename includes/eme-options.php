@@ -1273,7 +1273,46 @@ function eme_options_register() {
     }
 }
 
+function eme_secret_options() {
+    return [
+        'eme_recaptcha_api_key',
+        'eme_hcaptcha_secret_key',
+        'eme_cfcaptcha_secret_key',
+        'eme_friendlycaptcha_secret_key',
+        'eme_smtp_password',
+        'eme_imap_bounce_password',
+        'eme_paypal_secret',
+        'eme_webmoney_secret',
+        'eme_fdgg_shared_secret',
+        'eme_mollie_api_key',
+        'eme_worldpay_md5_secret',
+        'eme_worldpay_test_pwd',
+        'eme_worldpay_live_pwd',
+        'eme_braintree_private_key',
+        'eme_stripe_private_key',
+        'eme_instamojo_key',
+        'eme_instamojo_auth_token',
+        'eme_instamojo_salt',
+        'eme_mercadopago_sandbox_token',
+        'eme_mercadopago_live_token',
+        'eme_fondy_secret_key',
+        'eme_bancontactwero_api_key',
+        'eme_sumup_api_key',
+        'eme_opayo_test_pwd',
+        'eme_opayo_live_pwd',
+    ];
+}
+
 function eme_sanitize_option( $option_value, $option_name ) {
+    if ( in_array( $option_name, eme_secret_options(), true ) && isset( $_POST['option_page'] ) && $_POST['option_page'] === 'eme-options' ) {
+        if ( ! empty( $_POST[ 'eme_clear_' . $option_name ] ) ) {
+            return '';
+        }
+        if ( $option_value === '' ) {
+            return get_option( $option_name );
+        }
+        return mb_substr( (string) preg_replace( '/[\x00-\x1F\x7F]/', '', (string) $option_value ), 0, 255 );
+    }
     $no_kses = ['eme_smtp_password', 'eme_imap_bounce_password'];
     $maybe_unfiltered = [
         'eme_single_event_format',
@@ -1551,18 +1590,18 @@ function eme_options_page() {
                 eme_options_toggle( __( 'Use EME captcha for forms?', 'events-made-easy' ), 'eme_captcha_for_forms', __( 'Check this option if you want to use a simple image captcha on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_CAPTCHA to your form layout yourself or it will automatically be added just above the submit button if not present.', 'events-made-easy' ) );
                 eme_options_toggle( __( 'Use Google reCAPTCHA for forms?', 'events-made-easy' ), 'eme_recaptcha_for_forms', __( 'Check this option if you want to use Google reCAPTCHA (Cloud Enterprise) on the booking/cancel/membership forms, to thwart spammers a bit. Currently only supports reCAPTCHA v2 Tickbox. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present.', 'events-made-easy' ) );
                 eme_options_input_text( __( 'Google reCAPTCHA site key', 'events-made-easy' ), 'eme_recaptcha_site_key', __( 'Go to https://console.cloud.google.com/security/recaptcha to get your reCAPTCHA key', 'events-made-easy' ) );
-                eme_options_input_text( __( 'Google reCAPTCHA API key (Cloud project)', 'events-made-easy' ), 'eme_recaptcha_api_key', __( 'Go to https://console.cloud.google.com/apis/credentials to create a reCAPTCHA API key for your project', 'events-made-easy' ) );
+                eme_options_input_secret( __( 'Google reCAPTCHA API key (Cloud project)', 'events-made-easy' ), 'eme_recaptcha_api_key', __( 'Go to https://console.cloud.google.com/apis/credentials to create a reCAPTCHA API key for your project', 'events-made-easy' ) );
                 eme_options_input_text( __( 'Google reCAPTCHA Cloud project ID', 'events-made-easy' ), 'eme_recaptcha_project_id', __( 'Your Google cloud project ID', 'events-made-easy' ) );
                 eme_options_input_text( __( 'Google reCAPTCHA minimum score (0.0–1.0, default 0.5)', 'events-made-easy' ), 'eme_recaptcha_score', __( 'Score threshold below which submissions are rejected', 'events-made-easy' ) );
                 eme_options_toggle( __( 'Use hCaptcha for forms?', 'events-made-easy' ), 'eme_hcaptcha_for_forms', __( 'Check this option if you want to use hCaptcha on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present.', 'events-made-easy' ) );
                 eme_options_input_text( __( 'hCaptcha site key', 'events-made-easy' ), 'eme_hcaptcha_site_key', __( 'This field is required', 'events-made-easy' ) );
-                eme_options_input_text( __( 'hCaptcha secret key', 'events-made-easy' ), 'eme_hcaptcha_secret_key', __( 'This field is required', 'events-made-easy' ) );
+                eme_options_input_secret( __( 'hCaptcha secret key', 'events-made-easy' ), 'eme_hcaptcha_secret_key', __( 'This field is required', 'events-made-easy' ) );
                 eme_options_toggle( __( 'Use Cloudflare Turnstile for forms?', 'events-made-easy' ), 'eme_cfcaptcha_for_forms', __( 'Check this option if you want to use Cloudflare Turnstile on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present.', 'events-made-easy' ) );
                 eme_options_input_text( __( 'Cloudflare Turnstile site key', 'events-made-easy' ), 'eme_cfcaptcha_site_key', __( 'This field is required', 'events-made-easy' ) );
-                eme_options_input_text( __( 'Cloudflare Turnstile secret key', 'events-made-easy' ), 'eme_cfcaptcha_secret_key', __( 'This field is required', 'events-made-easy' ) );
+                eme_options_input_secret( __( 'Cloudflare Turnstile secret key', 'events-made-easy' ), 'eme_cfcaptcha_secret_key', __( 'This field is required', 'events-made-easy' ) );
                 eme_options_toggle( __( 'Use Friendly Captcha for forms?', 'events-made-easy' ), 'eme_friendlycaptcha_for_forms', __( 'Check this option if you want to use Friendly Captcha on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present.', 'events-made-easy' ) );
                 eme_options_input_text( __( 'Friendly Captcha site key', 'events-made-easy' ), 'eme_friendlycaptcha_site_key', __( 'This field is required', 'events-made-easy' ) );
-                eme_options_input_text( __( 'Friendly Captcha API key', 'events-made-easy' ), 'eme_friendlycaptcha_secret_key', __( 'This field is required', 'events-made-easy' ) );
+                eme_options_input_secret( __( 'Friendly Captcha API key', 'events-made-easy' ), 'eme_friendlycaptcha_secret_key', __( 'This field is required', 'events-made-easy' ) );
                 eme_options_toggle( __( 'Only use captcha for logged out users?', 'events-made-easy' ), 'eme_captcha_only_logged_out', __( 'If this option is checked, the captcha will only be used for logged out users.', 'events-made-easy' ) );
                 eme_options_select(
                     __( 'Autocomplete sources', 'events-made-easy' ),
@@ -2220,7 +2259,7 @@ function eme_options_page() {
             );
             eme_options_toggle( __( 'Use SMTP authentication?', 'events-made-easy' ), 'eme_smtp_auth', __( 'SMTP authentication is often needed. If you use Gmail, make sure to set this parameter to Yes', 'events-made-easy' ) );
             eme_options_input_text( __( 'SMTP username', 'events-made-easy' ), 'eme_smtp_username', __( 'Insert the username to be used to access your SMTP server.', 'events-made-easy' ) );
-            eme_options_input_password( __( 'SMTP password', 'events-made-easy' ), 'eme_smtp_password', __( 'Insert the password to be used to access your SMTP server', 'events-made-easy' ) );
+            eme_options_input_secret( __( 'SMTP password', 'events-made-easy' ), 'eme_smtp_password', __( 'Insert the password to be used to access your SMTP server', 'events-made-easy' ) );
             eme_options_toggle( __( 'Verify SMTP certificates?', 'events-made-easy' ), 'eme_smtp_verify_cert', __( 'Uncheck this option if you have issues sending mail via secure SMTP due to mismatching certificates. Since this in fact defeats the purpose of having certificates, it is not recommended to use it, but sometimes it is needed at specific hosting providers. This has only an effect for private ip ranges (like e.g. 127.0.0.1, localhost, ...), for public emailservers this is not allowed.', 'events-made-easy' ) );
             eme_options_toggle( __( 'Debug SMTP?', 'events-made-easy' ), 'eme_smtp_debug', __( 'Check this option if you have issues sending mail via SMTP. Only do this for debugging purposes and deactivate it afterwards!', 'events-made-easy' ) );
             $test_url = admin_url( 'admin.php?page=eme-emails#tab-testmail' );
@@ -2250,7 +2289,7 @@ function eme_options_page() {
                 __( 'Select the encryption method for IMAP.', 'events-made-easy' )
             );
             eme_options_input_text( __( 'IMAP username', 'events-made-easy' ), 'eme_imap_bounce_username', __( 'The username to access the IMAP mailbox.', 'events-made-easy' ) );
-            eme_options_input_password( __( 'IMAP password', 'events-made-easy' ), 'eme_imap_bounce_password', __( 'The password to access the IMAP mailbox. Only plain authentication is supported, no oauth.', 'events-made-easy' ) );
+            eme_options_input_secret( __( 'IMAP password', 'events-made-easy' ), 'eme_imap_bounce_password', __( 'The password to access the IMAP mailbox. Only plain authentication is supported, no oauth.', 'events-made-easy' ) );
             eme_options_input_text( __( 'IMAP mailbox/folder', 'events-made-easy' ), 'eme_imap_bounce_mailbox', __( 'The mailbox or folder to check for bounced emails. Default is INBOX.', 'events-made-easy' ) );
             eme_options_toggle( __( 'Process bounces daily', 'events-made-easy' ), 'eme_cron_process_bounces', __( 'Check this option to automatically process bounces once per day as part of the daily cron.', 'events-made-easy' ) );
 ?>
@@ -2859,7 +2898,7 @@ case 'payments':
     // translators: %s is the URL to the PayPal documentation page
     eme_options_input_text( __( 'PayPal client ID', 'events-made-easy' ), 'eme_paypal_clientid', __( 'Paypal client ID.', 'events-made-easy' ) . '<br>' . sprintf( __( 'For more info on Paypal apps and credentials, see <a href="%s">this page</a>', 'events-made-easy' ), 'https://developer.paypal.com/docs/integration/admin/manage-apps/#create-an-app-for-testing' ) );
     // translators: %s is the URL to the PayPal documentation page
-    eme_options_input_text( __( 'PayPal secret', 'events-made-easy' ), 'eme_paypal_secret', __( 'Paypal secret.', 'events-made-easy' ) . '<br>' . sprintf( __( 'For more info on Paypal apps and credentials, see <a href="%s">this page</a>', 'events-made-easy' ), 'https://developer.paypal.com/docs/integration/admin/manage-apps/#create-an-app-for-testing' ) );
+    eme_options_input_secret( __( 'PayPal secret', 'events-made-easy' ), 'eme_paypal_secret', __( 'Paypal secret.', 'events-made-easy' ) . '<br>' . sprintf( __( 'For more info on Paypal apps and credentials, see <a href="%s">this page</a>', 'events-made-easy' ), 'https://developer.paypal.com/docs/integration/admin/manage-apps/#create-an-app-for-testing' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -2955,7 +2994,7 @@ if (!empty($webhook_id)) {
         __( 'Choose wether you want to test Webmoney in a sandbox or go live and really use Webmoney.', 'events-made-easy' )
     );
     eme_options_input_text( __( 'Webmoney Purse', 'events-made-easy' ), 'eme_webmoney_purse', __( 'Webmoney Purse.', 'events-made-easy' ) );
-    eme_options_input_password( __( 'Webmoney Secret', 'events-made-easy' ), 'eme_webmoney_secret', __( 'Webmoney secret.', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Webmoney Secret', 'events-made-easy' ), 'eme_webmoney_secret', __( 'Webmoney secret.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -2993,7 +3032,7 @@ if (!empty($webhook_id)) {
         __( 'Choose wether you want to test First Data in a sandbox or go live and really use First Data.', 'events-made-easy' )
     );
     eme_options_input_text( __( 'First Data Store Name', 'events-made-easy' ), 'eme_fdgg_store_name', __( 'First Data Store Name.', 'events-made-easy' ) );
-    eme_options_input_password( __( 'First Data Shared Secret', 'events-made-easy' ), 'eme_fdgg_shared_secret', __( 'First Data Shared Secret.', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'First Data Shared Secret', 'events-made-easy' ), 'eme_fdgg_shared_secret', __( 'First Data Shared Secret.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -3018,7 +3057,7 @@ if (!empty($webhook_id)) {
 <?php
     $gateway = 'mollie';
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
-    eme_options_input_text( __( 'Mollie API key', 'events-made-easy' ), 'eme_mollie_api_key', __( 'Mollie API key', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Mollie API key', 'events-made-easy' ), 'eme_mollie_api_key', __( 'Mollie API key', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -3052,7 +3091,7 @@ if (!empty($webhook_id)) {
         ],
         __( 'Choose wether you want to test Bancontact Pay - Wero (Payconiq) in a sandbox or go live and really use Bancontact Pay - Wero (Payconiq).', 'events-made-easy' )
     );
-    eme_options_input_text( __( 'Bancontact Pay - Wero (Payconiq) API key', 'events-made-easy' ), 'eme_bancontactwero_api_key', __( 'Bancontact Pay - Wero (Payconiq) API key', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Bancontact Pay - Wero (Payconiq) API key', 'events-made-easy' ), 'eme_bancontactwero_api_key', __( 'Bancontact Pay - Wero (Payconiq) API key', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -3090,10 +3129,10 @@ if (!empty($webhook_id)) {
         __( 'Choose wether you want to test Worldpay in a sandbox or go live and really use Worldpay.', 'events-made-easy' )
     );
     eme_options_input_text( __( 'Worldpay installation ID', 'events-made-easy' ), 'eme_worldpay_instid', __( 'Worldpay installation ID', 'events-made-easy' ) );
-    eme_options_input_text( __( 'Worldpay MD5 secret', 'events-made-easy' ), 'eme_worldpay_md5_secret', __( 'Worldpay MD5 secret used when submitting payments', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Worldpay MD5 secret', 'events-made-easy' ), 'eme_worldpay_md5_secret', __( 'Worldpay MD5 secret used when submitting payments', 'events-made-easy' ) );
     eme_options_input_text( __( 'Worldpay MD5 parameters', 'events-made-easy' ), 'eme_worldpay_md5_parameters', __( "Worldpay parameters used to generate the MD5 signature, separated by ':'. Only use these 4 in the order of your choice: instId,cartId,currency and/or amount", 'events-made-easy' ) );
-    eme_options_input_password( __( 'Worldpay Test Password', 'events-made-easy' ), 'eme_worldpay_test_pwd', __( 'Worldpay password for payment notifications when testing', 'events-made-easy' ) );
-    eme_options_input_password( __( 'Worldpay Live Password', 'events-made-easy' ), 'eme_worldpay_live_pwd', __( 'Worldpay password for payment notifications when using Worldpay for real', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Worldpay Test Password', 'events-made-easy' ), 'eme_worldpay_test_pwd', __( 'Worldpay password for payment notifications when testing', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Worldpay Live Password', 'events-made-easy' ), 'eme_worldpay_live_pwd', __( 'Worldpay password for payment notifications when using Worldpay for real', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -3130,8 +3169,8 @@ if (!empty($webhook_id)) {
         __( 'Choose wether you want to test Opayo in a sandbox or go live and really use Opayo.', 'events-made-easy' )
     );
     eme_options_input_text( __( 'Opayo Vendor Name', 'events-made-easy' ), 'eme_opayo_vendor_name', __( 'Opayo Vendor Name', 'events-made-easy' ) );
-    eme_options_input_password( __( 'Opayo Test Password', 'events-made-easy' ), 'eme_opayo_test_pwd', __( 'Opayo password for testing purposes', 'events-made-easy' ) );
-    eme_options_input_password( __( 'Opayo Live Password', 'events-made-easy' ), 'eme_opayo_live_pwd', __( 'Opayo password when using Opayo for real', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Opayo Test Password', 'events-made-easy' ), 'eme_opayo_test_pwd', __( 'Opayo password for testing purposes', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Opayo Live Password', 'events-made-easy' ), 'eme_opayo_live_pwd', __( 'Opayo password when using Opayo for real', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -3156,7 +3195,7 @@ if (!empty($webhook_id)) {
     $gateway = 'sumup';
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_input_text( __( 'SumUp Merchant Code', 'events-made-easy' ), 'eme_sumup_merchant_code', __( 'SumUp Merchant Code', 'events-made-easy' ) );
-    eme_options_input_text( __( 'SumUp API Key', 'events-made-easy' ), 'eme_sumup_api_key', __( 'SumUp API Key', 'events-made-easy' ) . '<br><b>' . esc_html__( 'Make sure the API key has the rights needed to create and read checkouts.', 'events-made-easy' ) . '</b>' );
+    eme_options_input_secret( __( 'SumUp API Key', 'events-made-easy' ), 'eme_sumup_api_key', __( 'SumUp API Key', 'events-made-easy' ) . '<br><b>' . esc_html__( 'Make sure the API key has the rights needed to create and read checkouts.', 'events-made-easy' ) . '</b>' );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -3181,7 +3220,7 @@ if (!empty($webhook_id)) {
 <?php
     $gateway = 'stripe';
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
-    eme_options_input_text( __( 'Stripe Secret Key', 'events-made-easy' ), 'eme_stripe_private_key', __( 'Stripe Secret Key', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Stripe Secret Key', 'events-made-easy' ), 'eme_stripe_private_key', __( 'Stripe Secret Key', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -3236,7 +3275,7 @@ if (!empty($webhook_id)) {
     );
     eme_options_input_text( __( 'Braintree Merchant ID', 'events-made-easy' ), 'eme_braintree_merchant_id', __( 'Braintree Merchant ID', 'events-made-easy' ) );
     eme_options_input_text( __( 'Braintree Public Key', 'events-made-easy' ), 'eme_braintree_public_key', __( 'Braintree Public Key', 'events-made-easy' ) );
-    eme_options_input_text( __( 'Braintree Private Key', 'events-made-easy' ), 'eme_braintree_private_key', __( 'Braintree Private Key', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Braintree Private Key', 'events-made-easy' ), 'eme_braintree_private_key', __( 'Braintree Private Key', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -3271,9 +3310,9 @@ if (!empty($webhook_id)) {
         ],
         __( 'Choose wether you want to test Instamojo in a sandbox or go live and really use Instamojo.', 'events-made-easy' )
     );
-    eme_options_input_text( __( 'Instamojo Private Key', 'events-made-easy' ), 'eme_instamojo_key', __( 'Instamojo Private Key', 'events-made-easy' ) );
-    eme_options_input_text( __( 'Instamojo Private Auth Token', 'events-made-easy' ), 'eme_instamojo_auth_token', __( 'Instamojo Private Auth Token', 'events-made-easy' ) );
-    eme_options_input_text( __( 'Instamojo Private Salt', 'events-made-easy' ), 'eme_instamojo_salt', __( 'Instamojo Private Salt', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Instamojo Private Key', 'events-made-easy' ), 'eme_instamojo_key', __( 'Instamojo Private Key', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Instamojo Private Auth Token', 'events-made-easy' ), 'eme_instamojo_auth_token', __( 'Instamojo Private Auth Token', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Instamojo Private Salt', 'events-made-easy' ), 'eme_instamojo_salt', __( 'Instamojo Private Salt', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -3309,8 +3348,8 @@ if (!empty($webhook_id)) {
         ],
         __( 'Choose wether you want to test Mercado Pago in a sandbox or go live and really use Mercado Pago.', 'events-made-easy' )
     );
-    eme_options_input_text( __( 'Mercado Pago Sandbox Access Token', 'events-made-easy' ), 'eme_mercadopago_sandbox_token', __( 'Mercado Pago Sandbox Access Token', 'events-made-easy' ) );
-    eme_options_input_text( __( 'Mercado Pago Live Access Token', 'events-made-easy' ), 'eme_mercadopago_live_token', __( 'Mercado Pago Live Access Token', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Mercado Pago Sandbox Access Token', 'events-made-easy' ), 'eme_mercadopago_sandbox_token', __( 'Mercado Pago Sandbox Access Token', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Mercado Pago Live Access Token', 'events-made-easy' ), 'eme_mercadopago_live_token', __( 'Mercado Pago Live Access Token', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -3334,7 +3373,7 @@ if (!empty($webhook_id)) {
     $gateway = 'fondy';
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_input_text( __( 'Fondy Merchant ID', 'events-made-easy' ), 'eme_fondy_merchant_id', __( 'Fondy Merchant ID', 'events-made-easy' ) );
-    eme_options_input_text( __( 'Fondy Secret Key', 'events-made-easy' ), 'eme_fondy_secret_key', __( 'Fondy Secret Key', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Fondy Secret Key', 'events-made-easy' ), 'eme_fondy_secret_key', __( 'Fondy Secret Key', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );

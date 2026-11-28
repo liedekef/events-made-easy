@@ -5013,8 +5013,8 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
     if ( $offset > 0 ) {
         if ( $limit == 0 ) {
             // OFFSET needs LIMIT, take a high number ...
-            $limit_string = 'LIMIT 1000';
             $event_limit  = 10000;
+            $limit_string = "LIMIT $event_limit";
         }
         $offset_string = 'OFFSET ' . intval( $offset );
     } else {
@@ -6892,7 +6892,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             'eme-help-event-scheduled-status',
             __( 'Change status on', 'events-made-easy' ),
             [
-                __( 'At the chosen date and time the event status will change to the selected status. Times can only be chosen in 5-minute steps and depend on the Wordpress cron running every 5 minutes. Leave both fields empty to cancel a scheduled change.', 'events-made-easy' ),
+                __( 'At the chosen date and time the event status will change to the selected status. The time can only be chosen in 5-minute steps and depends on WordPress cron running at least every 5 minutes. Leave both fields empty to cancel a scheduled change.', 'events-made-easy' ),
             ],
             false
         );
@@ -10655,6 +10655,7 @@ function eme_ajax_events_list() {
             $scheduled_change       = eme_normalize_scheduled_status_change( $event['event_status_change_date'], $event['event_status_target'] );
             if ( ! empty( $scheduled_change['event_status_change_date'] ) ) {
                 $record['event_status'] .= '<br>' . sprintf(
+                    // translators: %1$s is the new event status, %2$s is the date for the scheduled status change
                     esc_html__( 'Scheduled change to %1$s on %2$s', 'events-made-easy' ),
                     esc_html( $event_status_array[ $scheduled_change['event_status_target'] ] ),
                     esc_html( eme_localized_datetime( $scheduled_change['event_status_change_date'], EME_TIMEZONE, 1 ) )

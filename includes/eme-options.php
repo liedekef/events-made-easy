@@ -1305,13 +1305,11 @@ function eme_secret_options() {
 
 function eme_sanitize_option( $option_value, $option_name ) {
     if ( in_array( $option_name, eme_secret_options(), true ) && isset( $_POST['option_page'] ) && $_POST['option_page'] === 'eme-options' ) {
-        if ( ! empty( $_POST[ 'eme_clear_' . $option_name ] ) ) {
-            return '';
+        $clean = trim( (string) preg_replace( '/[\x00-\x1F\x7F]/', '', (string) $option_value ) );
+        if ( $clean === '' || $clean === '0' ) {
+            return empty( $_POST[ 'eme_clear_' . $option_name ] ) ? get_option( $option_name ) : '';
         }
-        if ( $option_value === '' || $option_value === null ) {
-            return get_option( $option_name );
-        }
-        return mb_substr( (string) preg_replace( '/[\x00-\x1F\x7F]/', '', (string) $option_value ), 0, 255 );
+        return $clean;
     }
     $no_kses = ['eme_smtp_password', 'eme_imap_bounce_password'];
     $maybe_unfiltered = [

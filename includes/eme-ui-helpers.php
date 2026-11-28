@@ -91,9 +91,10 @@ function eme_options_input_password( $title, $name, $description ) {
 function eme_options_input_secret( $title, $name, $description, $visible_length = 4 ) {
     $name   = wp_strip_all_tags( $name );
     $value  = (string) get_option( $name );
+    $value_length   = mb_strlen($value);
     $visible_length = intval($visible_length);
-    if ($visible_length>0 && $visible_length < strlen($value)) {
-        $masked = $value !== '' ? str_repeat( '•', 8 ) . substr( $value, -1 * $visible_length ) : '';
+    if ( $visible_length > 0 && $value_length > 2 * $visible_length ) {
+        $masked = $value !== '' ? str_repeat( '•', 8 ) . mb_substr( $value, -1 * $visible_length ) : '';
     } else {
         $masked = $value !== '' ? str_repeat( '•', 8 ) : '';
     }
@@ -678,6 +679,7 @@ function eme_help_button( $dialog_id, $aria_label = '' ) {
     if ( empty( $aria_label ) ) {
         $aria_label = __( 'Help', 'events-made-easy' );
     } else {
+        // translators: %s is the aria label for the help button
         $aria_label = sprintf( __( 'Help: %s', 'events-made-easy' ), $aria_label );
     }
     return "<button type='button' class='eme-help-btn' aria-label='" . esc_attr( $aria_label ) . "' aria-haspopup='dialog' command='show-modal' commandfor='" . esc_attr( $dialog_id ) . "' data-eme-help-target='" . esc_attr( $dialog_id ) . "'>?</button>";

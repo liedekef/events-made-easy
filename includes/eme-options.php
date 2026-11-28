@@ -2259,7 +2259,7 @@ function eme_options_page() {
             );
             eme_options_toggle( __( 'Use SMTP authentication?', 'events-made-easy' ), 'eme_smtp_auth', __( 'SMTP authentication is often needed. If you use Gmail, make sure to set this parameter to Yes', 'events-made-easy' ) );
             eme_options_input_text( __( 'SMTP username', 'events-made-easy' ), 'eme_smtp_username', __( 'Insert the username to be used to access your SMTP server.', 'events-made-easy' ) );
-            eme_options_input_secret( __( 'SMTP password', 'events-made-easy' ), 'eme_smtp_password', __( 'Insert the password to be used to access your SMTP server', 'events-made-easy' ) );
+            eme_options_input_secret( __( 'SMTP password', 'events-made-easy' ), 'eme_smtp_password', __( 'Insert the password to be used to access your SMTP server', 'events-made-easy' ), 0 );
             eme_options_toggle( __( 'Verify SMTP certificates?', 'events-made-easy' ), 'eme_smtp_verify_cert', __( 'Uncheck this option if you have issues sending mail via secure SMTP due to mismatching certificates. Since this in fact defeats the purpose of having certificates, it is not recommended to use it, but sometimes it is needed at specific hosting providers. This has only an effect for private ip ranges (like e.g. 127.0.0.1, localhost, ...), for public emailservers this is not allowed.', 'events-made-easy' ) );
             eme_options_toggle( __( 'Debug SMTP?', 'events-made-easy' ), 'eme_smtp_debug', __( 'Check this option if you have issues sending mail via SMTP. Only do this for debugging purposes and deactivate it afterwards!', 'events-made-easy' ) );
             $test_url = admin_url( 'admin.php?page=eme-emails#tab-testmail' );
@@ -2289,7 +2289,7 @@ function eme_options_page() {
                 __( 'Select the encryption method for IMAP.', 'events-made-easy' )
             );
             eme_options_input_text( __( 'IMAP username', 'events-made-easy' ), 'eme_imap_bounce_username', __( 'The username to access the IMAP mailbox.', 'events-made-easy' ) );
-            eme_options_input_secret( __( 'IMAP password', 'events-made-easy' ), 'eme_imap_bounce_password', __( 'The password to access the IMAP mailbox. Only plain authentication is supported, no oauth.', 'events-made-easy' ) );
+            eme_options_input_secret( __( 'IMAP password', 'events-made-easy' ), 'eme_imap_bounce_password', __( 'The password to access the IMAP mailbox. Only plain authentication is supported, no oauth.', 'events-made-easy' ), 0 );
             eme_options_input_text( __( 'IMAP mailbox/folder', 'events-made-easy' ), 'eme_imap_bounce_mailbox', __( 'The mailbox or folder to check for bounced emails. Default is INBOX.', 'events-made-easy' ) );
             eme_options_toggle( __( 'Process bounces daily', 'events-made-easy' ), 'eme_cron_process_bounces', __( 'Check this option to automatically process bounces once per day as part of the daily cron.', 'events-made-easy' ) );
 ?>
@@ -3131,8 +3131,8 @@ if (!empty($webhook_id)) {
     eme_options_input_text( __( 'Worldpay installation ID', 'events-made-easy' ), 'eme_worldpay_instid', __( 'Worldpay installation ID', 'events-made-easy' ) );
     eme_options_input_secret( __( 'Worldpay MD5 secret', 'events-made-easy' ), 'eme_worldpay_md5_secret', __( 'Worldpay MD5 secret used when submitting payments', 'events-made-easy' ) );
     eme_options_input_text( __( 'Worldpay MD5 parameters', 'events-made-easy' ), 'eme_worldpay_md5_parameters', __( "Worldpay parameters used to generate the MD5 signature, separated by ':'. Only use these 4 in the order of your choice: instId,cartId,currency and/or amount", 'events-made-easy' ) );
-    eme_options_input_secret( __( 'Worldpay Test Password', 'events-made-easy' ), 'eme_worldpay_test_pwd', __( 'Worldpay password for payment notifications when testing', 'events-made-easy' ) );
-    eme_options_input_secret( __( 'Worldpay Live Password', 'events-made-easy' ), 'eme_worldpay_live_pwd', __( 'Worldpay password for payment notifications when using Worldpay for real', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Worldpay Test Password', 'events-made-easy' ), 'eme_worldpay_test_pwd', __( 'Worldpay password for payment notifications when testing', 'events-made-easy' ), 0 );
+    eme_options_input_secret( __( 'Worldpay Live Password', 'events-made-easy' ), 'eme_worldpay_live_pwd', __( 'Worldpay password for payment notifications when using Worldpay for real', 'events-made-easy' ), 0 );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -3169,8 +3169,8 @@ if (!empty($webhook_id)) {
         __( 'Choose wether you want to test Opayo in a sandbox or go live and really use Opayo.', 'events-made-easy' )
     );
     eme_options_input_text( __( 'Opayo Vendor Name', 'events-made-easy' ), 'eme_opayo_vendor_name', __( 'Opayo Vendor Name', 'events-made-easy' ) );
-    eme_options_input_secret( __( 'Opayo Test Password', 'events-made-easy' ), 'eme_opayo_test_pwd', __( 'Opayo password for testing purposes', 'events-made-easy' ) );
-    eme_options_input_secret( __( 'Opayo Live Password', 'events-made-easy' ), 'eme_opayo_live_pwd', __( 'Opayo password when using Opayo for real', 'events-made-easy' ) );
+    eme_options_input_secret( __( 'Opayo Test Password', 'events-made-easy' ), 'eme_opayo_test_pwd', __( 'Opayo password for testing purposes', 'events-made-easy' ), 0 );
+    eme_options_input_secret( __( 'Opayo Live Password', 'events-made-easy' ), 'eme_opayo_live_pwd', __( 'Opayo password when using Opayo for real', 'events-made-easy' ), 0 );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );

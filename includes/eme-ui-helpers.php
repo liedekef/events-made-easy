@@ -88,20 +88,26 @@ function eme_options_input_password( $title, $name, $description ) {
     eme_options_input_type( $title, $name, $description, "password", $option_value);
 }
 
-function eme_options_input_secret( $title, $name, $description ) {
+function eme_options_input_secret( $title, $name, $description, $visible_length = 4 ) {
     $name   = wp_strip_all_tags( $name );
     $value  = (string) get_option( $name );
-    $masked = $value !== '' ? str_repeat( '•', 8 ) . substr( $value, -4 ) : '';
+    $visible_length = intval($visible_length);
+    if ($visible_length>0 && $visible_length < strlen($value)) {
+        $masked = $value !== '' ? str_repeat( '•', 8 ) . substr( $value, -1 * $visible_length ) : '';
+    } else {
+        $masked = $value !== '' ? str_repeat( '•', 8 ) : '';
+    }
 ?>
     <tr style='vertical-align:top' id='<?php echo esc_attr( $name ); ?>_row'>
         <th scope="row"><label for='<?php echo esc_attr( $name ); ?>'><?php echo wp_kses_post( $title ); ?></label></th>
         <td>
 <?php if ( $value !== '' ): ?>
-            <p><code><?php echo esc_html( $masked ); ?></code></p>
+            <p><code><?php echo esc_html( $masked ); ?></code>
             <label>
-                <input type="checkbox" name="<?php echo esc_attr( 'eme_clear_' . $name ); ?>" value="1">
+                <input type="checkbox" name="<?php echo esc_attr( 'eme_clear_' . $name ); ?>" value="1" title="<?php echo esc_attr__('Check this to clear the value on save','events-made-easy');?>">
                 <?php esc_html_e( 'Clear', 'events-made-easy' ); ?>
             </label>
+            </p>
             <p class="description"><?php esc_html_e( 'Leave the field below empty to keep the current value.', 'events-made-easy' ); ?></p>
 <?php endif; ?>
             <input type="password" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $name ); ?>" value="" autocomplete="new-password" style='width: 95%;' size='45' placeholder="<?php echo $value !== '' ? esc_attr__( 'New value (optional)', 'events-made-easy' ) : esc_attr__( 'Enter a value', 'events-made-easy' ); ?>">

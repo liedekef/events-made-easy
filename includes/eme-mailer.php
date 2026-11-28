@@ -3488,7 +3488,7 @@ function eme_emails_page() {
             $label      = esc_html__( 'Select the event(s)', 'events-made-easy' );
             $aria_label = 'aria-label="' . $label . '"';
             echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped at assignment
-            echo eme_help_button( 'eme-help-mailer-event-multiple', __( 'Select the event(s)', 'events-made-easy' ) );
+            echo eme_help_button( 'eme-help-mailer-event-multiple', __( 'Select the event(s)', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button()
         ?>
         </td>
         <td><?php echo eme_ui_multiselect( $event_ids, 'event_ids', $myevents, 5, '', 1, 'eme_snapselect_events_class', $aria_label ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect() ?>

@@ -488,7 +488,7 @@ function eme_locations_edit_layout( $location, $message = '' ) {
     }
 ?>
             <div class="postbox" id="eme_authordiv">
-            <h2 class='hndle'><span><?php esc_html_e( 'Author', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-location-author', __( 'Author', 'events-made-easy' ) ); ?></h2>
+            <h2 class='hndle'><span><?php esc_html_e( 'Author', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-location-author', __( 'Author', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></h2>
                 <div class="inside">
 <?php
     eme_help(
@@ -512,7 +512,7 @@ function eme_locations_edit_layout( $location, $message = '' ) {
             </div>
             <!-- categories postbox -->
             <div class="postbox" id="eme_categoriesdiv">
-            <h2 class='hndle'><span><?php esc_html_e( 'Category', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-location-category', __( 'Category', 'events-made-easy' ) ); ?></h2>
+            <h2 class='hndle'><span><?php esc_html_e( 'Category', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-location-category', __( 'Category', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></h2>
                 <div class="inside">
 <?php
     eme_help(
@@ -732,7 +732,7 @@ function eme_meta_box_div_location_notes( $location ) {
         <div class="postbox" id="loc_description">
             <h2>
                 <?php esc_html_e( 'Location description', 'events-made-easy' ); ?>
-                <?php echo eme_help_button( 'eme-help-location-description', __( 'Location description', 'events-made-easy' ) ); ?>
+                <?php echo eme_help_button( 'eme-help-location-description', __( 'Location description', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?>
             </h2>
             <div class="inside">
                 <div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea">
@@ -808,7 +808,7 @@ function eme_meta_box_div_location_url( $location ) {
     </td>
     </tr>
     <tr>
-    <td><label for="eme_loc_prop_online_only"><?php esc_html_e( 'Only online location', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-location-online-only', __( 'Only online location', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="eme_loc_prop_online_only"><?php esc_html_e( 'Only online location', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-location-online-only', __( 'Only online location', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><input id="eme_loc_prop_online_only" name='eme_loc_prop_online_only' value='1' type='checkbox' <?php checked( $location['location_properties']['online_only'] ); ?>>
     </td>
     </tr>

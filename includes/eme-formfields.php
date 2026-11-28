@@ -3694,7 +3694,7 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
     $eme_dyndata_conditions = eme_get_dyndata_conditions();
     ?>
     <div id="div_dyndata">
-        <b><?php esc_html_e( 'Dynamically show fields based on a number of conditions', 'events-made-easy' ); ?></b><?php echo eme_help_button( 'eme-help-formfields-dynamic-data', __( 'Dynamically show fields based on a number of conditions', 'events-made-easy' ) ); ?>
+        <b><?php esc_html_e( 'Dynamically show fields based on a number of conditions', 'events-made-easy' ); ?></b><?php echo eme_help_button( 'eme-help-formfields-dynamic-data', __( 'Dynamically show fields based on a number of conditions', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?>
         <table class="eme_dyndata">
         <thead>
             <tr>

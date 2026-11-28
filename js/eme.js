@@ -483,7 +483,7 @@ function eme_init_widgets(dynamicOnly = false) {
                 clearButton: true,
                 closeButton: true,
                 timepicker: true,
-                minutesStep: parseInt(emebasic.translate_minutesStep),
+                minutesStep: parseInt(el.dataset.minutesStep ?? emebasic.translate_minutesStep),
                 firstDayOfWeek: parseInt(emebasic.translate_firstDayOfWeek),
                 altFormat: 'Y-m-d H:i:00',
                 multipleSeparator: ", ",

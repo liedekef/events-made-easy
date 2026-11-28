@@ -477,7 +477,7 @@ function eme_events_page() {
             $event['event_status_change_date'] = null;
         } else {
             $event_status_array    = eme_status_array();
-            $event['event_status'] = intval( $_POST['event_status'] ?? 0 );
+            $event['event_status'] = intval( $_POST['event_status'] ?? EME_EVENT_STATUS_DRAFT );
             if (empty($event_status_array[ $event['event_status'] ]))
                 $event['event_status'] = EME_EVENT_STATUS_DRAFT;
             $scheduled_change = eme_normalize_scheduled_status_change( $_POST['event_status_change_date'] ?? '', $_POST['event_status_target'] ?? '' );
@@ -6857,7 +6857,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                     <?php if ( current_user_can( get_option( 'eme_cap_author_event' ) ) || current_user_can( get_option( 'eme_cap_edit_events' ) ) ) { ?>
                     <!-- status postbox -->
                     <div class="postbox" id="eme_statusdiv">
-                    <h2 class='hndle'><span><?php esc_html_e( 'Event Status', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-event-status', __( 'Event Status', 'events-made-easy' ) ); ?></h2>
+                    <h2 class='hndle'><span><?php esc_html_e( 'Event Status', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-event-status', __( 'Event Status', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></h2>
                     <div class="inside">
 <?php
         $event_status_array = eme_status_array();
@@ -6882,8 +6882,8 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
         if ( ! $edit_recurrence && current_user_can( get_option( 'eme_cap_publish_event' ) ) ) {
 ?>
                         <p>
-                            <label for="event_status_change_date"><?php esc_html_e( 'Change status on', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-event-scheduled-status', __( 'Change status on', 'events-made-easy' ) ); ?></label><br>
-                            <input id="event_status_change_date" type="text" name="event_status_change_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Date and time', 'events-made-easy' ); ?>" data-date='<?php echo ! empty( $event['event_status_change_date'] ) ? esc_attr( eme_js_datetime( $event['event_status_change_date'] ) ) : ''; ?>' class='eme_formfield_fdatetime'>
+                            <label for="event_status_change_date"><?php esc_html_e( 'Change status on', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-scheduled-status', __( 'Change status on', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?><br>
+                            <input id="event_status_change_date" type="text" name="event_status_change_date" value="" readonly="readonly" placeholder="<?php esc_attr_e( 'Date and time', 'events-made-easy' ); ?>" data-minutes-step='5' data-date='<?php echo ! empty( $event['event_status_change_date'] ) ? esc_attr( eme_js_datetime( $event['event_status_change_date'] ) ) : ''; ?>' class='eme_formfield_fdatetime'>
                             <?php echo eme_ui_select( $event['event_status_target'] ?? '', 'event_status_target', eme_scheduled_status_array(), __( 'No scheduled status change', 'events-made-easy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
                             <br>
                         </p>
@@ -6892,7 +6892,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             'eme-help-event-scheduled-status',
             __( 'Change status on', 'events-made-easy' ),
             [
-                __( 'At the chosen date and time the event status will change to the selected status. Leave both fields empty to cancel a scheduled change.', 'events-made-easy' ),
+                __( 'At the chosen date and time the event status will change to the selected status. Times can only be chosen in 5-minute steps and depend on the Wordpress cron running every 5 minutes. Leave both fields empty to cancel a scheduled change.', 'events-made-easy' ),
             ],
             false
         );
@@ -7018,7 +7018,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 ?>
         <!-- author postbox -->
         <div class="postbox" id="eme_authordiv">
-        <h2 class='hndle'><span><?php esc_html_e( 'Author', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-event-author', __( 'Author', 'events-made-easy' ) ); ?></h2>
+        <h2 class='hndle'><span><?php esc_html_e( 'Author', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-event-author', __( 'Author', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></h2>
         <div class="inside">
 <?php
         eme_help(
@@ -7043,7 +7043,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 
         <!-- contact postbox -->
         <div class="postbox" id="eme_contactdiv">
-        <h2 class='hndle'><span><?php esc_html_e( 'Contact Person', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-event-contact', __( 'Contact Person', 'events-made-easy' ) ); ?></h2>
+        <h2 class='hndle'><span><?php esc_html_e( 'Contact Person', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-event-contact', __( 'Contact Person', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></h2>
         <div class="inside">
 <?php
         eme_help(
@@ -7073,7 +7073,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
         </div>
         <?php if ( get_option( 'eme_categories_enabled' ) ) : ?>
         <div class="postbox" id="eme_categoriesdiv">
-        <h2 class='hndle'><span><?php esc_html_e( 'Category', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-event-category', __( 'Category', 'events-made-easy' ) ); ?></h2>
+        <h2 class='hndle'><span><?php esc_html_e( 'Category', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-event-category', __( 'Category', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></h2>
         <div class="inside">
 <?php
         eme_help(
@@ -7099,7 +7099,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
         </div> 
         <?php endif; ?>
         <div class="postbox" id="eme_pagetemplate">
-        <h2 class='hndle'><span><?php esc_html_e( 'WP Page template', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-event-page-template', __( 'WP Page template', 'events-made-easy' ) ); ?></h2>
+        <h2 class='hndle'><span><?php esc_html_e( 'WP Page template', 'events-made-easy' ); ?></span><?php echo eme_help_button( 'eme-help-event-page-template', __( 'WP Page template', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></h2>
         <div class="inside">
 <?php
         $templates = wp_get_theme()->get_page_templates();
@@ -7573,7 +7573,7 @@ function eme_meta_box_div_event_single_event_format( $event, $templates_array ) 
     <br>
 <?php
     echo '<b>' . esc_html__( 'Single Event', 'events-made-easy' ) . '</b>';
-    echo eme_help_button( 'eme-help-event-template-single-event', __( 'Single Event', 'events-made-easy' ) );
+    echo eme_help_button( 'eme-help-event-template-single-event', __( 'Single Event', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button()
     eme_help(
         'eme-help-event-template-single-event',
         __( 'Single Event', 'events-made-easy' ),
@@ -7660,7 +7660,7 @@ function eme_meta_box_div_event_dyndata_allfields( $dyndata_all_fields, $templat
 ?>
 <div id="div_event_dyndata_allfields">
         <br>
-        <b><?php esc_html_e( 'Dynamic data check on every field', 'events-made-easy' ); ?></b><?php echo eme_help_button( 'eme-help-event-dynamic-data', __( 'Dynamic data check on every field', 'events-made-easy' ) ); ?>
+        <b><?php esc_html_e( 'Dynamic data check on every field', 'events-made-easy' ); ?></b><?php echo eme_help_button( 'eme-help-event-dynamic-data', __( 'Dynamic data check on every field', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?>
         <input id="eme_prop_dyndata_all_fields" name='eme_prop_dyndata_all_fields' value='1' type='checkbox' <?php checked( $dyndata_all_fields ); ?>>
 <?php
     eme_help(
@@ -8782,7 +8782,7 @@ function eme_meta_box_div_event_url( $event ) {
 ?>
 <div id="div_event_url" class="postarea">
     <h3>
-        <?php esc_html_e( 'External URL', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-event-external-url', __( 'External URL', 'events-made-easy' ) ); ?>
+        <?php esc_html_e( 'External URL', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-event-external-url', __( 'External URL', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?>
     </h3>
     <input type="url" id="event_url" name="event_url" autocomplete="off" value="<?php echo esc_html( $event['event_url'] ); ?>">
     <br>
@@ -8832,7 +8832,7 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
 ?>
                 </p>
                 <p id='span_skippaymentoptions'>
-                    <?php esc_html_e( 'Skip payment methods after booking', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-event-skip-payment', __( 'Skip payment methods after booking', 'events-made-easy' ) ); ?><br>
+                    <?php esc_html_e( 'Skip payment methods after booking', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-event-skip-payment', __( 'Skip payment methods after booking', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?><br>
                     <input id="eme_prop_skippaymentoptions" name='eme_prop_skippaymentoptions' value='1' type='checkbox' <?php checked( $event['event_properties']['skippaymentoptions'] ); ?>>
                 </p>
 <?php
@@ -8872,7 +8872,7 @@ function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templa
                     <label for="eme_prop_attendanceperday"><?php esc_html_e( 'Select this option if you want the scan count to be limited to the number of booked seats per day. If not (the default), the scan count is limited to the number of booked seats for the whole event duration.', 'events-made-easy' ) .'<br>' . esc_html_e( "This implies the use of attendance records per user and searches in that table for the number of times a user's qrcode has been scanned. As a result it is more demanding on the database, so use with care.", 'events-made-easy') ;  ?></label>
                 </p>
                 <p id='span_attendance_limit'>
-                    <?php esc_html_e( 'Attendance URL (generated by #_ATTENDANCE_URL) is valid from ', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-event-attendance-entry', __( 'Attendance URL', 'events-made-easy' ) ); ?>
+                    <?php esc_html_e( 'Attendance URL (generated by #_ATTENDANCE_URL) is valid from ', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-event-attendance-entry', __( 'Attendance URL', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?>
                     <input id="eme_prop_attendance_begin" type="text" name="eme_prop_attendance_begin" size='4' value="<?php echo esc_attr( $event['event_properties']['attendance_begin'] ); ?>">
                     <?php esc_html_e( 'hours before the event starts until ', 'events-made-easy' ); ?>
                     <input id="eme_prop_attendance_end" type="text" name="eme_prop_attendance_end" size='4' value="<?php echo esc_attr( $event['event_properties']['attendance_end'] ); ?>">
@@ -8984,7 +8984,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
 ?>
 <div id="div_event_rsvp">
     <p id='p_user_confirmation_required'>
-        <?php echo eme_ui_checkbox_binary( $event['event_properties']['require_user_confirmation'], 'eme_prop_require_user_confirmation', __( 'Require user confirmation after booking', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?><?php echo eme_help_button( 'eme-help-event-user-confirmation', __( 'Require user confirmation after booking', 'events-made-easy' ) ); ?>
+        <?php echo eme_ui_checkbox_binary( $event['event_properties']['require_user_confirmation'], 'eme_prop_require_user_confirmation', __( 'Require user confirmation after booking', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?><?php echo eme_help_button( 'eme-help-event-user-confirmation', __( 'Require user confirmation after booking', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?>
     </p>
 <?php
     eme_help(
@@ -9021,7 +9021,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         <label for="eme_prop_rsvp_approved_reminder_days"><?php esc_html_e( 'Set the number of days before reminder emails will be sent for approved bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails.', 'events-made-easy' ); ?></label>
     </p>
     <p id='p_create_wp_user'>
-        <?php echo eme_ui_checkbox_binary( $event['event_properties']['create_wp_user'], 'eme_prop_create_wp_user', __( 'Create WP user after succesful booking', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?><?php echo eme_help_button( 'eme-help-event-create-wp-user', __( 'Create WP user after succesful booking', 'events-made-easy' ) ); ?>
+        <?php echo eme_ui_checkbox_binary( $event['event_properties']['create_wp_user'], 'eme_prop_create_wp_user', __( 'Create WP user after succesful booking', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?><?php echo eme_help_button( 'eme-help-event-create-wp-user', __( 'Create WP user after succesful booking', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?>
     </p>
 <?php
     eme_help(
@@ -9041,7 +9041,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </p>
     <table class="eme_event_admin_table">
     <tr id='row_seats'>
-        <td><label for='seats-input'><?php esc_html_e( 'Seats', 'events-made-easy' ); ?> :</label><?php echo eme_help_button( 'eme-help-event-seats', __( 'Seats', 'events-made-easy' ) ); ?></td>
+        <td><label for='seats-input'><?php esc_html_e( 'Seats', 'events-made-easy' ); ?> :</label><?php echo eme_help_button( 'eme-help-event-seats', __( 'Seats', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td><input id="seats-input" type="text" name="event_seats" size='8' title="<?php echo esc_attr__( 'Enter 0 for no limit', 'events-made-easy' ) . "\n" . esc_attr( __( 'For multiseat events, separate the values by \'||\'', 'events-made-easy' ) ); ?>" value="<?php echo esc_html( $event_number_seats ); ?>">
             <span class="eme-hidden" id="loc_max_cap_warning"><br><img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL);?>images/warning.png' alt='warning'><b><?php esc_html_e( 'A location maximum capacity is set. If your event maximum surpasses this capacity, the location capacity will take precendence.', 'events-made-easy' ); ?></b></span>
         </td>
@@ -9076,16 +9076,16 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         <td><textarea name="eme_prop_multiprice_desc" id="eme_prop_multiprice_desc" rows="6" cols="40" style="field-sizing: content; min-width: 200px; max-width: 500px; min-height: 50px; max-height: 200px; resize: both;" ><?php echo str_replace( '||', "\n", esc_html( $event['event_properties']['multiprice_desc'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- output is already escaped by esc_html(), str_replace only adds newlines ?></textarea><p class="eme_smaller"><?php esc_html_e( 'Add an optional description for each price category (one price description per line).', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_vat'>
-        <td><label for='eme_prop_vat_pct'><?php esc_html_e( 'VAT percentage: ', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-vat', __( 'VAT percentage', 'events-made-easy' ) ); ?></td>
+        <td><label for='eme_prop_vat_pct'><?php esc_html_e( 'VAT percentage: ', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-vat', __( 'VAT percentage', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td><input id="eme_prop_vat_pct" type="text" name="eme_prop_vat_pct" size='8' title="<?php esc_attr_e( 'VAT percentage', 'events-made-easy' ); ?>" value="<?php echo esc_html( $event['event_properties']['vat_pct'] ); ?>">%
         </td>
     </tr>
     <tr id='row_discount'>
-        <td><label for='eme_prop_rsvp_discount'><?php esc_html_e( 'Discount to apply', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-discount-precedence', __( 'Discount to apply', 'events-made-easy' ) ); ?></td>
+        <td><label for='eme_prop_rsvp_discount'><?php esc_html_e( 'Discount to apply', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-discount-precedence', __( 'Discount to apply', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td><?php echo eme_ui_select( $event['event_properties']['rsvp_discount'], 'eme_prop_rsvp_discount', $discount_arr, '', 0, 'eme_snapselect_discounts_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
     </tr>
     <tr id='row_discountgroup'>
-        <td><label for='eme_prop_rsvp_discountgroup'><?php esc_html_e( 'Discount group to apply', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-discount-precedence', __( 'Discount group to apply', 'events-made-easy' ) ); ?></td>
+        <td><label for='eme_prop_rsvp_discountgroup'><?php esc_html_e( 'Discount group to apply', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-discount-precedence', __( 'Discount group to apply', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td><?php echo eme_ui_select( $event['event_properties']['rsvp_discountgroup'], 'eme_prop_rsvp_discountgroup', $dgroup_arr, '', 0, 'eme_snapselect_dgroups_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
     </tr>
     <tr id='row_waitinglist_seats'>
@@ -9098,20 +9098,20 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
             <span class="eme_smaller"><br><?php esc_html_e( 'Automatically take a booking from the waiting list when seats become available again', 'events-made-easy' ); ?></span></td>
     </tr>
     <tr id='row_max_allowed'>
-        <td><label for='eme_prop_max_allowed'><?php esc_html_e( 'Max number of seats to book', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-seat-limits', __( 'Max number of seats to book', 'events-made-easy' ) ); ?></td>
+        <td><label for='eme_prop_max_allowed'><?php esc_html_e( 'Max number of seats to book', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-seat-limits', __( 'Max number of seats to book', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td><input id="eme_prop_max_allowed" type="text" name="eme_prop_max_allowed" size='8' title="<?php echo esc_attr__( 'The maximum number of seats a person can book in one go.', 'events-made-easy' ) . ' ' . esc_attr__( '(is multi-compatible)', 'events-made-easy' ); ?>" value="<?php echo esc_html( $event['event_properties']['max_allowed'] ); ?>"></td>
     </tr>
     <tr id='row_min_allowed'>
-        <td><label for='eme_prop_min_allowed'><?php esc_html_e( 'Min number of seats to book', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-seat-limits', __( 'Min number of seats to book', 'events-made-easy' ) ); ?></td>
+        <td><label for='eme_prop_min_allowed'><?php esc_html_e( 'Min number of seats to book', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-seat-limits', __( 'Min number of seats to book', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td><input id="eme_prop_min_allowed" type="text" name="eme_prop_min_allowed" size='8' title="<?php echo esc_attr__( 'The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list).', 'events-made-easy' ) . ' ' . esc_attr__( '(is multi-compatible)', 'events-made-easy' ); ?>" value="<?php echo esc_html( $event['event_properties']['min_allowed'] ); ?>"></td>
     </tr>
     <tr id='row_take_attendance'>
-        <td><label for='eme_prop_take_attendance'><?php esc_html_e( 'Attendance-only event?', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-attendance-only', __( 'Attendance-only event?', 'events-made-easy' ) ); ?></td>
+        <td><label for='eme_prop_take_attendance'><?php esc_html_e( 'Attendance-only event?', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-attendance-only', __( 'Attendance-only event?', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td><?php echo eme_ui_checkbox_binary( $event['event_properties']['take_attendance'], 'eme_prop_take_attendance', __( 'Only take attendance (0 or 1 seat) for this event', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
         </td>
     </tr>
     <tr id='p_wp_member_required'>
-        <td><label for='registration_wp_users_only'><?php esc_html_e( 'Require WP membership for booking', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-wp-membership', __( 'Require WP membership for booking', 'events-made-easy' ) ); ?></td>
+        <td><label for='registration_wp_users_only'><?php esc_html_e( 'Require WP membership for booking', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-wp-membership', __( 'Require WP membership for booking', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td><?php echo eme_ui_checkbox_binary($event['registration_wp_users_only'], 'registration_wp_users_only'); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
 <?php
     eme_help(
@@ -9126,12 +9126,12 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         </td>
     </tr>
     <tr id='row_require_eme_group'>
-        <td><label for='eme_prop_rsvp_required_group_ids'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-require-groups', __( 'Require EME groups', 'events-made-easy' ) ); ?></td>
+        <td><label for='eme_prop_rsvp_required_group_ids'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-require-groups', __( 'Require EME groups', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_group_ids'], 'eme_prop_rsvp_required_group_ids', eme_get_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_attr__( 'Select one or more groups', 'events-made-easy' ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?>
         </td>
     </tr>
     <tr id='row_require_eme_memberships'>
-        <td><label for='eme_prop_rsvp_required_membership_ids'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-require-memberships', __( 'Require EME membership', 'events-made-easy' ) ); ?></td>
+        <td><label for='eme_prop_rsvp_required_membership_ids'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-require-memberships', __( 'Require EME membership', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_membership_ids'], 'eme_prop_rsvp_required_membership_ids', eme_get_memberships(), 'membership_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_attr__( 'Select one or more memberships', 'events-made-easy' ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?>
         </td>
     </tr>
@@ -9140,17 +9140,17 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_addpersontogroup'], 'eme_prop_rsvp_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect', 'data-placeholder="' . esc_attr__( 'Select one or more groups', 'events-made-easy' ) . '"' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_rsvppassword'>
-        <td><label for='eme_prop_rsvp_password'><?php esc_html_e( 'RSVP Password', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-rsvp-password', __( 'RSVP Password', 'events-made-easy' ) ); ?></td>
+        <td><label for='eme_prop_rsvp_password'><?php esc_html_e( 'RSVP Password', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-rsvp-password', __( 'RSVP Password', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td><input id="eme_prop_rsvp_password" type="text" class="eme_passwordfield" autocomplete='off' name="eme_prop_rsvp_password" size='20' value="<?php echo esc_html( $event['event_properties']['rsvp_password'] ); ?>"></td>
     </tr>
     <tr id='row_inviteonly'>
-        <td><label for='eme_prop_invite_only'><?php esc_html_e( 'Invite-only event?', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-invite-only', __( 'Invite-only event?', 'events-made-easy' ) ); ?></td>
+        <td><label for='eme_prop_invite_only'><?php esc_html_e( 'Invite-only event?', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-invite-only', __( 'Invite-only event?', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td><?php echo eme_ui_checkbox_binary( $event['event_properties']['invite_only'], 'eme_prop_invite_only', __( 'Require an invitation', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox_binary() ?>
         </td>
     </tr>
     <tr><td colspan="2">&nbsp;</td></tr>
     <tr id='row_ticket'>
-        <td><label for='eme_prop_ticket_template_id'><?php esc_html_e( 'Ticket PDF template', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-ticket-template', __( 'Ticket PDF template', 'events-made-easy' ) ); ?></td>
+        <td><label for='eme_prop_ticket_template_id'><?php esc_html_e( 'Ticket PDF template', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-ticket-template', __( 'Ticket PDF template', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td><?php echo eme_ui_select( $event['event_properties']['ticket_template_id'], 'eme_prop_ticket_template_id', $pdf_templates_array, '&nbsp;' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
     eme_help(
@@ -9166,7 +9166,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         </td>
     </tr>
     <tr id='row_ticketmail'>
-        <td><label for='eme_prop_ticket_mail'><?php esc_html_e( 'Ticket mail preference', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-ticket-mail', __( 'Ticket mail preference', 'events-made-easy' ) ); ?></td>
+        <td><label for='eme_prop_ticket_mail'><?php esc_html_e( 'Ticket mail preference', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-event-ticket-mail', __( 'Ticket mail preference', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td> <?php echo eme_ui_select( $event['event_properties']['ticket_mail'], 'eme_prop_ticket_mail', [ 'booking'  => __( 'At booking time', 'events-made-easy' ), 'approval' => __( 'Upon approval', 'events-made-easy' ), 'payment'  => __( 'Upon payment', 'events-made-easy' ), 'always'   => __( 'All of the above', 'events-made-easy'), ]); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
     eme_help(
@@ -10652,6 +10652,14 @@ function eme_ajax_events_list() {
         if ( isset( $event_status_array[ $event['event_status'] ] ) ) {
             $record['event_status'] = $event_status_array[ $event['event_status'] ];
             $event_url              = esc_url( eme_event_url( $event ) );
+            $scheduled_change       = eme_normalize_scheduled_status_change( $event['event_status_change_date'], $event['event_status_target'] );
+            if ( ! empty( $scheduled_change['event_status_change_date'] ) ) {
+                $record['event_status'] .= '<br>' . sprintf(
+                    esc_html__( 'Scheduled change to %1$s on %2$s', 'events-made-easy' ),
+                    esc_html( $event_status_array[ $scheduled_change['event_status_target'] ] ),
+                    esc_html( eme_localized_datetime( $scheduled_change['event_status_change_date'], EME_TIMEZONE, 1 ) )
+                );
+            }
             if ( ! $view_trash ) {
                 if ( $event['event_status'] == EME_EVENT_STATUS_DRAFT ) {
                     $record['event_status'] .= "<br> <a href='$event_url' target='_blank' rel='noopener noreferrer'>" . esc_html__( 'Preview event', 'events-made-easy' ) . '</a>';

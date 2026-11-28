@@ -1308,7 +1308,7 @@ function eme_sanitize_option( $option_value, $option_name ) {
         if ( ! empty( $_POST[ 'eme_clear_' . $option_name ] ) ) {
             return '';
         }
-        if ( $option_value === '' ) {
+        if ( $option_value === '' || $option_value === null ) {
             return get_option( $option_name );
         }
         return mb_substr( (string) preg_replace( '/[\x00-\x1F\x7F]/', '', (string) $option_value ), 0, 255 );

@@ -464,7 +464,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const helpButton = e.target.closest('.eme-help-btn[data-eme-help-target]');
         if (helpButton) {
             e.stopPropagation();
-            if (helpButton.closest('summary, label')) {
+            if (helpButton.closest('summary')) {
                 const dialog = document.getElementById(helpButton.dataset.emeHelpTarget);
                 if (dialog && !dialog.open) {
                     e.preventDefault();

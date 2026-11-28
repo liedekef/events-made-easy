@@ -1882,7 +1882,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
     </td>
     </tr>
 <?php } ?>
-    <tr><td><?php esc_html_e( 'Member status calculated automatically', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-status-automatic', __( 'Member status calculated automatically', 'events-made-easy' ) ); ?></td>
+    <tr><td><?php esc_html_e( 'Member status calculated automatically', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-status-automatic', __( 'Member status calculated automatically', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><?php echo eme_ui_select_binary( $member['status_automatic'], 'status_automatic', 0, 'nodynamicupdates', $disabled ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
         if ( $member['status_automatic'] && ! $member['paid'] && $action == 'edit' && empty( $member['related_member_id'] ) ) {
@@ -1902,7 +1902,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         <tr><td><?php esc_html_e( 'Has the member paid?', 'events-made-easy' ); ?></td>
     <td><?php echo eme_ui_select_binary( $member['paid'], 'paid', 0, 'nodynamicupdates', $disabled ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
     </td></tr>
-    <tr><td><?php esc_html_e( 'Last payment received date', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-payment-date', __( 'Last payment received date', 'events-made-easy' ) ); ?></td>
+    <tr><td><?php esc_html_e( 'Last payment received date', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-payment-date', __( 'Last payment received date', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
         <td>
 <?php
             if ( $limited ) {
@@ -2120,7 +2120,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr>
-    <td><label for="duration_count"><?php esc_html_e( 'Duration period', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-duration-period', __( 'Duration period', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="duration_count"><?php esc_html_e( 'Duration period', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-duration-period', __( 'Duration period', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><input type="number" id="duration_count" name="duration_count" value="<?php echo esc_attr( $membership['duration_count'] ); ?>" size="4"><?php echo eme_ui_select( $membership['duration_period'], 'duration_period', $duration_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()  ?>
 <?php
     eme_help(
@@ -2133,7 +2133,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr id='freeperiod'>
-    <td><label for="properties[one_free_period]"><?php esc_html_e( 'One extra free period', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-one-free-period', __( 'One extra free period', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="properties[one_free_period]"><?php esc_html_e( 'One extra free period', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-one-free-period', __( 'One extra free period', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><?php echo eme_ui_select_binary( $membership['properties']['one_free_period'], 'properties[one_free_period]', 0 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
     eme_help(
@@ -2149,7 +2149,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr id='graceperiod'>
-    <td><label for="properties[grace_period]"><?php esc_html_e( 'Grace period', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-grace-period', __( 'Grace period', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="properties[grace_period]"><?php esc_html_e( 'Grace period', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-grace-period', __( 'Grace period', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><input type="text" id="properties[grace_period]" name="properties[grace_period]" value="<?php echo esc_attr( $membership['properties']['grace_period'] ); ?>" size="40">
 <?php
     eme_help(
@@ -2165,7 +2165,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr>
-    <td><label for="properties[max_usage_count]"><?php esc_html_e( 'Maximum usage', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-max-usage', __( 'Maximum usage', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="properties[max_usage_count]"><?php esc_html_e( 'Maximum usage', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-max-usage', __( 'Maximum usage', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><input type="number" id="properties[max_usage_count]" name="properties[max_usage_count]" value="<?php echo esc_attr( $membership['properties']['max_usage_count'] ); ?>" size="40">
 <?php
     eme_help(
@@ -2178,7 +2178,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr id='reminder'>
-    <td><label for="properties[reminder_days]"><?php esc_html_e( 'Reminder', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-reminder-days', __( 'Reminder', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="properties[reminder_days]"><?php esc_html_e( 'Reminder', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-reminder-days', __( 'Reminder', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><input type="text" id="properties[reminder_days]" name="properties[reminder_days]" value="<?php echo esc_attr( $membership['properties']['reminder_days'] ); ?>" size="40">
 <?php
     eme_help(
@@ -2200,7 +2200,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr>
-    <td><label for="allow_renewal"><?php esc_html_e( 'Allow membership renewal', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-allow-renewal', __( 'Allow membership renewal', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="allow_renewal"><?php esc_html_e( 'Allow membership renewal', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-allow-renewal', __( 'Allow membership renewal', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><input id="allow_renewal" name="properties[allow_renewal]" type="checkbox" value="1" <?php checked( $membership['properties']['allow_renewal'] ); ?>>
 <?php
     eme_help(
@@ -2213,7 +2213,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr id='tr_renewal_cutoff_days'>
-    <td><label for="properties[renewal_cutoff_days]"><?php esc_html_e( 'Renewal for active members based on end date', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-renewal-cutoff-days', __( 'Renewal for active members based on end date', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="properties[renewal_cutoff_days]"><?php esc_html_e( 'Renewal for active members based on end date', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-renewal-cutoff-days', __( 'Renewal for active members based on end date', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><input type="text" id="properties[renewal_cutoff_days]" name="properties[renewal_cutoff_days]" value="<?php echo esc_attr( $membership['properties']['renewal_cutoff_days'] ); ?>" size="40">
 <?php
     eme_help(
@@ -2237,7 +2237,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr>
-    <td><label for="create_wp_user"><?php esc_html_e( 'Create WP user after signup', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-create-wp-user', __( 'Create WP user after signup', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="create_wp_user"><?php esc_html_e( 'Create WP user after signup', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-create-wp-user', __( 'Create WP user after signup', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><input id="create_wp_user" name="properties[create_wp_user]" type="checkbox" value='1' <?php checked( $membership['properties']['create_wp_user'] ); ?>>
 <?php
     eme_help(
@@ -2266,7 +2266,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     <td><?php echo eme_ui_select( $membership['properties']['currency'], 'properties[currency]', $currency_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
     </tr>
     <tr>
-    <td><label for="vat_pct"><?php esc_html_e( 'VAT percentage', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-vat', __( 'VAT percentage', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="vat_pct"><?php esc_html_e( 'VAT percentage', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-vat', __( 'VAT percentage', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><input id="vat_pct" name="properties[vat_pct]" type="text" value="<?php echo esc_html( $membership['properties']['vat_pct'] ); ?>" size="4">%
 <?php
     eme_help(
@@ -2279,11 +2279,11 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr id='row_discount'>
-    <td><label for='properties[discount]'><?php esc_html_e( 'Discount to apply', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-discount-precedence', __( 'Discount to apply', 'events-made-easy' ) ); ?></label></td>
+    <td><label for='properties[discount]'><?php esc_html_e( 'Discount to apply', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-discount-precedence', __( 'Discount to apply', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><?php echo eme_ui_select( $membership['properties']['discount'], 'properties[discount]', $discount_arr, '', 0, 'eme_snapselect_discounts_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?></td>
     </tr>
     <tr id='row_discountgroup'>
-    <td><label for='properties[discountgroup]'><?php esc_html_e( 'Discount group to apply', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-discount-precedence', __( 'Discount group to apply', 'events-made-easy' ) ); ?></label></td>
+    <td><label for='properties[discountgroup]'><?php esc_html_e( 'Discount group to apply', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-discount-precedence', __( 'Discount group to apply', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><?php echo eme_ui_select( $membership['properties']['discountgroup'], 'properties[discountgroup]', $dgroup_arr, '', 0, 'eme_snapselect_dgroups_class' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
     eme_help(
@@ -2319,7 +2319,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr id='tr_attendancerecord'>
-    <td><label for="attendancerecord"><?php esc_html_e( 'Keep attendance records?', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-attendance-record', __( 'Keep attendance records?', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="attendancerecord"><?php esc_html_e( 'Keep attendance records?', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-attendance-record', __( 'Keep attendance records?', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><input id="attendancerecord" name="properties[attendancerecord]" type="checkbox" value='1' <?php checked( $membership['properties']['attendancerecord'] ); ?>>
 <?php
     eme_help(
@@ -2332,7 +2332,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr id="tr_member_form_tpl">
-    <td><label for="properties[member_form_tpl]"><?php esc_html_e( 'Member Form:', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-member-form', __( 'Member Form:', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="properties[member_form_tpl]"><?php esc_html_e( 'Member Form:', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-member-form', __( 'Member Form:', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><?php echo eme_ui_select_key_value( $membership['properties']['member_form_tpl'], 'properties[member_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
     eme_help(
@@ -2360,7 +2360,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr>
-    <td><label for="family_membership"><?php esc_html_e( 'Ask for family member info when someone signs up', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-family-membership', __( 'Ask for family member info when someone signs up', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="family_membership"><?php esc_html_e( 'Ask for family member info when someone signs up', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-family-membership', __( 'Ask for family member info when someone signs up', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><input id="family_membership" name="properties[family_membership]" type="checkbox" value='1' <?php checked( $membership['properties']['family_membership'] ); ?>>
 <?php
     eme_help(
@@ -2379,7 +2379,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr id="tr_familymember_form_tpl">
-    <td><label for="properties[familymember_form_tpl]"><?php esc_html_e( 'Family Member Form:', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-family-member-form', __( 'Family Member Form:', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="properties[familymember_form_tpl]"><?php esc_html_e( 'Family Member Form:', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-family-member-form', __( 'Family Member Form:', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><?php echo eme_ui_select_key_value( $membership['properties']['familymember_form_tpl'], 'properties[familymember_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
     eme_help(
@@ -2408,7 +2408,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr>
-    <td><label for="properties[member_added_tpl]"><?php esc_html_e( 'Member Added Message:', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-member-added-message', __( 'Member Added Message:', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="properties[member_added_tpl]"><?php esc_html_e( 'Member Added Message:', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-member-added-message', __( 'Member Added Message:', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><?php echo eme_ui_select( $membership['properties']['member_added_tpl'], 'properties[member_added_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
     eme_help(
@@ -2436,7 +2436,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr>
-    <td><label for="properties[payment_form_header_tpl]"><?php esc_html_e( 'Payment Form Header:', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-payment-form-header', __( 'Payment Form Header:', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="properties[payment_form_header_tpl]"><?php esc_html_e( 'Payment Form Header:', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-payment-form-header', __( 'Payment Form Header:', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><?php echo eme_ui_select( $membership['properties']['payment_form_header_tpl'], 'properties[payment_form_header_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
     eme_help(
@@ -2464,7 +2464,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr>
-    <td><label for="properties[payment_form_footer_tpl]"><?php esc_html_e( 'Payment Form Footer:', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-payment-form-footer', __( 'Payment Form Footer:', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="properties[payment_form_footer_tpl]"><?php esc_html_e( 'Payment Form Footer:', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-payment-form-footer', __( 'Payment Form Footer:', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><?php echo eme_ui_select( $membership['properties']['payment_form_footer_tpl'], 'properties[payment_form_footer_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
     eme_help(
@@ -2492,7 +2492,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr>
-    <td><label for="properties[payment_success_tpl]"><?php esc_html_e( 'Payment Success Message:', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-payment-success', __( 'Payment Success Message:', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="properties[payment_success_tpl]"><?php esc_html_e( 'Payment Success Message:', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-payment-success', __( 'Payment Success Message:', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><?php echo eme_ui_select( $membership['properties']['payment_success_tpl'], 'properties[payment_success_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
     eme_help(
@@ -2524,7 +2524,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     <td><?php echo eme_ui_multiselect_key_value( $membership['properties']['addpersontogroup'], 'properties[addpersontogroup]', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_snapselect' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_multiselect_key_value() ?><br><p class='eme_smaller'><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr>
-    <td><label for='properties[member_template_id]'><?php esc_html_e( 'Membership card PDF template', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-membership-card-pdf', __( 'Membership card PDF template', 'events-made-easy' ) ); ?></label></td>
+    <td><label for='properties[member_template_id]'><?php esc_html_e( 'Membership card PDF template', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-membership-card-pdf', __( 'Membership card PDF template', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><?php echo eme_ui_select_key_value( $membership['properties']['member_template_id'], 'properties[member_template_id]', eme_get_templates( 'pdf', 1 ), 'id', 'name', '&nbsp;' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
     eme_help(
@@ -2537,7 +2537,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr>
-    <td><label for='properties[payment_gateways]'><?php esc_html_e( 'Payment methods', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-payment-methods', __( 'Payment methods', 'events-made-easy' ) ); ?></label></td>
+    <td><label for='properties[payment_gateways]'><?php esc_html_e( 'Payment methods', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-payment-methods', __( 'Payment methods', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td>
 <?php
     esc_html_e( 'If no payment method is selected, the "Member Added Message" will be shown. Otherwise the "Member Added Message" will be shown and after some seconds the user gets redirected to the payment page (see the generic EME settings on the redirection timeout and more payment settings).', 'events-made-easy' );
@@ -2558,7 +2558,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr id="tr_offline">
-    <td><label for="properties[offline_payment_tpl]"><?php esc_html_e( 'Offline Payment Format:', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-offline-payment', __( 'Offline Payment Format:', 'events-made-easy' ) ); ?></label></td>
+    <td><label for="properties[offline_payment_tpl]"><?php esc_html_e( 'Offline Payment Format:', 'events-made-easy' ); ?></label><?php echo eme_help_button( 'eme-help-members-offline-payment', __( 'Offline Payment Format:', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></td>
     <td><?php echo eme_ui_select( $membership['properties']['offline_payment_tpl'], 'properties[offline_payment_tpl]', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select() ?>
 <?php
     eme_help(
@@ -2608,7 +2608,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 ?>
     <div>
         <br>
-        <b><?php esc_html_e( 'Dynamic data check on every field', 'events-made-easy' ); ?></b><?php echo eme_help_button( 'eme-help-members-dynamic-data', __( 'Dynamic data check on every field', 'events-made-easy' ) ); ?>
+        <b><?php esc_html_e( 'Dynamic data check on every field', 'events-made-easy' ); ?></b><?php echo eme_help_button( 'eme-help-members-dynamic-data', __( 'Dynamic data check on every field', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?>
         <input id="properties[dyndata_all_fields]" name='properties[dyndata_all_fields]' value='1' type='checkbox' <?php checked( $membership['properties']['dyndata_all_fields'] ); ?>>
 <?php
     eme_help(
@@ -2630,20 +2630,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 ?>
 <div id="div-mailformats">
     <details name='eme_details_memberships' class="eme_accordion">
-    <summary><?php esc_html_e( 'New member email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-new-member-email', __( 'New member email', 'events-made-easy' ) ); ?></summary>
-<?php
-    eme_help(
-        'eme-help-members-new-member-email',
-        __( 'New member email', 'events-made-easy' ),
-        [
-            __( 'The subject of the mail sent to the person signing up as a member.', 'events-made-easy' ),
-            __( 'The body of the mail sent to the person signing up as a member.', 'events-made-easy' ),
-            __( 'The subject of the mail sent to the contactperson when someone signes up as a member.', 'events-made-easy' ),
-            __( 'The body of the mail sent to the contactperson when someone signes up as a member.', 'events-made-easy' ),
-        ],
-        false
-    );
-?>
+    <summary><?php esc_html_e( 'New member email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-new-member-email', __( 'New member email', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></summary>
     <div>
     <img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the member that is signing up.', 'events-made-easy' ); ?>
     <table class="eme_membership_admin_table">
@@ -2742,22 +2729,22 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </table>
     </div>
     </details>
-
-    <details name='eme_details_memberships' class="eme_accordion">
-    <summary><?php esc_html_e( 'Member updated Email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-member-updated-email', __( 'Member updated Email', 'events-made-easy' ) ); ?></summary>
 <?php
     eme_help(
-        'eme-help-members-member-updated-email',
-        __( 'Member updated Email', 'events-made-easy' ),
+        'eme-help-members-new-member-email',
+        __( 'New member email', 'events-made-easy' ),
         [
-            __( 'The subject of the mail sent to the member upon changes.', 'events-made-easy' ),
-            __( 'Currently only used when a member is manually marked as unpaid.', 'events-made-easy' ),
-            __( 'The body of the mail sent to the member upon changes.', 'events-made-easy' ),
-            __( 'Currently only used when a member is manually marked as unpaid.', 'events-made-easy' ),
+            __( 'The subject of the mail sent to the person signing up as a member.', 'events-made-easy' ),
+            __( 'The body of the mail sent to the person signing up as a member.', 'events-made-easy' ),
+            __( 'The subject of the mail sent to the contactperson when someone signes up as a member.', 'events-made-easy' ),
+            __( 'The body of the mail sent to the contactperson when someone signes up as a member.', 'events-made-easy' ),
         ],
         false
     );
 ?>
+
+    <details name='eme_details_memberships' class="eme_accordion">
+    <summary><?php esc_html_e( 'Member updated Email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-member-updated-email', __( 'Member updated Email', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></summary>
     <div>
     <table class="eme_membership_admin_table">
     <tr>
@@ -2788,20 +2775,22 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </table>
     </div>
     </details>
-
-    <details name='eme_details_memberships' class="eme_accordion">
-    <summary><?php esc_html_e( 'Membership extended email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-extended-email', __( 'Membership extended email', 'events-made-easy' ) ); ?></summary>
 <?php
     eme_help(
-        'eme-help-members-extended-email',
-        __( 'Membership extended email', 'events-made-easy' ),
+        'eme-help-members-member-updated-email',
+        __( 'Member updated Email', 'events-made-easy' ),
         [
-            __( 'The subject of the mail sent to the member when the membership is extended.', 'events-made-easy' ),
-            __( 'The body of the mail sent to the member when the membership is extended.', 'events-made-easy' ),
+            __( 'The subject of the mail sent to the member upon changes.', 'events-made-easy' ),
+            __( 'Currently only used when a member is manually marked as unpaid.', 'events-made-easy' ),
+            __( 'The body of the mail sent to the member upon changes.', 'events-made-easy' ),
+            __( 'Currently only used when a member is manually marked as unpaid.', 'events-made-easy' ),
         ],
         false
     );
 ?>
+
+    <details name='eme_details_memberships' class="eme_accordion">
+    <summary><?php esc_html_e( 'Membership extended email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-extended-email', __( 'Membership extended email', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></summary>
     <div>
     <img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members.', 'events-made-easy' ); ?>
     <table class="eme_membership_admin_table">
@@ -2875,22 +2864,20 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </table>
     </div>
     </details>
-
-    <details name='eme_details_memberships' class="eme_accordion">
-    <summary><?php esc_html_e( 'Membership paid email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-paid-email', __( 'Membership paid email', 'events-made-easy' ) ); ?></summary>
 <?php
     eme_help(
-        'eme-help-members-paid-email',
-        __( 'Membership paid email', 'events-made-easy' ),
+        'eme-help-members-extended-email',
+        __( 'Membership extended email', 'events-made-easy' ),
         [
-            __( 'The subject of the mail sent to the member when marked as paid.', 'events-made-easy' ),
-            __( 'The body of the mail sent to the member when marked as paid.', 'events-made-easy' ),
-            __( 'The subject of the mail sent to the contactperson after a member is marked as paid.', 'events-made-easy' ),
-            __( 'The body of the mail sent to the contactperson after a member is marked as paid.', 'events-made-easy' ),
+            __( 'The subject of the mail sent to the member when the membership is extended.', 'events-made-easy' ),
+            __( 'The body of the mail sent to the member when the membership is extended.', 'events-made-easy' ),
         ],
         false
     );
 ?>
+
+    <details name='eme_details_memberships' class="eme_accordion">
+    <summary><?php esc_html_e( 'Membership paid email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-paid-email', __( 'Membership paid email', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></summary>
     <div>
     <img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members.', 'events-made-easy' ); ?>
     <table class="eme_membership_admin_table">
@@ -2989,22 +2976,22 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </table>
     </div>
     </details>
-
-    <details name='eme_details_memberships' class="eme_accordion">
-    <summary><?php esc_html_e( 'Membership reminder email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-reminder-email', __( 'Membership reminder email', 'events-made-easy' ) ); ?></summary>
 <?php
     eme_help(
-        'eme-help-members-reminder-email',
-        __( 'Membership reminder email', 'events-made-easy' ),
+        'eme-help-members-paid-email',
+        __( 'Membership paid email', 'events-made-easy' ),
         [
-            __( 'The subject of the mail sent to the member when membership is about to expire. These reminders will be sent once a day, based on the reminder settings of the defined membership.', 'events-made-easy' ),
-            __( 'This reminder email does NOT take into account an optional grace period.', 'events-made-easy' ),
-            __( 'The body of the mail sent to the member when membership is about to expire. These reminders will be sent once a day, based on the reminder settings of the defined membership.', 'events-made-easy' ),
-            __( 'This reminder email does NOT take into account an optional grace period.', 'events-made-easy' ),
+            __( 'The subject of the mail sent to the member when marked as paid.', 'events-made-easy' ),
+            __( 'The body of the mail sent to the member when marked as paid.', 'events-made-easy' ),
+            __( 'The subject of the mail sent to the contactperson after a member is marked as paid.', 'events-made-easy' ),
+            __( 'The body of the mail sent to the contactperson after a member is marked as paid.', 'events-made-easy' ),
         ],
         false
     );
 ?>
+
+    <details name='eme_details_memberships' class="eme_accordion">
+    <summary><?php esc_html_e( 'Membership reminder email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-reminder-email', __( 'Membership reminder email', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></summary>
     <div>
     <img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the head of the family.', 'events-made-easy' ); ?>
     <table class="eme_membership_admin_table">
@@ -3036,26 +3023,22 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </table>
     </div>
     </details>
-
-    <details name='eme_details_memberships' class="eme_accordion">
-    <summary><?php esc_html_e( 'Membership stopped email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-stopped-email', __( 'Membership stopped email', 'events-made-easy' ) ); ?></summary>
 <?php
     eme_help(
-        'eme-help-members-stopped-email',
-        __( 'Membership stopped email', 'events-made-easy' ),
+        'eme-help-members-reminder-email',
+        __( 'Membership reminder email', 'events-made-easy' ),
         [
-            __( 'The subject of the mail sent to the member when a membership has expired or is marked as stopped.', 'events-made-easy' ),
-            __( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ),
-            __( 'The body of the mail sent to the member when a membership has expired or is marked as stopped.', 'events-made-easy' ),
-            __( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ),
-            __( 'The subject of the mail sent to the contactperson when a membership has expired or is stopped.', 'events-made-easy' ),
-            __( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ),
-            __( 'The body of the mail sent to the contactperson when a membership has expired or is stopped.', 'events-made-easy' ),
-            __( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ),
+            __( 'The subject of the mail sent to the member when membership is about to expire. These reminders will be sent once a day, based on the reminder settings of the defined membership.', 'events-made-easy' ),
+            __( 'This reminder email does NOT take into account an optional grace period.', 'events-made-easy' ),
+            __( 'The body of the mail sent to the member when membership is about to expire. These reminders will be sent once a day, based on the reminder settings of the defined membership.', 'events-made-easy' ),
+            __( 'This reminder email does NOT take into account an optional grace period.', 'events-made-easy' ),
         ],
         false
     );
 ?>
+
+    <details name='eme_details_memberships' class="eme_accordion">
+    <summary><?php esc_html_e( 'Membership stopped email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-stopped-email', __( 'Membership stopped email', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></summary>
     <div>
     <img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members.', 'events-made-easy' ); ?>
     <table class="eme_membership_admin_table">
@@ -3112,20 +3095,26 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </table>
     </div>
     </details>
-
-    <details name='eme_details_memberships' class="eme_accordion">
-    <summary><?php esc_html_e( 'Member deleted email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-deleted-email', __( 'Member deleted email', 'events-made-easy' ) ); ?></summary>
 <?php
     eme_help(
-        'eme-help-members-deleted-email',
-        __( 'Member deleted email', 'events-made-easy' ),
+        'eme-help-members-stopped-email',
+        __( 'Membership stopped email', 'events-made-easy' ),
         [
-            __( 'The subject of the mail sent to the contactperson just before a member is deleted.', 'events-made-easy' ),
-            __( 'The body of the mail sent to the contactperson just before a member is deleted.', 'events-made-easy' ),
+            __( 'The subject of the mail sent to the member when a membership has expired or is marked as stopped.', 'events-made-easy' ),
+            __( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ),
+            __( 'The body of the mail sent to the member when a membership has expired or is marked as stopped.', 'events-made-easy' ),
+            __( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ),
+            __( 'The subject of the mail sent to the contactperson when a membership has expired or is stopped.', 'events-made-easy' ),
+            __( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ),
+            __( 'The body of the mail sent to the contactperson when a membership has expired or is stopped.', 'events-made-easy' ),
+            __( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ),
         ],
         false
     );
 ?>
+
+    <details name='eme_details_memberships' class="eme_accordion">
+    <summary><?php esc_html_e( 'Member deleted email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-deleted-email', __( 'Member deleted email', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></summary>
     <div>
     <table class="eme_membership_admin_table">
     <tr>
@@ -3156,20 +3145,20 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </table>
     </div>
     </details>
-
-    <details name='eme_details_memberships' class="eme_accordion">
-    <summary><?php esc_html_e( 'Contactperson payment notification email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-contact-ipn-email', __( 'Contactperson payment notification email', 'events-made-easy' ) ); ?></summary>
 <?php
     eme_help(
-        'eme-help-members-contact-ipn-email',
-        __( 'Contactperson payment notification email', 'events-made-easy' ),
+        'eme-help-members-deleted-email',
+        __( 'Member deleted email', 'events-made-easy' ),
         [
-            __( 'The subject of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ),
-            __( 'The body of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ),
+            __( 'The subject of the mail sent to the contactperson just before a member is deleted.', 'events-made-easy' ),
+            __( 'The body of the mail sent to the contactperson just before a member is deleted.', 'events-made-easy' ),
         ],
         false
     );
 ?>
+
+    <details name='eme_details_memberships' class="eme_accordion">
+    <summary><?php esc_html_e( 'Contactperson payment notification email', 'events-made-easy' ); ?><?php echo eme_help_button( 'eme-help-members-contact-ipn-email', __( 'Contactperson payment notification email', 'events-made-easy' ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button() ?></summary>
     <div>
     <table class="eme_membership_admin_table">
     <tr>
@@ -3200,6 +3189,17 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </table>
     </div>
     </details>
+<?php
+    eme_help(
+        'eme-help-members-contact-ipn-email',
+        __( 'Contactperson payment notification email', 'events-made-easy' ),
+        [
+            __( 'The subject of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ),
+            __( 'The body of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ),
+        ],
+        false
+    );
+?>
 </div>
 <?php
 }
@@ -5458,7 +5458,7 @@ function eme_access_meta_box_cb( $post ) {
     }
     echo eme_ui_checkbox( $selected_groupids_arr, 'eme_groupids', $groups_arr, false, 0 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_checkbox()
 
-    echo "<br><label for='eme_access_denied'>" . esc_html__( 'Access denied message template', 'events-made-easy' ) . eme_help_button( 'eme-help-members-access-denied-message', __( 'Access denied message template', 'events-made-easy' ) ) . '</label>&nbsp;';
+    echo "<br><label for='eme_access_denied'>" . esc_html__( 'Access denied message template', 'events-made-easy' ) . '</label>' . eme_help_button( 'eme-help-members-access-denied-message', __( 'Access denied message template', 'events-made-easy' ) ) . '&nbsp;'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button()
     #echo "<input type='text' name='eme_access_denied' id='eme_access_denied' value='$text'>";
     $templates_array = eme_get_templates_array_by_id();
     echo eme_ui_select( $access_denied_tpl, 'eme_access_denied', $templates_array ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_ui_select()

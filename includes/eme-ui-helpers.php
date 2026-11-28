@@ -104,7 +104,7 @@ function eme_options_input_secret( $title, $name, $description, $visible_length 
 <?php if ( $value !== '' ): ?>
             <p><code><?php echo esc_html( $masked ); ?></code>
             <label>
-                <input type="checkbox" name="<?php echo esc_attr( 'eme_clear_' . $name ); ?>" value="1" title="<?php echo esc_attr__('Check this to clear the value on save','events-made-easy');?>">
+                <input type="checkbox" name="<?php echo esc_attr( 'eme_clear_' . $name ); ?>" value="1" title="<?php echo esc_attr__('Check this to clear the existing value on save','events-made-easy');?>">
                 <?php esc_html_e( 'Clear', 'events-made-easy' ); ?>
             </label>
             </p>
@@ -677,6 +677,8 @@ function eme_help_button( $dialog_id, $aria_label = '' ) {
     $dialog_id = sanitize_html_class( $dialog_id );
     if ( empty( $aria_label ) ) {
         $aria_label = __( 'Help', 'events-made-easy' );
+    } else {
+        $aria_label = sprintf( __( 'Help: %s', 'events-made-easy' ), $aria_label );
     }
     return "<button type='button' class='eme-help-btn' aria-label='" . esc_attr( $aria_label ) . "' aria-haspopup='dialog' command='show-modal' commandfor='" . esc_attr( $dialog_id ) . "' data-eme-help-target='" . esc_attr( $dialog_id ) . "'>?</button>";
 }
@@ -697,9 +699,9 @@ function eme_help_dialog( $dialog_id, $title, $content ) {
 
 function eme_help( $dialog_id, $title, $content, $show_button = true ) {
     if ( $show_button ) {
-        echo eme_help_button( $dialog_id, $title );
+        echo eme_help_button( $dialog_id, $title ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_button()
     }
-    echo eme_help_dialog( $dialog_id, $title, $content );
+    echo eme_help_dialog( $dialog_id, $title, $content ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted HTML from eme_help_dialog()
 }
 
 function eme_get_field_id ( $field_name, $number = 1) {
